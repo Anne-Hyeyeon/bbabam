@@ -1,4 +1,5 @@
 // In-memory store for local testing without a database
+// Uses globalThis to persist across HMR and module reloads in dev
 
 interface Card {
   id: string;
@@ -31,39 +32,53 @@ interface CardView {
   viewedAt: Date;
 }
 
-let cardIdCounter = 0;
+interface MemoryData {
+  cardIdCounter: number;
+  cards: Card[];
+  recipients: CardRecipient[];
+  views: CardView[];
+}
 
-const cards: Card[] = [];
-const recipients: CardRecipient[] = [];
-const views: CardView[] = [];
+const globalData = globalThis as typeof globalThis & { __bbabam_memory?: MemoryData };
+
+if (!globalData.__bbabam_memory) {
+  globalData.__bbabam_memory = {
+    cardIdCounter: 0,
+    cards: [],
+    recipients: [],
+    views: [],
+  };
+}
+
+const data = globalData.__bbabam_memory;
 
 export const memoryStore = {
-  createCard(data: Omit<Card, "id" | "createdAt">) {
+  createCard(cardData: Omit<Card, "id" | "createdAt">) {
     const card: Card = {
-      ...data,
-      id: String(++cardIdCounter),
+      ...cardData,
+      id: String(++data.cardIdCounter),
       createdAt: new Date(),
     };
-    cards.push(card);
+    data.cards.push(card);
     return card;
   },
 
   addRecipients(cardId: string, items: Array<{ name: string; nickname: string }>) {
     for (const item of items) {
-      recipients.push({ id: String(Math.random()), cardId, ...item });
+      data.recipients.push({ id: String(Math.random()), cardId, ...item });
     }
   },
 
   getCardBySlug(slug: string) {
-    return cards.find((c) => c.slug === slug) ?? null;
+    return data.cards.find((c) => c.slug === slug) ?? null;
   },
 
   getRecipientsByCardId(cardId: string) {
-    return recipients.filter((r) => r.cardId === cardId);
+    return data.recipients.filter((r) => r.cardId === cardId);
   },
 
   addView(cardId: string, viewerName: string | null, gamePlayed: string | null) {
-    views.push({
+    data.views.push({
       id: String(Math.random()),
       cardId,
       viewerName,
@@ -73,11 +88,11 @@ export const memoryStore = {
   },
 
   getCardsByUserId(userId: string) {
-    return cards
+    return data.cards
       .filter((c) => c.userId === userId)
       .map((c) => ({
         ...c,
-        viewCount: views.filter((v) => v.cardId === c.id).length,
+        viewCount: data.views.filter((v) => v.cardId === c.id).length,
       }));
   },
 };
