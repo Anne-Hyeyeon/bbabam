@@ -1,7 +1,7 @@
 "use client";
 import { useTranslations } from "next-intl";
 import { signIn } from "next-auth/react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 
 export default function LoginPage() {
   const t = useTranslations("login");
