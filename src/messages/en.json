@@ -1,0 +1,82 @@
+{
+  "common": {
+    "siteName": "BBABAM",
+    "siteDescription": "Create a gender reveal card and share it with your loved ones",
+    "create": "Create Card",
+    "login": "Log In",
+    "dashboard": "My Cards",
+    "copyLink": "Copy Link",
+    "shareKakao": "Share via KakaoTalk",
+    "copied": "Copied!"
+  },
+  "landing": {
+    "hero": "Reveal your baby's gender in a fun way!",
+    "subtitle": "Create an interactive game card and share the link",
+    "cta": "Create Free Card"
+  },
+  "create": {
+    "title": "Create Card",
+    "babyNickname": "Baby Nickname",
+    "babyNicknamePlaceholder": "e.g. Bean",
+    "gender": "Gender",
+    "girl": "Girl",
+    "boy": "Boy",
+    "dueDate": "Due Date (optional)",
+    "gameMode": "Game Mode",
+    "gameModeFixed": "Fixed game",
+    "gameModeChoice": "Recipient chooses",
+    "selectGame": "Select Game",
+    "recipientMode": "Recipient Name",
+    "recipientPreset": "Set in advance",
+    "recipientInput": "Recipient enters their own",
+    "recipientName": "Recipient Name",
+    "recipientNickname": "Nickname (what baby will call them)",
+    "recipientNicknamePlaceholder": "e.g. Auntie Jane",
+    "addRecipient": "Add Recipient",
+    "language": "Card Language",
+    "submit": "Create Card",
+    "success": "Card created!",
+    "yourLink": "Card Link"
+  },
+  "games": {
+    "iceCream": "Ice Cream Scoop",
+    "balloon": "Balloon Pop",
+    "scratch": "Scratch Card",
+    "roulette": "Roulette Spin",
+    "giftBox": "Gift Box",
+    "gacha": "Capsule Machine",
+    "selectTitle": "Choose a game",
+    "iceCreamHint": "Scoop the ice cream!",
+    "balloonHint": "Tap the balloon fast!",
+    "scratchHint": "Scratch to reveal!",
+    "rouletteHint": "Spin the roulette!",
+    "giftBoxHint": "Untie the ribbon and open the box!",
+    "gachaHint": "Pull the lever!"
+  },
+  "result": {
+    "greeting": "Dear {nickname},",
+    "revealGirl": "{babyName} is a girl!",
+    "revealBoy": "{babyName} is a boy!",
+    "dDay": "See you in {days} days!",
+    "tryAnother": "Try another version"
+  },
+  "recipient": {
+    "enterName": "Enter your name",
+    "enterNickname": "Enter your nickname (what baby will call you)",
+    "nicknamePlaceholder": "e.g. Auntie Jane",
+    "start": "Start"
+  },
+  "dashboard": {
+    "title": "My Cards",
+    "noCards": "No cards yet",
+    "createFirst": "Create your first card!",
+    "views": "views",
+    "created": "Created"
+  },
+  "login": {
+    "title": "Log In",
+    "kakao": "Log in with Kakao",
+    "google": "Log in with Google",
+    "continueWithout": "Continue without login"
+  }
+}
