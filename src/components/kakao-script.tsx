@@ -8,8 +8,9 @@ export function KakaoScript() {
       src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"
       strategy="lazyOnload"
       onLoad={() => {
-        if (typeof window !== "undefined" && window.Kakao && !window.Kakao.isInitialized()) {
-          window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_JS_KEY!);
+        const key = process.env.NEXT_PUBLIC_KAKAO_JS_KEY;
+        if (key && typeof window !== "undefined" && window.Kakao && !window.Kakao.isInitialized()) {
+          window.Kakao.init(key);
         }
       }}
     />
