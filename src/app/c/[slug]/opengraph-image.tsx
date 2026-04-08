@@ -1,7 +1,5 @@
 import { ImageResponse } from "next/og";
-import { db } from "@/db";
-import { cards } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { isMemoryMode, memoryStore } from "@/db/memory-store";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -11,9 +9,26 @@ export const contentType = "image/png";
 
 export default async function Image({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const card = await db.select({ babyNickname: cards.babyNickname, language: cards.language }).from(cards).where(eq(cards.slug, slug)).limit(1);
-  const babyName = card[0]?.babyNickname ?? "Baby";
-  const isKo = card[0]?.language === "ko";
+
+  let babyName = "Baby";
+  let isKo = true;
+
+  if (isMemoryMode) {
+    const card = memoryStore.getCardBySlug(slug);
+    if (card) {
+      babyName = card.babyNickname;
+      isKo = card.language === "ko";
+    }
+  } else {
+    const { db } = await import("@/db");
+    const { cards } = await import("@/db/schema");
+    const { eq } = await import("drizzle-orm");
+    const card = await db.select({ babyNickname: cards.babyNickname, language: cards.language }).from(cards).where(eq(cards.slug, slug)).limit(1);
+    if (card[0]) {
+      babyName = card[0].babyNickname;
+      isKo = card[0].language === "ko";
+    }
+  }
 
   return new ImageResponse(
     (

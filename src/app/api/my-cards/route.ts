@@ -1,10 +1,16 @@
 import { NextResponse } from "next/server";
-import { db } from "@/db";
-import { cards, cardViews } from "@/db/schema";
-import { eq, sql, desc } from "drizzle-orm";
-import { auth } from "@/lib/auth";
+import { isMemoryMode } from "@/db/memory-store";
 
 export async function GET() {
+  if (isMemoryMode) {
+    return NextResponse.json([]);
+  }
+
+  const { db } = await import("@/db");
+  const { cards, cardViews } = await import("@/db/schema");
+  const { eq, sql, desc } = await import("drizzle-orm");
+  const { auth } = await import("@/lib/auth");
+
   const session = await auth();
   if (!session?.user?.id) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const result = await db.select({
