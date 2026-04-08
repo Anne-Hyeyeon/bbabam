@@ -3,6 +3,7 @@ import { db } from "@/db";
 import { cards } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
+export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 export const alt = "BBABAM Gender Reveal Card";
 export const size = { width: 1200, height: 630 };

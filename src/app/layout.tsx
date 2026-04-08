@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Script from "next/script";
+import { KakaoScript } from "@/components/kakao-script";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,15 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html>
       <body className={`${inter.className} bg-gray-50 text-gray-900`}>
         {children}
-        <Script
-          src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"
-          strategy="lazyOnload"
-          onLoad={() => {
-            if (typeof window !== "undefined" && window.Kakao && !window.Kakao.isInitialized()) {
-              window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_JS_KEY);
-            }
-          }}
-        />
+        <KakaoScript />
       </body>
     </html>
   );
