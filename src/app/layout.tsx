@@ -1,19 +1,23 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Jua } from "next/font/google";
 import "./globals.css";
 import { KakaoScript } from "@/components/kakao-script";
 
-const inter = Inter({ subsets: ["latin"] });
+const jua = Jua({ weight: "400", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "빠밤 BBABAM - 젠더리빌 카드",
-  description: "인터랙티브 게임 카드로 아기 성별을 재밌게 알려주세요!",
+  title: "빠밤! - 젠더리빌 카드",
+  description: "우리 아기의 성별을 재미있게 공개해보세요!",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html>
-      <body className={`${inter.className} bg-gray-50 text-gray-900`}>
+    <html lang="ko">
+      <body className={jua.className}>
         {children}
         <KakaoScript />
       </body>
