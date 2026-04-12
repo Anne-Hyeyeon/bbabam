@@ -15,7 +15,7 @@ export function Header({ showBack = true, showHamburger = true }: HeaderProps) {
 
   return (
     <>
-      <header className="sticky top-0 z-40 flex items-center justify-between px-4 py-3 bg-cream/80 backdrop-blur-sm shadow-sm">
+      <header className="sticky top-0 z-40 flex items-center justify-between px-4 py-3 bg-white/90 backdrop-blur-sm border-b border-gray-100">
         <div className="w-10">
           {showBack && (
             <button

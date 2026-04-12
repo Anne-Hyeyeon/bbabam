@@ -28,7 +28,7 @@ export function HamburgerMenu({ onClose }: HamburgerMenuProps) {
 
         {/* Menu panel */}
         <motion.nav
-          className="absolute right-0 top-0 h-full w-64 bg-cream shadow-lg p-6"
+          className="absolute right-0 top-0 h-full w-64 bg-white shadow-lg p-6"
           initial={{ x: "100%" }}
           animate={{ x: 0 }}
           exit={{ x: "100%" }}

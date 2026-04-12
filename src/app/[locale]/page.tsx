@@ -39,7 +39,7 @@ export default function LandingPage() {
             ].map((item, i) => (
               <div
                 key={i}
-                className="flex items-center gap-3 bg-white rounded-xl p-4 border border-gray-100"
+                className="flex items-center gap-3 bg-gray-soft rounded-xl p-4"
               >
                 <div className="w-8 h-8 rounded-full bg-gradient-to-r from-pink-baby to-blue-baby text-white flex items-center justify-center text-sm shrink-0">
                   {item.num}

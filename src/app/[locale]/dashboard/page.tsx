@@ -46,7 +46,7 @@ export default function DashboardPage() {
         <h2 className="text-lg mb-4">{t("title")}</h2>
 
         {loading ? (
-          <div className="text-center py-12">
+          <div className="flex justify-center py-12">
             <div className="w-8 h-8 rounded-full border-2 border-pink-baby/30 border-t-pink-baby animate-spin" />
           </div>
         ) : cards.length === 0 ? (
@@ -64,7 +64,7 @@ export default function DashboardPage() {
             {cards.map((card) => (
               <div
                 key={card.id}
-                className={`bg-white rounded-xl p-4 border border-gray-100 flex items-center justify-between ${
+                className={`bg-gray-soft rounded-xl p-4 flex items-center justify-between ${
                   card.gender === "girl" ? "border-l-4 border-l-pink-baby" : "border-l-4 border-l-blue-baby"
                 }`}
               >
