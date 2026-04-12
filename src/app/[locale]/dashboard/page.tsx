@@ -2,62 +2,93 @@
 
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
+import { Header } from "@/components/layout/header";
 import { Link } from "@/i18n/navigation";
-import { CardContainer } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { ShareButtons } from "@/components/share-buttons";
 
-interface CardItem {
-  id: string; slug: string; babyNickname: string; gender: "boy" | "girl";
-  dueDate: string | null; gameMode: string; language: string; createdAt: string; viewCount: number;
+interface Card {
+  id: string;
+  slug: string;
+  babyNickname: string;
+  gender: "boy" | "girl";
+  templateId: string;
+  createdAt: string;
 }
 
 export default function DashboardPage() {
   const t = useTranslations("dashboard");
-  const tCommon = useTranslations("common");
-  const [cards, setCards] = useState<CardItem[]>([]);
+  const [cards, setCards] = useState<Card[]>([]);
   const [loading, setLoading] = useState(true);
-  const [expandedCard, setExpandedCard] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch("/api/my-cards")
-      .then((res) => { if (!res.ok) throw new Error("Unauthorized"); return res.json(); })
-      .then(setCards)
-      .catch(() => setCards([]))
-      .finally(() => setLoading(false));
+    fetch("/api/cards")
+      .then((res) => res.json())
+      .then((data) => {
+        setCards(Array.isArray(data) ? data : []);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
   }, []);
 
-  if (loading) {
-    return <main className="min-h-screen flex items-center justify-center"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-pink-500" /></main>;
-  }
+  const handleDelete = async (id: string) => {
+    if (!confirm(t("deleteConfirm"))) return;
+    await fetch(`/api/cards/${id}`, { method: "DELETE" });
+    setCards((prev) => prev.filter((c) => c.id !== id));
+  };
+
+  const handleCopy = (slug: string) => {
+    navigator.clipboard.writeText(`${window.location.origin}/c/${slug}`);
+  };
 
   return (
-    <main className="min-h-screen py-12 px-4 max-w-lg mx-auto">
-      <h1 className="text-2xl font-bold mb-8">{t("title")}</h1>
-      {cards.length === 0 ? (
-        <CardContainer className="text-center">
-          <p className="text-gray-500 mb-4">{t("noCards")}</p>
-          <Link href="/create"><Button>{t("createFirst")}</Button></Link>
-        </CardContainer>
-      ) : (
-        <div className="space-y-4">
-          {cards.map((card) => (
-            <CardContainer key={card.id}>
-              <div className="flex items-center justify-between mb-2">
-                <h2 className="text-lg font-semibold">{card.babyNickname}<span className="ml-2 text-sm">{card.gender === "girl" ? "👧" : "👦"}</span></h2>
-                <span className="text-sm text-gray-500">{t("views")}: {card.viewCount}</span>
+    <>
+      <Header />
+      <main className="p-4">
+        <h2 className="text-lg mb-4">{t("title")}</h2>
+
+        {loading ? (
+          <div className="text-center py-12">
+            <span className="animate-pulse text-2xl">✨</span>
+          </div>
+        ) : cards.length === 0 ? (
+          <div className="text-center py-12">
+            <p className="text-text-secondary mb-4">{t("empty")}</p>
+            <Link
+              href="/create"
+              className="inline-block px-6 py-3 rounded-xl bg-pink-baby text-white"
+            >
+              {t("createFirst")}
+            </Link>
+          </div>
+        ) : (
+          <div className="flex flex-col gap-3">
+            {cards.map((card) => (
+              <div
+                key={card.id}
+                className="bg-white rounded-xl p-4 shadow-sm flex items-center justify-between"
+              >
+                <div>
+                  <span className="mr-2">{card.gender === "girl" ? "👧" : "👦"}</span>
+                  <span>{card.babyNickname}</span>
+                </div>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => handleCopy(card.slug)}
+                    className="px-3 py-1.5 rounded-lg bg-pink-light text-pink-baby text-sm"
+                  >
+                    {t("copyLink")}
+                  </button>
+                  <button
+                    onClick={() => handleDelete(card.id)}
+                    className="px-3 py-1.5 rounded-lg bg-red-50 text-red-400 text-sm"
+                  >
+                    {t("delete")}
+                  </button>
+                </div>
               </div>
-              <p className="text-xs text-gray-400 mb-3">{t("created")}: {new Date(card.createdAt).toLocaleDateString()}</p>
-              <button onClick={() => setExpandedCard(expandedCard === card.id ? null : card.id)} className="text-sm text-purple-500 font-medium">
-                {expandedCard === card.id ? "▲" : "▼"} {tCommon("copyLink")}
-              </button>
-              {expandedCard === card.id && (
-                <div className="mt-3"><ShareButtons url={`/c/${card.slug}`} babyNickname={card.babyNickname} /></div>
-              )}
-            </CardContainer>
-          ))}
-        </div>
-      )}
-    </main>
+            ))}
+          </div>
+        )}
+      </main>
+    </>
   );
 }

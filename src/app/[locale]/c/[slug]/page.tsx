@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation";
-import { GameContainer } from "@/components/game-container";
 import { isMemoryMode, memoryStore } from "@/db/memory-store";
+import { Header } from "@/components/layout/header";
+import { CardViewer } from "@/components/viewer/card-viewer";
+import type { Metadata } from "next";
 
 interface CardPageProps {
   params: Promise<{ slug: string; locale: string }>;
@@ -37,9 +39,51 @@ async function getCard(slug: string) {
   return result[0];
 }
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const card = await getCard(slug);
+
+  if (!card) return {};
+
+  const ogUrl = `/api/og/${slug}`;
+  const title =
+    card.ogMode === "fake-surprise"
+      ? "선물이 도착했어요!"
+      : `${card.babyNickname}의 성별은?`;
+
+  return {
+    title,
+    openGraph: {
+      title,
+      images: [{ url: ogUrl, width: 1200, height: 630 }],
+    },
+  };
+}
+
 export default async function CardPage({ params }: CardPageProps) {
   const { slug } = await params;
   const card = await getCard(slug);
-  if (!card) notFound();
-  return <GameContainer slug={slug} card={card} />;
+
+  if (!card) {
+    notFound();
+  }
+
+  return (
+    <>
+      <Header showBack={false} showHamburger={false} />
+      <CardViewer
+        templateId={card.templateId}
+        gender={card.gender as "boy" | "girl"}
+        babyNickname={card.babyNickname}
+        recipientMode={card.recipientMode as "preset" | "input"}
+        recipientName={card.recipientName || undefined}
+        ogMode={card.ogMode as "default" | "fake-surprise"}
+        ultrasoundImageUrl={card.ultrasoundImageUrl || undefined}
+      />
+    </>
+  );
 }

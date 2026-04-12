@@ -1,28 +1,51 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import { Header } from "@/components/layout/header";
 
-export default function Home() {
+export default function LandingPage() {
   const t = useTranslations("landing");
-  const tCommon = useTranslations("common");
+  const common = useTranslations("common");
 
   return (
-    <main className="min-h-screen flex flex-col">
-      <nav className="flex items-center justify-between px-6 py-4">
-        <span className="text-xl font-bold bg-gradient-to-r from-pink-500 to-blue-500 bg-clip-text text-transparent">{tCommon("siteName")}</span>
-        <div className="flex gap-4">
-          <Link href="/dashboard" className="text-sm text-gray-600 hover:text-gray-900">{tCommon("dashboard")}</Link>
-          <Link href="/login" className="text-sm text-gray-600 hover:text-gray-900">{tCommon("login")}</Link>
+    <>
+      <Header showBack={false} />
+      <main className="flex flex-col items-center px-4 pb-8">
+        {/* Hero */}
+        <div className="text-center py-12">
+          <h1 className="text-2xl leading-snug whitespace-pre-line mb-3">
+            {t("heroTitle")}
+          </h1>
+          <p className="text-text-secondary text-sm mb-8">
+            {t("heroDescription")}
+          </p>
+          <Link
+            href="/create"
+            className="inline-block px-8 py-4 rounded-2xl bg-pink-baby text-white text-lg shadow-md"
+          >
+            {t("createButton")}
+          </Link>
         </div>
-      </nav>
-      <section className="flex-1 flex flex-col items-center justify-center px-6 text-center">
-        <div className="text-6xl mb-6">🎉</div>
-        <h1 className="text-3xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-pink-500 to-blue-500 bg-clip-text text-transparent">{t("hero")}</h1>
-        <p className="text-lg text-gray-600 mb-8 max-w-md">{t("subtitle")}</p>
-        <Link href="/create" className="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-10 py-4 rounded-full text-lg font-semibold hover:shadow-lg transition-shadow">{t("cta")}</Link>
-        <div className="flex gap-4 mt-12 text-3xl">
-          <span>🍦</span><span>🎈</span><span>🎫</span><span>🎡</span><span>🎁</span><span>🏮</span>
+
+        {/* How it works */}
+        <div className="w-full mt-4">
+          <h2 className="text-lg mb-4 text-center">{t("howItWorks")}</h2>
+          <div className="flex flex-col gap-3">
+            {[
+              { emoji: "1️⃣", text: t("step1") },
+              { emoji: "2️⃣", text: t("step2") },
+              { emoji: "3️⃣", text: t("step3") },
+            ].map((item, i) => (
+              <div
+                key={i}
+                className="flex items-center gap-3 bg-white rounded-xl p-4 shadow-sm"
+              >
+                <span className="text-2xl">{item.emoji}</span>
+                <span className="text-sm">{item.text}</span>
+              </div>
+            ))}
+          </div>
         </div>
-      </section>
-    </main>
+      </main>
+    </>
   );
 }
