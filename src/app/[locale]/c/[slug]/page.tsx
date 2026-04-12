@@ -10,45 +10,31 @@ async function getCard(slug: string) {
   if (isMemoryMode) {
     const card = memoryStore.getCardBySlug(slug);
     if (!card) return null;
-    const recipients = card.recipientMode === "preset"
-      ? memoryStore.getRecipientsByCardId(card.id).map((r) => ({ name: r.name, nickname: r.nickname }))
-      : [];
     return {
+      templateId: card.templateId,
       babyNickname: card.babyNickname,
-      dueDate: card.dueDate,
-      gameMode: card.gameMode,
-      fixedGame: card.fixedGame,
+      gender: card.gender,
       recipientMode: card.recipientMode,
+      recipientName: card.recipientName,
+      ogMode: card.ogMode,
+      ultrasoundImageUrl: card.ultrasoundImageUrl,
       language: card.language,
-      recipients,
     };
   }
 
   const { db } = await import("@/db");
-  const { cards, cardRecipients } = await import("@/db/schema");
+  const { cards } = await import("@/db/schema");
   const { eq } = await import("drizzle-orm");
 
-  const card = await db
-    .select({
-      id: cards.id, babyNickname: cards.babyNickname, dueDate: cards.dueDate,
-      gameMode: cards.gameMode, fixedGame: cards.fixedGame,
-      recipientMode: cards.recipientMode, language: cards.language,
-    })
+  const result = await db
+    .select()
     .from(cards)
     .where(eq(cards.slug, slug))
     .limit(1);
 
-  if (card.length === 0) return null;
+  if (result.length === 0) return null;
 
-  let recipients: Array<{ name: string; nickname: string }> = [];
-  if (card[0].recipientMode === "preset") {
-    recipients = await db
-      .select({ name: cardRecipients.name, nickname: cardRecipients.nickname })
-      .from(cardRecipients)
-      .where(eq(cardRecipients.cardId, card[0].id));
-  }
-
-  return { ...card[0], recipients };
+  return result[0];
 }
 
 export default async function CardPage({ params }: CardPageProps) {

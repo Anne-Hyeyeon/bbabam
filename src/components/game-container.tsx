@@ -17,12 +17,14 @@ const gameComponents: Record<GameType, React.LazyExoticComponent<React.Component
 };
 
 interface CardData {
+  templateId: string;
   babyNickname: string;
-  dueDate: string | null;
-  gameMode: "fixed" | "choice";
-  fixedGame: GameType | null;
+  gender: "boy" | "girl";
   recipientMode: "preset" | "input";
-  recipients: Array<{ name: string; nickname: string }>;
+  recipientName: string | null;
+  ogMode: "default" | "fake-surprise";
+  ultrasoundImageUrl: string | null;
+  language: string;
 }
 
 interface GameContainerProps {
@@ -34,22 +36,19 @@ type Phase = "recipient" | "select" | "playing" | "result";
 
 export function GameContainer({ slug, card }: GameContainerProps) {
   const [phase, setPhase] = useState<Phase>(
-    card.recipientMode === "input" ? "recipient" :
-    card.gameMode === "choice" ? "select" : "playing"
+    card.recipientMode === "input" ? "recipient" : "playing"
   );
   const [nickname, setNickname] = useState(
-    card.recipientMode === "preset" && card.recipients[0] ? card.recipients[0].nickname : ""
+    card.recipientMode === "preset" && card.recipientName ? card.recipientName : ""
   );
-  const [viewerName, setViewerName] = useState(
-    card.recipientMode === "preset" && card.recipients[0] ? card.recipients[0].name : ""
-  );
-  const [selectedGame, setSelectedGame] = useState<GameType>(card.fixedGame ?? "ice-cream");
+  const [viewerName, setViewerName] = useState("");
+  const [selectedGame, setSelectedGame] = useState<GameType>("ice-cream");
   const [gender, setGender] = useState<"boy" | "girl" | null>(null);
 
   const handleRecipientSubmit = (name: string, nick: string) => {
     setViewerName(name);
     setNickname(nick);
-    setPhase(card.gameMode === "choice" ? "select" : "playing");
+    setPhase("playing");
   };
 
   const handleGameSelect = (game: GameType) => {
@@ -58,13 +57,7 @@ export function GameContainer({ slug, card }: GameContainerProps) {
   };
 
   const handleGameComplete = async () => {
-    const res = await fetch(`/api/cards/${slug}/reveal`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ viewerName: viewerName || null, gamePlayed: selectedGame }),
-    });
-    const data = await res.json();
-    setGender(data.gender);
+    setGender(card.gender);
     setPhase("result");
   };
 
@@ -97,7 +90,7 @@ export function GameContainer({ slug, card }: GameContainerProps) {
         )}
         {phase === "result" && gender && (
           <motion.div key="result" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <ResultScreen nickname={nickname} babyNickname={card.babyNickname} gender={gender} dueDate={card.dueDate} showTryAnother={card.gameMode === "choice"} onTryAnother={handleTryAnother} />
+            <ResultScreen nickname={nickname} babyNickname={card.babyNickname} gender={gender} dueDate={null} showTryAnother={false} onTryAnother={handleTryAnother} />
           </motion.div>
         )}
       </AnimatePresence>

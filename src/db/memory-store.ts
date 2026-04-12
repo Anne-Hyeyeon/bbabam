@@ -5,38 +5,20 @@ interface Card {
   id: string;
   userId: string | null;
   slug: string;
+  templateId: string;
   babyNickname: string;
   gender: "boy" | "girl";
-  dueDate: string | null;
-  gameMode: "fixed" | "choice";
-  fixedGame: string | null;
   recipientMode: "preset" | "input";
+  recipientName: string | null;
+  ogMode: "default" | "fake-surprise";
+  ultrasoundImageUrl: string | null;
   language: string;
-  tier: "free" | "premium";
-  managementToken: string | null;
   createdAt: Date;
-}
-
-interface CardRecipient {
-  id: string;
-  cardId: string;
-  name: string;
-  nickname: string;
-}
-
-interface CardView {
-  id: string;
-  cardId: string;
-  viewerName: string | null;
-  gamePlayed: string | null;
-  viewedAt: Date;
 }
 
 interface MemoryData {
   cardIdCounter: number;
   cards: Card[];
-  recipients: CardRecipient[];
-  views: CardView[];
 }
 
 const globalData = globalThis as typeof globalThis & { __bbabam_memory?: MemoryData };
@@ -45,8 +27,6 @@ if (!globalData.__bbabam_memory) {
   globalData.__bbabam_memory = {
     cardIdCounter: 0,
     cards: [],
-    recipients: [],
-    views: [],
   };
 }
 
@@ -63,37 +43,19 @@ export const memoryStore = {
     return card;
   },
 
-  addRecipients(cardId: string, items: Array<{ name: string; nickname: string }>) {
-    for (const item of items) {
-      data.recipients.push({ id: String(Math.random()), cardId, ...item });
-    }
-  },
-
   getCardBySlug(slug: string) {
     return data.cards.find((c) => c.slug === slug) ?? null;
   },
 
-  getRecipientsByCardId(cardId: string) {
-    return data.recipients.filter((r) => r.cardId === cardId);
-  },
-
-  addView(cardId: string, viewerName: string | null, gamePlayed: string | null) {
-    data.views.push({
-      id: String(Math.random()),
-      cardId,
-      viewerName,
-      gamePlayed,
-      viewedAt: new Date(),
-    });
-  },
-
   getCardsByUserId(userId: string) {
-    return data.cards
-      .filter((c) => c.userId === userId)
-      .map((c) => ({
-        ...c,
-        viewCount: data.views.filter((v) => v.cardId === c.id).length,
-      }));
+    return data.cards.filter((c) => c.userId === userId);
+  },
+
+  deleteCard(id: string, userId: string) {
+    const index = data.cards.findIndex((c) => c.id === id && c.userId === userId);
+    if (index !== -1) {
+      data.cards.splice(index, 1);
+    }
   },
 };
 

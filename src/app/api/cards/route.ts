@@ -1,68 +1,77 @@
 import { NextRequest, NextResponse } from "next/server";
-import { generateSlug, generateManagementToken } from "@/lib/slug";
-import { GAME_TYPES, type GameType } from "@/lib/games";
+import { nanoid } from "nanoid";
 import { isMemoryMode, memoryStore } from "@/db/memory-store";
 
-interface CreateCardBody {
-  babyNickname: string;
-  gender: "boy" | "girl";
-  dueDate?: string;
-  gameMode: "fixed" | "choice";
-  fixedGame?: GameType;
-  recipientMode: "preset" | "input";
-  recipients?: Array<{ name: string; nickname: string }>;
-  language: "ko" | "en";
-}
-
 export async function POST(request: NextRequest) {
-  const body: CreateCardBody = await request.json();
-  if (!body.babyNickname || !body.gender || !body.gameMode || !body.recipientMode) {
+  const body = await request.json();
+  const { templateId, babyNickname, gender, recipientMode, recipientName, ogMode, ultrasoundImageUrl } = body;
+
+  if (!templateId || !babyNickname || !gender || !recipientMode) {
     return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
   }
-  if (!["boy", "girl"].includes(body.gender)) {
-    return NextResponse.json({ error: "Invalid gender" }, { status: 400 });
-  }
-  if (body.gameMode === "fixed" && (!body.fixedGame || !GAME_TYPES.includes(body.fixedGame))) {
-    return NextResponse.json({ error: "Invalid game selection" }, { status: 400 });
-  }
 
-  const slug = generateSlug();
-  const managementToken = generateManagementToken();
+  const slug = nanoid(12);
 
   if (isMemoryMode) {
     const card = memoryStore.createCard({
       userId: null,
       slug,
-      babyNickname: body.babyNickname,
-      gender: body.gender,
-      dueDate: body.dueDate ?? null,
-      gameMode: body.gameMode,
-      fixedGame: body.gameMode === "fixed" ? body.fixedGame! : null,
-      recipientMode: body.recipientMode,
-      language: body.language ?? "ko",
-      tier: "free",
-      managementToken,
+      templateId,
+      babyNickname,
+      gender,
+      recipientMode,
+      recipientName: recipientMode === "preset" ? recipientName : null,
+      ogMode: ogMode || "default",
+      ultrasoundImageUrl: ultrasoundImageUrl || null,
+      language: "ko",
     });
-    if (body.recipientMode === "preset" && body.recipients?.length) {
-      memoryStore.addRecipients(card.id, body.recipients);
-    }
-    return NextResponse.json({ slug: card.slug, url: `/c/${card.slug}`, managementToken });
+    return NextResponse.json({ id: card.id, slug: card.slug });
   }
 
   const { db } = await import("@/db");
-  const { cards, cardRecipients } = await import("@/db/schema");
+  const { cards } = await import("@/db/schema");
   const { auth } = await import("@/lib/auth");
   const session = await auth();
 
-  const [card] = await db.insert(cards).values({
-    userId: session?.user?.id ?? null, slug, babyNickname: body.babyNickname, gender: body.gender,
-    dueDate: body.dueDate ?? null, gameMode: body.gameMode,
-    fixedGame: body.gameMode === "fixed" ? body.fixedGame! : null,
-    recipientMode: body.recipientMode, language: body.language ?? "ko",
-    managementToken: session?.user?.id ? null : managementToken,
-  }).returning();
-  if (body.recipientMode === "preset" && body.recipients?.length) {
-    await db.insert(cardRecipients).values(body.recipients.map((r) => ({ cardId: card.id, name: r.name, nickname: r.nickname })));
+  const [card] = await db
+    .insert(cards)
+    .values({
+      slug,
+      userId: session?.user?.id || null,
+      templateId,
+      babyNickname,
+      gender,
+      recipientMode,
+      recipientName: recipientMode === "preset" ? recipientName : null,
+      ogMode: ogMode || "default",
+      ultrasoundImageUrl: ultrasoundImageUrl || null,
+    })
+    .returning();
+
+  return NextResponse.json({ id: card.id, slug: card.slug });
+}
+
+export async function GET() {
+  if (isMemoryMode) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
-  return NextResponse.json({ slug: card.slug, url: `/c/${card.slug}`, managementToken: session?.user?.id ? null : managementToken });
+
+  const { auth } = await import("@/lib/auth");
+  const session = await auth();
+
+  if (!session?.user?.id) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const { db } = await import("@/db");
+  const { cards } = await import("@/db/schema");
+  const { eq } = await import("drizzle-orm");
+
+  const userCards = await db
+    .select()
+    .from(cards)
+    .where(eq(cards.userId, session.user.id))
+    .orderBy(cards.createdAt);
+
+  return NextResponse.json(userCards);
 }
