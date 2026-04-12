@@ -33,7 +33,7 @@ export function CardInfoForm({ data, onChange }: CardInfoFormProps) {
           value={data.babyNickname}
           onChange={(e) => update({ babyNickname: e.target.value })}
           placeholder={t("babyNicknamePlaceholder")}
-          className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-pink-baby outline-none"
+          className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-pink-baby outline-none"
         />
       </div>
 
@@ -43,7 +43,7 @@ export function CardInfoForm({ data, onChange }: CardInfoFormProps) {
         <div className="grid grid-cols-2 gap-3">
           <button
             onClick={() => update({ gender: "boy" })}
-            className={`py-3 rounded-xl border-2 transition-all ${
+            className={`py-3 rounded-xl border transition-all cursor-pointer ${
               data.gender === "boy"
                 ? "border-blue-baby bg-blue-light"
                 : "border-gray-200"
@@ -53,7 +53,7 @@ export function CardInfoForm({ data, onChange }: CardInfoFormProps) {
           </button>
           <button
             onClick={() => update({ gender: "girl" })}
-            className={`py-3 rounded-xl border-2 transition-all ${
+            className={`py-3 rounded-xl border transition-all cursor-pointer ${
               data.gender === "girl"
                 ? "border-pink-baby bg-pink-light"
                 : "border-gray-200"
@@ -70,7 +70,7 @@ export function CardInfoForm({ data, onChange }: CardInfoFormProps) {
         <div className="flex flex-col gap-2">
           <button
             onClick={() => update({ recipientMode: "preset" })}
-            className={`px-4 py-3 rounded-xl border-2 text-left transition-all ${
+            className={`px-4 py-3 rounded-xl border text-left transition-all cursor-pointer ${
               data.recipientMode === "preset"
                 ? "border-pink-baby bg-pink-light"
                 : "border-gray-200"
@@ -80,7 +80,7 @@ export function CardInfoForm({ data, onChange }: CardInfoFormProps) {
           </button>
           <button
             onClick={() => update({ recipientMode: "input" })}
-            className={`px-4 py-3 rounded-xl border-2 text-left transition-all ${
+            className={`px-4 py-3 rounded-xl border text-left transition-all cursor-pointer ${
               data.recipientMode === "input"
                 ? "border-pink-baby bg-pink-light"
                 : "border-gray-200"
@@ -95,7 +95,7 @@ export function CardInfoForm({ data, onChange }: CardInfoFormProps) {
             value={data.recipientName}
             onChange={(e) => update({ recipientName: e.target.value })}
             placeholder={t("recipientNamePlaceholder")}
-            className="w-full mt-2 px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-pink-baby outline-none"
+            className="w-full mt-2 px-4 py-3 rounded-xl border border-gray-200 focus:border-pink-baby outline-none"
           />
         )}
       </div>
@@ -119,7 +119,7 @@ export function CardInfoForm({ data, onChange }: CardInfoFormProps) {
         <div className="flex flex-col gap-2">
           <button
             onClick={() => update({ ogMode: "default" })}
-            className={`px-4 py-3 rounded-xl border-2 text-left transition-all ${
+            className={`px-4 py-3 rounded-xl border text-left transition-all cursor-pointer ${
               data.ogMode === "default"
                 ? "border-pink-baby bg-pink-light"
                 : "border-gray-200"
@@ -130,7 +130,7 @@ export function CardInfoForm({ data, onChange }: CardInfoFormProps) {
           </button>
           <button
             onClick={() => update({ ogMode: "fake-surprise" })}
-            className={`px-4 py-3 rounded-xl border-2 text-left transition-all ${
+            className={`px-4 py-3 rounded-xl border text-left transition-all cursor-pointer ${
               data.ogMode === "fake-surprise"
                 ? "border-pink-baby bg-pink-light"
                 : "border-gray-200"
