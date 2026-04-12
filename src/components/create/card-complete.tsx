@@ -24,7 +24,7 @@ export function CardComplete({ slug, babyNickname }: CardCompleteProps) {
 
         <Link
           href="/dashboard"
-          className="text-text-secondary text-sm underline mt-2"
+          className="text-text-secondary text-sm mt-2 hover:text-text-primary transition-colors"
         >
           {t("manageDashboard")}
         </Link>

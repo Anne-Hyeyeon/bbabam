@@ -38,13 +38,13 @@ export function ShareButtons({ url, babyNickname }: ShareButtonsProps) {
 
   return (
     <div className="flex flex-col gap-3 w-full">
-      <div className="flex items-center gap-2 bg-gray-100 rounded-lg px-4 py-2">
+      <div className="flex items-center gap-2 bg-gray-soft rounded-xl px-4 py-3 border border-gray-100">
         <span className="text-sm text-gray-600 truncate flex-1">{fullUrl}</span>
       </div>
       <Button onClick={handleCopy} variant="outline" className="w-full">
         {copied ? t("copied") : t("copyLink")}
       </Button>
-      <Button onClick={handleKakaoShare} className="w-full bg-yellow-400 text-black hover:bg-yellow-500">
+      <Button onClick={handleKakaoShare} className="w-full !bg-yellow-400 text-black hover:!bg-yellow-500 rounded-xl">
         {t("shareKakao")}
       </Button>
     </div>
