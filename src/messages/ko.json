@@ -11,13 +11,13 @@
     "logout": "로그아웃"
   },
   "landing": {
-    "heroTitle": "세상에서 가장 특별한\n성별 공개 카드",
-    "heroDescription": "귀여운 카드 템플릿으로 아기의 성별을 재미있게 알려보세요",
+    "intro": "우리 아기 성별, 특별하게 알려볼까요?",
+    "introDesc": "카드를 만들고 링크를 공유하면 끝!",
     "createButton": "카드 만들기",
-    "howItWorks": "이렇게 사용해요",
-    "step1": "마음에 드는 템플릿을 골라요",
-    "step2": "아기 정보를 입력해요",
-    "step3": "링크를 공유하면 끝!"
+    "scratchDesc": "은박을 긁으면 성별이 나타나요",
+    "flipDesc": "카드를 뒤집으면 성별이 보여요",
+    "envelopeDesc": "봉투를 열면 편지가 나와요",
+    "startWith": "이 템플릿으로 시작하기"
   },
   "create": {
     "step1Title": "템플릿 선택",

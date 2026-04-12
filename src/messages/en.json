@@ -11,13 +11,13 @@
     "logout": "Logout"
   },
   "landing": {
-    "heroTitle": "The Most Special\nGender Reveal Card",
-    "heroDescription": "Share your baby's gender with a cute card template",
+    "intro": "Reveal your baby's gender in a special way",
+    "introDesc": "Create a card and share the link!",
     "createButton": "Create Card",
-    "howItWorks": "How It Works",
-    "step1": "Pick a template you like",
-    "step2": "Enter baby info",
-    "step3": "Share the link!"
+    "scratchDesc": "Scratch the foil to reveal the gender",
+    "flipDesc": "Flip the card to see the gender",
+    "envelopeDesc": "Open the envelope to find a letter",
+    "startWith": "Start with this template"
   },
   "create": {
     "step1Title": "Choose Template",
