@@ -1,82 +1,76 @@
 {
   "common": {
-    "siteName": "빠밤",
-    "siteDescription": "젠더리빌 카드를 만들어 소중한 사람들에게 공유하세요",
-    "create": "카드 만들기",
+    "appName": "빠밤!",
+    "tagline": "우리 아기의 성별을 재미있게 공개해보세요!"
+  },
+  "menu": {
+    "home": "홈",
+    "createCard": "카드 만들기",
+    "myCards": "내 카드",
     "login": "로그인",
-    "dashboard": "내 카드",
-    "copyLink": "링크 복사",
-    "shareKakao": "카카오톡 공유",
-    "copied": "복사됨!"
+    "logout": "로그아웃"
   },
   "landing": {
-    "hero": "아기 성별, 재밌게 알려주세요!",
-    "subtitle": "인터랙티브 게임 카드를 만들어 링크로 공유하세요",
-    "cta": "무료로 카드 만들기"
+    "heroTitle": "세상에서 가장 특별한\n성별 공개 카드",
+    "heroDescription": "귀여운 카드 템플릿으로 아기의 성별을 재미있게 알려보세요",
+    "createButton": "카드 만들기",
+    "howItWorks": "이렇게 사용해요",
+    "step1": "마음에 드는 템플릿을 골라요",
+    "step2": "아기 정보를 입력해요",
+    "step3": "링크를 공유하면 끝!"
   },
   "create": {
-    "title": "카드 만들기",
-    "babyNickname": "태명",
-    "babyNicknamePlaceholder": "예: 콩이",
+    "step1Title": "템플릿 선택",
+    "step2Title": "정보 입력",
+    "step3Title": "미리보기",
+    "step4Title": "완료!",
+    "babyNickname": "아기 별명",
+    "babyNicknamePlaceholder": "예: 콩이, 복덩이",
     "gender": "성별",
-    "girl": "딸",
     "boy": "아들",
-    "dueDate": "예정일 (선택)",
-    "gameMode": "게임 모드",
-    "gameModeFixed": "게임 하나로 고정",
-    "gameModeChoice": "받는 사람이 선택",
-    "selectGame": "게임 선택",
-    "recipientMode": "받는 사람 이름",
-    "recipientPreset": "미리 입력",
-    "recipientInput": "받는 사람이 직접 입력",
+    "girl": "딸",
+    "recipientMode": "받는 사람",
+    "recipientPreset": "직접 입력하기",
+    "recipientInput": "받는 사람이 적게 하기",
     "recipientName": "받는 사람 이름",
-    "recipientNickname": "호칭 (아이가 부를 이름)",
-    "recipientNicknamePlaceholder": "예: 혜연 이모",
-    "addRecipient": "받는 사람 추가",
-    "language": "카드 언어",
-    "submit": "카드 생성",
-    "success": "카드가 생성되었습니다!",
-    "yourLink": "카드 링크"
+    "recipientNamePlaceholder": "예: 할머니",
+    "ultrasound": "초음파 사진",
+    "ultrasoundOptional": "(선택사항)",
+    "ultrasoundUpload": "사진 업로드",
+    "ogMode": "카드 미리보기 스타일",
+    "ogDefault": "기본",
+    "ogDefaultDesc": "성별 공개 카드임을 알 수 있어요",
+    "ogFakeSurprise": "페이크 서프라이즈",
+    "ogFakeSurpriseDesc": "전혀 다른 내용으로 보여요",
+    "next": "다음",
+    "prev": "이전",
+    "preview": "미리보기",
+    "create": "카드 만들기",
+    "complete": "카드가 완성되었어요!",
+    "copyLink": "링크 복사",
+    "copied": "복사되었어요!",
+    "shareKakao": "카카오톡으로 공유",
+    "manageDashboard": "내 카드 관리하기"
   },
-  "games": {
-    "iceCream": "아이스크림 퍼먹기",
-    "balloon": "풍선 터트리기",
-    "scratch": "스크래치 복권",
-    "roulette": "룰렛 돌리기",
-    "giftBox": "선물상자 열기",
-    "gacha": "뽑기",
-    "selectTitle": "게임을 선택하세요",
-    "iceCreamHint": "아이스크림을 퍼먹어 보세요!",
-    "balloonHint": "풍선을 빠르게 눌러주세요!",
-    "scratchHint": "긁어서 확인하세요!",
-    "rouletteHint": "룰렛을 돌려보세요!",
-    "giftBoxHint": "리본을 풀고 상자를 열어보세요!",
-    "gachaHint": "레버를 당겨 뽑아보세요!"
-  },
-  "result": {
-    "greeting": "{nickname}님,",
-    "revealGirl": "{babyName}이는 딸이랍니다!",
-    "revealBoy": "{babyName}이는 아들이랍니다!",
-    "dDay": "D-{days}후에 만나요!",
-    "tryAnother": "다른 버전으로 다시 보기"
-  },
-  "recipient": {
-    "enterName": "이름을 입력해주세요",
-    "enterNickname": "호칭을 입력해주세요 (아이가 부를 이름)",
-    "nicknamePlaceholder": "예: 혜연 이모",
-    "start": "시작하기"
+  "viewer": {
+    "enterName": "이름을 알려주세요",
+    "namePlaceholder": "이름 입력",
+    "confirm": "확인",
+    "tapToReveal": "탭해서 확인하기",
+    "congratulations": "축하해요!",
+    "createMyCard": "나도 카드 만들기"
   },
   "dashboard": {
     "title": "내 카드",
-    "noCards": "아직 만든 카드가 없어요",
-    "createFirst": "첫 카드를 만들어보세요!",
-    "views": "조회",
-    "created": "생성일"
+    "empty": "아직 만든 카드가 없어요",
+    "createFirst": "첫 카드 만들기",
+    "copyLink": "링크 복사",
+    "delete": "삭제",
+    "deleteConfirm": "정말 삭제할까요?"
   },
-  "login": {
-    "title": "로그인",
-    "kakao": "카카오로 로그인",
-    "google": "Google로 로그인",
-    "continueWithout": "로그인 없이 만들기"
+  "templates": {
+    "scratch": "스크래치",
+    "flip": "카드 뒤집기",
+    "envelope": "봉투 열기"
   }
 }

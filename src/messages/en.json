@@ -1,82 +1,76 @@
 {
   "common": {
-    "siteName": "BBABAM",
-    "siteDescription": "Create a gender reveal card and share it with your loved ones",
-    "create": "Create Card",
-    "login": "Log In",
-    "dashboard": "My Cards",
-    "copyLink": "Copy Link",
-    "shareKakao": "Share via KakaoTalk",
-    "copied": "Copied!"
+    "appName": "bbabam!",
+    "tagline": "Reveal your baby's gender in a fun way!"
+  },
+  "menu": {
+    "home": "Home",
+    "createCard": "Create Card",
+    "myCards": "My Cards",
+    "login": "Login",
+    "logout": "Logout"
   },
   "landing": {
-    "hero": "Reveal your baby's gender in a fun way!",
-    "subtitle": "Create an interactive game card and share the link",
-    "cta": "Create Free Card"
+    "heroTitle": "The Most Special\nGender Reveal Card",
+    "heroDescription": "Share your baby's gender with a cute card template",
+    "createButton": "Create Card",
+    "howItWorks": "How It Works",
+    "step1": "Pick a template you like",
+    "step2": "Enter baby info",
+    "step3": "Share the link!"
   },
   "create": {
-    "title": "Create Card",
+    "step1Title": "Choose Template",
+    "step2Title": "Enter Info",
+    "step3Title": "Preview",
+    "step4Title": "Done!",
     "babyNickname": "Baby Nickname",
-    "babyNicknamePlaceholder": "e.g. Bean",
+    "babyNicknamePlaceholder": "e.g., Bean, Peanut",
     "gender": "Gender",
-    "girl": "Girl",
     "boy": "Boy",
-    "dueDate": "Due Date (optional)",
-    "gameMode": "Game Mode",
-    "gameModeFixed": "Fixed game",
-    "gameModeChoice": "Recipient chooses",
-    "selectGame": "Select Game",
-    "recipientMode": "Recipient Name",
-    "recipientPreset": "Set in advance",
-    "recipientInput": "Recipient enters their own",
+    "girl": "Girl",
+    "recipientMode": "Recipient",
+    "recipientPreset": "Enter name now",
+    "recipientInput": "Let recipient enter their name",
     "recipientName": "Recipient Name",
-    "recipientNickname": "Nickname (what baby will call them)",
-    "recipientNicknamePlaceholder": "e.g. Auntie Jane",
-    "addRecipient": "Add Recipient",
-    "language": "Card Language",
-    "submit": "Create Card",
-    "success": "Card created!",
-    "yourLink": "Card Link"
+    "recipientNamePlaceholder": "e.g., Grandma",
+    "ultrasound": "Ultrasound Photo",
+    "ultrasoundOptional": "(optional)",
+    "ultrasoundUpload": "Upload Photo",
+    "ogMode": "Card Preview Style",
+    "ogDefault": "Default",
+    "ogDefaultDesc": "Shows it's a gender reveal card",
+    "ogFakeSurprise": "Fake Surprise",
+    "ogFakeSurpriseDesc": "Shows something completely different",
+    "next": "Next",
+    "prev": "Back",
+    "preview": "Preview",
+    "create": "Create Card",
+    "complete": "Your card is ready!",
+    "copyLink": "Copy Link",
+    "copied": "Copied!",
+    "shareKakao": "Share via KakaoTalk",
+    "manageDashboard": "Manage My Cards"
   },
-  "games": {
-    "iceCream": "Ice Cream Scoop",
-    "balloon": "Balloon Pop",
-    "scratch": "Scratch Card",
-    "roulette": "Roulette Spin",
-    "giftBox": "Gift Box",
-    "gacha": "Capsule Machine",
-    "selectTitle": "Choose a game",
-    "iceCreamHint": "Scoop the ice cream!",
-    "balloonHint": "Tap the balloon fast!",
-    "scratchHint": "Scratch to reveal!",
-    "rouletteHint": "Spin the roulette!",
-    "giftBoxHint": "Untie the ribbon and open the box!",
-    "gachaHint": "Pull the lever!"
-  },
-  "result": {
-    "greeting": "Dear {nickname},",
-    "revealGirl": "{babyName} is a girl!",
-    "revealBoy": "{babyName} is a boy!",
-    "dDay": "See you in {days} days!",
-    "tryAnother": "Try another version"
-  },
-  "recipient": {
-    "enterName": "Enter your name",
-    "enterNickname": "Enter your nickname (what baby will call you)",
-    "nicknamePlaceholder": "e.g. Auntie Jane",
-    "start": "Start"
+  "viewer": {
+    "enterName": "What's your name?",
+    "namePlaceholder": "Enter your name",
+    "confirm": "OK",
+    "tapToReveal": "Tap to reveal",
+    "congratulations": "Congratulations!",
+    "createMyCard": "Create My Card"
   },
   "dashboard": {
     "title": "My Cards",
-    "noCards": "No cards yet",
-    "createFirst": "Create your first card!",
-    "views": "views",
-    "created": "Created"
+    "empty": "No cards yet",
+    "createFirst": "Create Your First Card",
+    "copyLink": "Copy Link",
+    "delete": "Delete",
+    "deleteConfirm": "Are you sure you want to delete?"
   },
-  "login": {
-    "title": "Log In",
-    "kakao": "Log in with Kakao",
-    "google": "Log in with Google",
-    "continueWithout": "Continue without login"
+  "templates": {
+    "scratch": "Scratch",
+    "flip": "Card Flip",
+    "envelope": "Open Envelope"
   }
 }
