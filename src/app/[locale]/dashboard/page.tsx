@@ -47,7 +47,7 @@ export default function DashboardPage() {
 
         {loading ? (
           <div className="text-center py-12">
-            <span className="animate-pulse text-2xl">✨</span>
+            <div className="w-8 h-8 rounded-full border-2 border-pink-baby/30 border-t-pink-baby animate-spin" />
           </div>
         ) : cards.length === 0 ? (
           <div className="text-center py-12">
@@ -69,7 +69,7 @@ export default function DashboardPage() {
                 }`}
               >
                 <div>
-                  <span className="mr-2">{card.gender === "girl" ? "👧" : "👦"}</span>
+                  <span className={`inline-block w-2 h-2 rounded-full mr-2 ${card.gender === "girl" ? "bg-pink-baby" : "bg-blue-baby"}`} />
                   <span>{card.babyNickname}</span>
                 </div>
                 <div className="flex gap-2">

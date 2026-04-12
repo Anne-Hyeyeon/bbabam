@@ -27,13 +27,13 @@ export function RecipientInput({ onSubmit }: RecipientInputProps) {
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder={t("namePlaceholder")}
-          className="w-full px-4 py-3 rounded-xl border-2 border-pink-baby/30 focus:border-pink-baby outline-none text-center text-lg"
+          className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-pink-baby outline-none text-center text-lg"
           autoFocus
         />
         <button
           type="submit"
           disabled={!name.trim()}
-          className="w-full py-3 rounded-xl bg-pink-baby text-white text-lg disabled:opacity-50 transition-opacity"
+          className="w-full py-3 rounded-xl bg-gradient-to-r from-pink-baby to-blue-baby text-white text-lg disabled:opacity-50 transition-opacity"
         >
           {t("confirm")}
         </button>

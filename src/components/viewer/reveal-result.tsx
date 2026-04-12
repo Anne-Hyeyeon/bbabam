@@ -21,7 +21,6 @@ export function RevealResult({
   const t = useTranslations("viewer");
   const genderColor = gender === "girl" ? "#FFB6C1" : "#89CFF0";
   const genderText = gender === "girl" ? "딸" : "아들";
-  const genderEmoji = gender === "girl" ? "👧" : "👦";
 
   return (
     <>
@@ -32,7 +31,14 @@ export function RevealResult({
         animate={{ opacity: 1, y: 0 }}
       >
         <p className="text-lg mb-2">{t("congratulations")}</p>
-        <span className="text-7xl my-4">{genderEmoji}</span>
+        <div
+          className="w-20 h-20 rounded-full flex items-center justify-center my-4"
+          style={{ backgroundColor: `${genderColor}20` }}
+        >
+          <span className="text-3xl font-bold" style={{ color: genderColor }}>
+            {genderText === "딸" ? "G" : "B"}
+          </span>
+        </div>
         <h2 className="text-2xl mb-1">
           <span style={{ color: genderColor }}>{babyNickname}</span>는
         </h2>
@@ -58,7 +64,7 @@ export function RevealResult({
 
         <Link
           href="/create"
-          className="mt-8 px-6 py-3 rounded-xl bg-pink-baby text-white text-lg"
+          className="mt-8 px-6 py-3 rounded-xl bg-gradient-to-r from-pink-baby to-blue-baby text-white text-lg"
         >
           {t("createMyCard")}
         </Link>
