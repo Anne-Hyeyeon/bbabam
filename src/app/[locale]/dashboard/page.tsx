@@ -54,7 +54,7 @@ export default function DashboardPage() {
             <p className="text-text-secondary mb-4">{t("empty")}</p>
             <Link
               href="/create"
-              className="inline-block px-6 py-3 rounded-xl bg-pink-baby text-white"
+              className="inline-block px-6 py-3 rounded-xl bg-gradient-to-r from-pink-baby to-blue-baby text-white"
             >
               {t("createFirst")}
             </Link>
@@ -64,7 +64,9 @@ export default function DashboardPage() {
             {cards.map((card) => (
               <div
                 key={card.id}
-                className="bg-white rounded-xl p-4 shadow-sm flex items-center justify-between"
+                className={`bg-white rounded-xl p-4 border border-gray-100 flex items-center justify-between ${
+                  card.gender === "girl" ? "border-l-4 border-l-pink-baby" : "border-l-4 border-l-blue-baby"
+                }`}
               >
                 <div>
                   <span className="mr-2">{card.gender === "girl" ? "👧" : "👦"}</span>
@@ -73,7 +75,7 @@ export default function DashboardPage() {
                 <div className="flex gap-2">
                   <button
                     onClick={() => handleCopy(card.slug)}
-                    className="px-3 py-1.5 rounded-lg bg-pink-light text-pink-baby text-sm"
+                    className="px-3 py-1.5 rounded-lg bg-gradient-to-r from-pink-baby to-blue-baby text-white text-sm"
                   >
                     {t("copyLink")}
                   </button>
