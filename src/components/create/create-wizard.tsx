@@ -90,13 +90,13 @@ export function CreateWizard() {
             {[1, 2, 3].map((s) => (
               <div
                 key={s}
-                className={`h-1.5 flex-1 rounded-full transition-colors ${
-                  s <= step ? "bg-pink-baby" : "bg-gray-200"
+                className={`h-2 flex-1 rounded-full transition-colors ${
+                  s <= step ? "bg-gradient-to-r from-pink-baby to-blue-baby" : "bg-gray-200"
                 }`}
               />
             ))}
           </div>
-          <h2 className="text-lg">{stepTitles[step - 1]}</h2>
+          <h2 className="text-lg mb-2">{stepTitles[step - 1]}</h2>
         </div>
       )}
 
@@ -140,7 +140,7 @@ export function CreateWizard() {
           {step > 1 && (
             <button
               onClick={() => setStep((s) => (s - 1) as Step)}
-              className="flex-1 py-3 rounded-xl border-2 border-gray-200 text-text-secondary"
+              className="flex-1 py-3 rounded-xl border border-gray-200 text-text-secondary hover:bg-gray-50 transition-colors"
             >
               {t("prev")}
             </button>
@@ -149,7 +149,7 @@ export function CreateWizard() {
             <button
               onClick={() => setStep((s) => (s + 1) as Step)}
               disabled={!canProceed()}
-              className="flex-1 py-3 rounded-xl bg-pink-baby text-white disabled:opacity-50 transition-opacity"
+              className="flex-1 py-3 rounded-xl bg-gradient-to-r from-pink-baby to-blue-baby text-white disabled:opacity-50 transition-opacity"
             >
               {t("next")}
             </button>
@@ -157,7 +157,7 @@ export function CreateWizard() {
             <button
               onClick={handleCreate}
               disabled={isSubmitting}
-              className="flex-1 py-3 rounded-xl bg-pink-baby text-white disabled:opacity-50 transition-opacity"
+              className="flex-1 py-3 rounded-xl bg-gradient-to-r from-pink-baby to-blue-baby text-white disabled:opacity-50 transition-opacity"
             >
               {isSubmitting ? "..." : t("create")}
             </button>
