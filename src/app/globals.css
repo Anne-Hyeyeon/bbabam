@@ -2,13 +2,13 @@
 
 @theme {
   --color-pink-baby: #FFB6C1;
-  --color-pink-light: #FFF0F3;
+  --color-pink-light: #FFF0F5;
   --color-blue-baby: #89CFF0;
-  --color-blue-light: #F0F7FF;
+  --color-blue-light: #EEF4FF;
   --color-cream: #FFF8F0;
   --color-gray-soft: #F5F5F5;
-  --color-text-primary: #4A4A4A;
-  --color-text-secondary: #888888;
+  --color-text-primary: #3D3D3D;
+  --color-text-secondary: #9CA3AF;
 }
 
 body {
