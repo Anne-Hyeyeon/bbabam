@@ -6,12 +6,15 @@ type SectionKey =
   | "genderQuiz"
   | "geneticsPredict"
   | "announceCard"
-  | "genderReveal"
+  | "cardGenderScratch"
+  | "cardGenderFlip"
+  | "cardGenderEnvelope"
   | "nameGenerator"
   | "parentMbti";
 
 type Category = "catGuess" | "catCards" | "catQuiz" | "catTools";
 type Palette = "peach" | "sage" | "lilac" | "butter" | "pink" | "blue";
+type PrefixKey = "genderReveal" | "announce";
 
 type SectionDef = {
   key: SectionKey;
@@ -19,17 +22,21 @@ type SectionDef = {
   status: "live" | "new" | "soon";
   category: Category;
   palette: Palette;
-  /** Future: Miricanvas-designed thumbnail URL. If present, replaces the phrase placeholder. */
+  /** Product line prefix (e.g. "젠더리빌", "임밍아웃"). Shown as `(...)` before the title. */
+  prefix?: PrefixKey;
+  /** Future: Miricanvas-designed thumbnail URL. Replaces the phrase placeholder. */
   imageUrl?: string;
 };
 
 const SECTIONS: Record<SectionKey, SectionDef> = {
-  genderReveal:    { key: "genderReveal",    href: "/create", status: "live", category: "catCards", palette: "pink" },
-  announceCard:    { key: "announceCard",    href: "/create", status: "new",  category: "catCards", palette: "lilac" },
-  genderQuiz:      { key: "genderQuiz",      href: null,      status: "soon", category: "catGuess", palette: "peach" },
-  geneticsPredict: { key: "geneticsPredict", href: null,      status: "soon", category: "catGuess", palette: "sage" },
-  nameGenerator:   { key: "nameGenerator",   href: null,      status: "soon", category: "catTools", palette: "butter" },
-  parentMbti:      { key: "parentMbti",      href: null,      status: "soon", category: "catQuiz",  palette: "blue" },
+  cardGenderScratch:  { key: "cardGenderScratch",  href: "/create?template=scratch",  status: "live", category: "catCards", palette: "pink",   prefix: "genderReveal" },
+  cardGenderFlip:     { key: "cardGenderFlip",     href: "/create?template=flip",     status: "live", category: "catCards", palette: "butter", prefix: "genderReveal" },
+  cardGenderEnvelope: { key: "cardGenderEnvelope", href: "/create?template=envelope", status: "live", category: "catCards", palette: "peach",  prefix: "genderReveal" },
+  announceCard:       { key: "announceCard",       href: "/create",                   status: "new",  category: "catCards", palette: "lilac",  prefix: "announce" },
+  genderQuiz:         { key: "genderQuiz",         href: null,                        status: "soon", category: "catGuess", palette: "peach" },
+  geneticsPredict:    { key: "geneticsPredict",    href: null,                        status: "soon", category: "catTools", palette: "sage" },
+  nameGenerator:      { key: "nameGenerator",      href: null,                        status: "soon", category: "catTools", palette: "butter" },
+  parentMbti:         { key: "parentMbti",         href: null,                        status: "soon", category: "catQuiz",  palette: "blue" },
 };
 
 const POSTER_BG: Record<Palette, string> = {
@@ -49,9 +56,9 @@ const CHIPS: { key: "all" | Category }[] = [
   { key: "catTools" },
 ];
 
-const BEST_KEYS: SectionKey[] = ["genderReveal", "parentMbti", "genderQuiz", "nameGenerator"];
+const BEST_KEYS: SectionKey[] = ["cardGenderScratch", "parentMbti", "genderQuiz", "nameGenerator"];
 const NEW_KEYS: SectionKey[] = ["announceCard", "geneticsPredict"];
-const CARDS_KEYS: SectionKey[] = ["genderReveal", "announceCard"];
+const CARDS_KEYS: SectionKey[] = ["cardGenderScratch", "cardGenderFlip", "cardGenderEnvelope", "announceCard"];
 const QUIZ_KEYS: SectionKey[] = ["parentMbti", "genderQuiz", "geneticsPredict"];
 
 function StatusBadge({ status, label }: { status: "live" | "new"; label: string }) {
@@ -71,12 +78,14 @@ function PosterCard({
   section,
   phrase,
   catLabel,
+  prefixLabel,
   size,
   t,
 }: {
   section: SectionDef;
   phrase: string;
   catLabel: string;
+  prefixLabel?: string;
   size: "lg" | "md";
   t: ReturnType<typeof useTranslations>;
 }) {
@@ -93,7 +102,6 @@ function PosterCard({
         isDisabled ? "opacity-80" : "hover:-translate-y-[2px]",
       ].join(" ")}
     >
-      {/* Poster */}
       <div
         className={[
           "relative w-full overflow-hidden rounded-[12px]",
@@ -103,11 +111,7 @@ function PosterCard({
       >
         {section.imageUrl ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={section.imageUrl}
-            alt=""
-            className="h-full w-full object-cover"
-          />
+          <img src={section.imageUrl} alt="" className="h-full w-full object-cover" />
         ) : (
           <div className="flex h-full w-full items-center justify-center px-3">
             <p className="text-center text-[20px] font-bold leading-[1.15] text-[var(--color-ink)] whitespace-pre-line">
@@ -125,12 +129,14 @@ function PosterCard({
         )}
       </div>
 
-      {/* Meta under poster */}
       <div className="mt-2 px-0.5">
         <p className="text-[10px] font-medium uppercase tracking-[0.1em] text-[var(--color-ink-muted)]">
           {catLabel}
         </p>
         <h3 className="mt-0.5 text-[13px] font-semibold leading-tight text-[var(--color-ink)] line-clamp-2">
+          {prefixLabel && (
+            <span className="text-[var(--color-ink-muted)] font-normal">({prefixLabel}) </span>
+          )}
           {t(`sections.${section.key}.title`)}
         </h3>
       </div>
@@ -186,6 +192,7 @@ export default function PortalLandingPage() {
           section={s}
           phrase={t(`phrases.${k}`)}
           catLabel={t(`chips.${s.category}`)}
+          prefixLabel={s.prefix ? t(`prefix.${s.prefix}`) : undefined}
           size={size}
           t={t}
         />
@@ -246,7 +253,7 @@ export default function PortalLandingPage() {
           <ScrollRow>{render(CARDS_KEYS, "md")}</ScrollRow>
         </section>
 
-        {/* ------- 나는 어떤 부모? (Quiz) ------- */}
+        {/* ------- 나는 어떤 부모? ------- */}
         <section className="pt-6">
           <SectionHeader title={t("sectionQuiz")} sub={t("sectionQuizSub")} />
           <ScrollRow>{render(QUIZ_KEYS, "md")}</ScrollRow>

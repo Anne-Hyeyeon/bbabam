@@ -7,9 +7,9 @@
     "searchPlaceholder": "뭐 재밌는 거 없나?",
     "chips": {
       "all": "전체",
-      "catGuess": "성별 테스트",
+      "catGuess": "성별",
       "catCards": "카드",
-      "catQuiz": "진단",
+      "catQuiz": "테스트",
       "catTools": "도구"
     },
     "sectionBest": "BEST",
@@ -19,20 +19,26 @@
     "sectionCards": "카드 만들기",
     "sectionCardsSub": "임신·출산 축하 카드 템플릿",
     "sectionQuiz": "나는 어떤 부모?",
-    "sectionQuizSub": "자가진단·MBTI 모음",
+    "sectionQuizSub": "자가 테스트·MBTI 모음",
     "more": "더보기",
     "comingSoon": "준비중",
     "new": "NEW",
     "live": "LIVE",
-    "catGuess": "성별 테스트",
+    "catGuess": "성별",
     "catTools": "도구",
     "catCards": "카드",
-    "catQuiz": "진단",
+    "catQuiz": "테스트",
+    "prefix": {
+      "genderReveal": "젠더리빌",
+      "announce": "임밍아웃"
+    },
     "phrases": {
       "genderQuiz": "아들일까\n딸일까?",
       "geneticsPredict": "닮은 꼴\n누구?",
       "announceCard": "저 임신\n했어요!",
-      "genderReveal": "짜잔,\n성별 공개!",
+      "cardGenderScratch": "긁어서\n공개!",
+      "cardGenderFlip": "뒤집으면\n짜잔!",
+      "cardGenderEnvelope": "봉투 열어\n확인해봐",
       "nameGenerator": "우리 아기\n태명 짓기",
       "parentMbti": "나는 어떤\n엄마·아빠?"
     },
@@ -49,9 +55,17 @@
         "title": "임밍아웃 카드",
         "desc": "깜짝 임신 소식, 특별하게 알리기"
       },
-      "genderReveal": {
-        "title": "젠더리빌 카드",
-        "desc": "게임 깨면 짜잔! 성별이 나오는 카드"
+      "cardGenderScratch": {
+        "title": "스크래치 카드",
+        "desc": "은박을 긁으면 성별이 나타나요"
+      },
+      "cardGenderFlip": {
+        "title": "카드 뒤집기",
+        "desc": "카드를 뒤집으면 성별이 보여요"
+      },
+      "cardGenderEnvelope": {
+        "title": "봉투 열기",
+        "desc": "봉투를 열면 편지가 나와요"
       },
       "nameGenerator": {
         "title": "태명 생성기",

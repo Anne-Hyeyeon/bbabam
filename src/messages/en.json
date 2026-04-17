@@ -7,9 +7,9 @@
     "searchPlaceholder": "Looking for something fun?",
     "chips": {
       "all": "All",
-      "catGuess": "Gender test",
+      "catGuess": "Gender",
       "catCards": "Cards",
-      "catQuiz": "Quiz",
+      "catQuiz": "Tests",
       "catTools": "Tools"
     },
     "sectionBest": "BEST",
@@ -24,15 +24,21 @@
     "comingSoon": "Soon",
     "new": "NEW",
     "live": "LIVE",
-    "catGuess": "Gender test",
+    "catGuess": "Gender",
     "catTools": "Tool",
     "catCards": "Card",
-    "catQuiz": "Quiz",
+    "catQuiz": "Test",
+    "prefix": {
+      "genderReveal": "Gender reveal",
+      "announce": "Announcement"
+    },
     "phrases": {
       "genderQuiz": "Boy\nor girl?",
       "geneticsPredict": "Who will\nbaby look like?",
       "announceCard": "I'm\npregnant!",
-      "genderReveal": "Ta-da,\nit's a ...",
+      "cardGenderScratch": "Scratch\nto reveal",
+      "cardGenderFlip": "Flip\nand ta-da!",
+      "cardGenderEnvelope": "Open the\nenvelope",
       "nameGenerator": "Find our\nnickname",
       "parentMbti": "What kind\nof parent?"
     },
@@ -49,9 +55,17 @@
         "title": "Pregnancy announcement card",
         "desc": "Share your surprise in a warm, special way"
       },
-      "genderReveal": {
-        "title": "Gender reveal card",
-        "desc": "Clear the game — then ta-da! The gender appears."
+      "cardGenderScratch": {
+        "title": "Scratch card",
+        "desc": "Scratch the foil to reveal the gender"
+      },
+      "cardGenderFlip": {
+        "title": "Card flip",
+        "desc": "Flip the card to see the gender"
+      },
+      "cardGenderEnvelope": {
+        "title": "Open envelope",
+        "desc": "Open the envelope to find a letter"
       },
       "nameGenerator": {
         "title": "Baby nickname generator",
