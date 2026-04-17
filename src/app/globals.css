@@ -1,6 +1,42 @@
 @import "tailwindcss";
 
+/* ------------------------------------------------------------------
+ * Design Tokens — see docs/02-design/styles/overhaul.design-principles.md
+ * ------------------------------------------------------------------ */
 @theme {
+  /* Base — clean near-white, NO warm gradient everywhere */
+  --color-bg: #F6F5F1;              /* Page background — very subtle warm neutral */
+  --color-surface: #FFFFFF;         /* Card/content surface */
+  --color-surface-muted: #F1F0EC;   /* Subdued surface (e.g. section separator bands) */
+  --color-ink: #1F1F1F;
+  --color-ink-muted: #6B6B6B;
+  --color-border: #E9E7E1;
+
+  /* Primary — used sparingly (CTA + Live badge only) */
+  --color-primary: #E87A5D;
+  --color-primary-hover: #D9644A;
+  --color-primary-soft: #FDEDE6;
+
+  /* Category tints — used ONLY on section cards, not on backgrounds */
+  --color-cat-peach: #FFD2B8;
+  --color-cat-sage: #C3D5A9;
+  --color-cat-lilac: #D2C2FB;
+  --color-cat-butter: #F9E199;
+  --color-cat-pink: #FFB7C6;
+  --color-cat-blue: #A6C6E0;
+
+  /* States */
+  --color-state-success: #6EAF82;
+  --color-state-warn: #E8B84A;
+  --color-state-error: #D96B61;
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
+
+  /* Legacy tokens (in-flight components) */
   --color-pink-baby: #FFB6C1;
   --color-pink-light: #FFF0F5;
   --color-blue-baby: #89CFF0;
@@ -11,9 +47,48 @@
   --color-text-secondary: #9CA3AF;
 }
 
+/* ------------------------------------------------------------------
+ * Global element resets — CLEAN, no omnipresent gradient
+ * ------------------------------------------------------------------ */
+html,
 body {
-  background-color: #F0F0F5;
-  color: var(--color-text-primary);
+  background-color: var(--color-bg);
+}
+
+body {
+  color: var(--color-ink);
+  font-family: var(--font-sans-kr), var(--font-sans), "Apple SD Gothic Neo", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "ss01", "cv11";
+}
+
+::selection {
+  background-color: var(--color-primary-soft);
+  color: var(--color-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Shadow utilities — soft, minimal */
+@utility shadow-card {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+@utility shadow-hover {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06), 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

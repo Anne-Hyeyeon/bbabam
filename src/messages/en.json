@@ -1,7 +1,67 @@
 {
   "common": {
     "appName": "bbabam!",
-    "tagline": "Reveal your baby's gender in a fun way!"
+    "tagline": "Little tools to smile about — from pregnancy to birth"
+  },
+  "portal": {
+    "searchPlaceholder": "Looking for something fun?",
+    "chips": {
+      "all": "All",
+      "catGuess": "Gender test",
+      "catCards": "Cards",
+      "catQuiz": "Quiz",
+      "catTools": "Tools"
+    },
+    "sectionBest": "BEST",
+    "sectionBestSub": "Popular this week",
+    "sectionNew": "NEW",
+    "sectionNewSub": "Just added",
+    "sectionCards": "Create a card",
+    "sectionCardsSub": "Pregnancy & birth card templates",
+    "sectionQuiz": "What kind of parent?",
+    "sectionQuizSub": "Self-tests & MBTI",
+    "more": "See all",
+    "comingSoon": "Soon",
+    "new": "NEW",
+    "live": "LIVE",
+    "catGuess": "Gender test",
+    "catTools": "Tool",
+    "catCards": "Card",
+    "catQuiz": "Quiz",
+    "phrases": {
+      "genderQuiz": "Boy\nor girl?",
+      "geneticsPredict": "Who will\nbaby look like?",
+      "announceCard": "I'm\npregnant!",
+      "genderReveal": "Ta-da,\nit's a ...",
+      "nameGenerator": "Find our\nnickname",
+      "parentMbti": "What kind\nof parent?"
+    },
+    "sections": {
+      "genderQuiz": {
+        "title": "Gender guessing games",
+        "desc": "Chinese calendar, morning-sickness, and sound-based gender tests"
+      },
+      "geneticsPredict": {
+        "title": "Baby genetics preview",
+        "desc": "Imagine your baby's looks from mom & dad's traits"
+      },
+      "announceCard": {
+        "title": "Pregnancy announcement card",
+        "desc": "Share your surprise in a warm, special way"
+      },
+      "genderReveal": {
+        "title": "Gender reveal card",
+        "desc": "Clear the game — then ta-da! The gender appears."
+      },
+      "nameGenerator": {
+        "title": "Baby nickname generator",
+        "desc": "Find the perfect pet-name for your little one"
+      },
+      "parentMbti": {
+        "title": "Expecting-parent MBTI",
+        "desc": "What kind of mom or dad will you be?"
+      }
+    }
   },
   "menu": {
     "home": "Home",

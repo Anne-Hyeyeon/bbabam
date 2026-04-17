@@ -1,7 +1,67 @@
 {
   "common": {
     "appName": "빠밤!",
-    "tagline": "우리 아기의 성별을 재미있게 공개해보세요!"
+    "tagline": "임신부터 출산까지, 함께 웃을 수 있는 작은 도구들"
+  },
+  "portal": {
+    "searchPlaceholder": "뭐 재밌는 거 없나?",
+    "chips": {
+      "all": "전체",
+      "catGuess": "성별 테스트",
+      "catCards": "카드",
+      "catQuiz": "진단",
+      "catTools": "도구"
+    },
+    "sectionBest": "BEST",
+    "sectionBestSub": "이번 주 인기 테스트",
+    "sectionNew": "NEW",
+    "sectionNewSub": "새로 올라온 콘텐츠",
+    "sectionCards": "카드 만들기",
+    "sectionCardsSub": "임신·출산 축하 카드 템플릿",
+    "sectionQuiz": "나는 어떤 부모?",
+    "sectionQuizSub": "자가진단·MBTI 모음",
+    "more": "더보기",
+    "comingSoon": "준비중",
+    "new": "NEW",
+    "live": "LIVE",
+    "catGuess": "성별 테스트",
+    "catTools": "도구",
+    "catCards": "카드",
+    "catQuiz": "진단",
+    "phrases": {
+      "genderQuiz": "아들일까\n딸일까?",
+      "geneticsPredict": "닮은 꼴\n누구?",
+      "announceCard": "저 임신\n했어요!",
+      "genderReveal": "짜잔,\n성별 공개!",
+      "nameGenerator": "우리 아기\n태명 짓기",
+      "parentMbti": "나는 어떤\n엄마·아빠?"
+    },
+    "sections": {
+      "genderQuiz": {
+        "title": "성별 맞추기",
+        "desc": "중국황실달력·입덧·소리로 아들딸 맞혀보기"
+      },
+      "geneticsPredict": {
+        "title": "아기 유전자 예상하기",
+        "desc": "엄마 아빠 유전자로 우리 아기 모습 상상해보기"
+      },
+      "announceCard": {
+        "title": "임밍아웃 카드",
+        "desc": "깜짝 임신 소식, 특별하게 알리기"
+      },
+      "genderReveal": {
+        "title": "젠더리빌 카드",
+        "desc": "게임 깨면 짜잔! 성별이 나오는 카드"
+      },
+      "nameGenerator": {
+        "title": "태명 생성기",
+        "desc": "우리 아기에게 딱 맞는 태명 찾기"
+      },
+      "parentMbti": {
+        "title": "예비 부모 MBTI",
+        "desc": "나는 어떤 스타일의 엄마·아빠가 될까?"
+      }
+    }
   },
   "menu": {
     "home": "홈",

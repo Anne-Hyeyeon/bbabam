@@ -15,12 +15,12 @@ export function Header({ showBack = true, showHamburger = true }: HeaderProps) {
 
   return (
     <>
-      <header className="sticky top-0 z-40 flex items-center justify-between px-4 py-3 bg-white/90 backdrop-blur-sm border-b border-gray-100">
+      <header className="sticky top-0 z-40 flex items-center justify-between px-4 py-3 bg-surface/90 backdrop-blur-sm border-b border-border">
         <div className="w-10">
           {showBack && (
             <button
               onClick={() => router.back()}
-              className="text-text-secondary"
+              className="text-ink-muted hover:text-ink transition"
               aria-label="뒤로가기"
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -29,14 +29,14 @@ export function Header({ showBack = true, showHamburger = true }: HeaderProps) {
             </button>
           )}
         </div>
-        <h1 className="text-xl font-bold bg-gradient-to-r from-pink-baby to-blue-baby bg-clip-text text-transparent">
-          빠밤!
+        <h1 className="text-[20px] font-bold tracking-tight text-ink">
+          빠밤<span className="text-primary">!</span>
         </h1>
         <div className="w-10 text-right">
           {showHamburger && (
             <button
               onClick={() => setMenuOpen(true)}
-              className="text-text-secondary"
+              className="text-ink-muted hover:text-ink transition"
               aria-label="메뉴"
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
