@@ -12,10 +12,10 @@
   --color-ink-muted: #6B6B6B;
   --color-border: #E9E7E1;
 
-  /* Primary — used sparingly (CTA + Live badge only) */
-  --color-primary: #E87A5D;
-  --color-primary-hover: #D9644A;
-  --color-primary-soft: #FDEDE6;
+  /* Primary — dusty sage green. Calm + modern + gender-neutral. */
+  --color-primary: #8AB09D;
+  --color-primary-hover: #749A86;
+  --color-primary-soft: #E8F0EB;
 
   /* Category tints — used ONLY on section cards, not on backgrounds */
   --color-cat-peach: #FFD2B8;

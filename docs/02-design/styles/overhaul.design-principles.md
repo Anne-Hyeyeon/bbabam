@@ -29,8 +29,9 @@
 | `--color-ink` | `#2A1F1A` | 본문 (Warm dark, 순검정 X) |
 | `--color-ink-muted` | `#7A6B63` | 보조 텍스트 |
 | `--color-border` | `#EDE6DB` | 구분선·테두리 |
-| `--color-primary` | `#E87A5D` | Primary CTA (Coral) |
-| `--color-primary-hover` | `#D9644A` | Primary hover |
+| `--color-primary` | `#8AB09D` | Primary CTA (Dusty Sage) |
+| `--color-primary-hover` | `#749A86` | Primary hover |
+| `--color-primary-soft` | `#E8F0EB` | Primary soft tint (badges, focus bg) |
 
 ### 2.2 파스텔 악센트
 

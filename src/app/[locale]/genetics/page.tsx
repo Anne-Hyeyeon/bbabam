@@ -170,13 +170,8 @@ function InputView({
   return (
     <div className="px-4 py-6">
       <div className="text-center">
-        <div
-          className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full"
-          style={{ background: "var(--color-cat-sage)" }}
-        >
-          <DnaIcon className="h-8 w-8 text-[var(--color-ink)]" />
-        </div>
-        <h1 className="text-[22px] font-bold tracking-tight text-[var(--color-ink)]">
+        <BabyIllustration className="mx-auto h-24 w-24" />
+        <h1 className="mt-2 text-[22px] font-bold tracking-tight text-[var(--color-ink)]">
           {BABY_GENETICS_META.title}
         </h1>
         <p className="mt-1.5 text-[13px] text-[var(--color-ink-muted)]">
@@ -709,24 +704,3 @@ function BabyIllustration({ className }: { className?: string }) {
   );
 }
 
-/* Simple DNA glyph — matches portal SVG-first convention */
-function DnaIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d="M4 4c4 4 12 12 16 16" />
-      <path d="M20 4c-4 4-12 12-16 16" />
-      <path d="M7 7h10" />
-      <path d="M7 12h10" />
-      <path d="M7 17h10" />
-    </svg>
-  );
-}
