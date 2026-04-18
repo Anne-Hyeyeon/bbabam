@@ -37,6 +37,7 @@
       "folkloreQuiz": "속설로\n성별 맞추기",
       "geneticsPredict": "닮은 꼴\n누구?",
       "announceCard": "저 임신\n했어요!",
+      "announceCopy": "상황별\n알림 문구",
       "cardGenderScratch": "긁어서\n공개!",
       "cardGenderFlip": "뒤집으면\n짜잔!",
       "cardGenderEnvelope": "봉투 열어\n확인해봐",
@@ -59,6 +60,10 @@
       "announceCard": {
         "title": "임밍아웃 카드",
         "desc": "깜짝 임신 소식, 특별하게 알리기"
+      },
+      "announceCopy": {
+        "title": "임밍아웃 문구 모음",
+        "desc": "부모님·배우자·친구·회사까지 상황별 알림 문구 복사"
       },
       "cardGenderScratch": {
         "title": "스크래치 카드",

@@ -8,6 +8,7 @@ type SectionKey =
   | "folkloreQuiz"
   | "geneticsPredict"
   | "announceCard"
+  | "announceCopy"
   | "cardGenderScratch"
   | "cardGenderFlip"
   | "cardGenderEnvelope"
@@ -35,6 +36,7 @@ const SECTIONS: Record<SectionKey, SectionDef> = {
   cardGenderFlip:     { key: "cardGenderFlip",     href: "/create?template=flip",     status: "live", category: "catCards", palette: "butter", prefix: "genderReveal" },
   cardGenderEnvelope: { key: "cardGenderEnvelope", href: "/create?template=envelope", status: "live", category: "catCards", palette: "peach",  prefix: "genderReveal" },
   announceCard:       { key: "announceCard",       href: "/create",                   status: "new",  category: "catCards", palette: "lilac",  prefix: "announce" },
+  announceCopy:       { key: "announceCopy",       href: "/announcements",            status: "new",  category: "catTools", palette: "butter", prefix: "announce" },
   genderQuiz:         { key: "genderQuiz",         href: "/chinese-calendar",         status: "live", category: "catGuess", palette: "peach" },
   folkloreQuiz:       { key: "folkloreQuiz",       href: "/gender-folklore",          status: "new",  category: "catGuess", palette: "lilac" },
   geneticsPredict:    { key: "geneticsPredict",    href: "/genetics",                 status: "live", category: "catTools", palette: "sage" },
@@ -60,8 +62,8 @@ const CHIPS: { key: "all" | Category }[] = [
 ];
 
 const BEST_KEYS: SectionKey[] = ["geneticsPredict", "genderQuiz", "folkloreQuiz", "cardGenderScratch"];
-const NEW_KEYS: SectionKey[] = ["folkloreQuiz", "genderQuiz", "geneticsPredict", "announceCard"];
-const CARDS_KEYS: SectionKey[] = ["cardGenderScratch", "cardGenderFlip", "cardGenderEnvelope", "announceCard"];
+const NEW_KEYS: SectionKey[] = ["folkloreQuiz", "announceCopy", "genderQuiz", "geneticsPredict"];
+const CARDS_KEYS: SectionKey[] = ["cardGenderScratch", "cardGenderFlip", "cardGenderEnvelope", "announceCard", "announceCopy"];
 const QUIZ_KEYS: SectionKey[] = ["folkloreQuiz", "parentMbti", "genderQuiz", "geneticsPredict"];
 
 function StatusBadge({ status, label }: { status: "live" | "new"; label: string }) {

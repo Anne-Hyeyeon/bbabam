@@ -37,6 +37,7 @@
       "folkloreQuiz": "Old wives'\ntales",
       "geneticsPredict": "Who will\nbaby look like?",
       "announceCard": "I'm\npregnant!",
+      "announceCopy": "Announcement\nmessages",
       "cardGenderScratch": "Scratch\nto reveal",
       "cardGenderFlip": "Flip\nand ta-da!",
       "cardGenderEnvelope": "Open the\nenvelope",
@@ -59,6 +60,10 @@
       "announceCard": {
         "title": "Pregnancy announcement card",
         "desc": "Share your surprise in a warm, special way"
+      },
+      "announceCopy": {
+        "title": "Pregnancy announcement copy",
+        "desc": "Ready-to-use phrases for parents, partner, friends, and work"
       },
       "cardGenderScratch": {
         "title": "Scratch card",
