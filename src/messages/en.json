@@ -44,8 +44,8 @@
     },
     "sections": {
       "genderQuiz": {
-        "title": "Gender guessing games",
-        "desc": "Chinese calendar, morning-sickness, and sound-based gender tests"
+        "title": "Chinese royal gender calendar",
+        "desc": "Predict boy or girl with the Qing dynasty's royal calendar"
       },
       "geneticsPredict": {
         "title": "Baby genetics preview",

@@ -44,8 +44,8 @@
     },
     "sections": {
       "genderQuiz": {
-        "title": "성별 맞추기",
-        "desc": "중국황실달력·입덧·소리로 아들딸 맞혀보기"
+        "title": "황실 성별 달력",
+        "desc": "청나라 황실의 비밀 달력으로 아들·딸 점쳐보기"
       },
       "geneticsPredict": {
         "title": "아기 유전자 예상",

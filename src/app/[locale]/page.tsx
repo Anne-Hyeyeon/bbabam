@@ -1,6 +1,7 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Header } from "@/components/layout/header";
+import { ScrollRow } from "@/components/scroll-row";
 
 type SectionKey =
   | "genderQuiz"
@@ -33,7 +34,7 @@ const SECTIONS: Record<SectionKey, SectionDef> = {
   cardGenderFlip:     { key: "cardGenderFlip",     href: "/create?template=flip",     status: "live", category: "catCards", palette: "butter", prefix: "genderReveal" },
   cardGenderEnvelope: { key: "cardGenderEnvelope", href: "/create?template=envelope", status: "live", category: "catCards", palette: "peach",  prefix: "genderReveal" },
   announceCard:       { key: "announceCard",       href: "/create",                   status: "new",  category: "catCards", palette: "lilac",  prefix: "announce" },
-  genderQuiz:         { key: "genderQuiz",         href: null,                        status: "soon", category: "catGuess", palette: "peach" },
+  genderQuiz:         { key: "genderQuiz",         href: "/chinese-calendar",         status: "live", category: "catGuess", palette: "peach" },
   geneticsPredict:    { key: "geneticsPredict",    href: "/genetics",                 status: "live", category: "catTools", palette: "sage" },
   nameGenerator:      { key: "nameGenerator",      href: null,                        status: "soon", category: "catTools", palette: "butter" },
   parentMbti:         { key: "parentMbti",         href: null,                        status: "soon", category: "catQuiz",  palette: "blue" },
@@ -56,8 +57,8 @@ const CHIPS: { key: "all" | Category }[] = [
   { key: "catTools" },
 ];
 
-const BEST_KEYS: SectionKey[] = ["geneticsPredict", "cardGenderScratch", "parentMbti", "genderQuiz"];
-const NEW_KEYS: SectionKey[] = ["geneticsPredict", "announceCard"];
+const BEST_KEYS: SectionKey[] = ["geneticsPredict", "genderQuiz", "cardGenderScratch", "parentMbti"];
+const NEW_KEYS: SectionKey[] = ["genderQuiz", "geneticsPredict", "announceCard"];
 const CARDS_KEYS: SectionKey[] = ["cardGenderScratch", "cardGenderFlip", "cardGenderEnvelope", "announceCard"];
 const QUIZ_KEYS: SectionKey[] = ["parentMbti", "genderQuiz", "geneticsPredict"];
 
@@ -143,19 +144,17 @@ function PosterCard({
     </article>
   );
 
-  if (isDisabled) return <div aria-disabled>{poster}</div>;
+  if (isDisabled) {
+    return (
+      <div aria-disabled className="block shrink-0">
+        {poster}
+      </div>
+    );
+  }
   return (
-    <Link href={section.href!} className="block">
+    <Link href={section.href!} className="block shrink-0">
       {poster}
     </Link>
-  );
-}
-
-function ScrollRow({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="flex gap-3 overflow-x-auto px-4 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-      {children}
-    </div>
   );
 }
 

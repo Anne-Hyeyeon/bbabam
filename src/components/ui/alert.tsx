@@ -10,6 +10,7 @@ const alertVariants = cva(
         default: "border-[var(--color-border)] bg-[var(--color-surface-muted)] text-[var(--color-ink)]",
         info: "border-[var(--color-cat-blue)]/40 bg-[var(--color-cat-blue)]/20 text-[var(--color-ink)]",
         warn: "border-[var(--color-state-warn)]/40 bg-[var(--color-state-warn)]/15 text-[var(--color-ink)]",
+        error: "border-[var(--color-state-error)]/40 bg-[var(--color-state-error)]/10 text-[var(--color-ink)]",
       },
     },
     defaultVariants: { variant: "default" },
