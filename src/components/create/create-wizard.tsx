@@ -1,19 +1,27 @@
 "use client";
 
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
 import { TemplatePicker } from "./template-picker";
 import { CardInfoForm, type CardInfoData } from "./card-info-form";
 import { CardPreview } from "./card-preview";
 import { CardComplete } from "./card-complete";
+import { getTemplateById } from "@/components/templates";
 
 type Step = 1 | 2 | 3 | 4;
 
 export function CreateWizard() {
   const t = useTranslations("create");
-  const [step, setStep] = useState<Step>(1);
-  const [templateId, setTemplateId] = useState<string | null>(null);
+  const searchParams = useSearchParams();
+  const initialTemplate = (() => {
+    const q = searchParams.get("template");
+    return q && getTemplateById(q) ? q : null;
+  })();
+
+  const [step, setStep] = useState<Step>(initialTemplate ? 2 : 1);
+  const [templateId, setTemplateId] = useState<string | null>(initialTemplate);
   const [cardInfo, setCardInfo] = useState<CardInfoData>({
     babyNickname: "",
     gender: "boy",
