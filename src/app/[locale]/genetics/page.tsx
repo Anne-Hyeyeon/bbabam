@@ -25,6 +25,7 @@ import {
   PARENT_TRAIT_OPTIONS,
   predictBabyGenetics,
 } from "@/features/baby-genetics/data";
+import { josaEunNeun } from "@/features/baby-genetics/share";
 import type {
   BabyGeneticsInput,
   BabyGeneticsResult,
@@ -55,31 +56,60 @@ export default function BabyGeneticsPage() {
   const [father, setFather] = useState<ParentTraits>(FATHER_DEFAULT);
   const [mother, setMother] = useState<ParentTraits>(MOTHER_DEFAULT);
   const [babySex, setBabySex] = useState<"boy" | "girl" | "unknown">("unknown");
+  const [nickname, setNickname] = useState("");
   const [result, setResult] = useState<BabyGeneticsResult | null>(null);
+  const [shareCopied, setShareCopied] = useState(false);
 
   function predict() {
-    const input: BabyGeneticsInput = { father, mother, babySex };
+    const safeFather = {
+      ...father,
+      heightCm:
+        Number.isFinite(father.heightCm) && father.heightCm > 0 ? father.heightCm : 175,
+    };
+    const safeMother = {
+      ...mother,
+      heightCm:
+        Number.isFinite(mother.heightCm) && mother.heightCm > 0 ? mother.heightCm : 162,
+    };
+    const input: BabyGeneticsInput = {
+      father: safeFather,
+      mother: safeMother,
+      babySex,
+    };
     setResult(predictBabyGenetics(input));
     setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 50);
   }
 
   function reset() {
     setResult(null);
+    setShareCopied(false);
   }
 
   async function share() {
     if (!result) return;
+    const displayName = nickname.trim() || "아기";
     const h = pickHeight(result);
-    const text = `우리 아기 예상 키: ${h.min}~${h.max}cm\n빠밤!에서 예측해보세요 → https://bbabam.com/genetics`;
+    const url =
+      typeof window !== "undefined"
+        ? `${window.location.origin}${window.location.pathname}`
+        : "https://bbabam.com/genetics";
+    const text = `우리 ${displayName}의 예상 키: ${h.min}~${h.max}cm\n빠밤!에서 직접 예측해봤어요 → ${url}`;
+
     if (typeof navigator !== "undefined" && navigator.share) {
       try {
-        await navigator.share({ title: "아기 유전자 예상", text });
+        await navigator.share({
+          title: `${displayName}의 유전자 예상`,
+          text,
+        });
+        return;
       } catch {
-        /* user cancelled */
+        /* user cancelled — fall through to clipboard */
       }
-    } else if (typeof navigator !== "undefined") {
+    }
+    if (typeof navigator !== "undefined" && navigator.clipboard) {
       await navigator.clipboard.writeText(text);
-      alert("결과가 복사되었어요!");
+      setShareCopied(true);
+      setTimeout(() => setShareCopied(false), 2000);
     }
   }
 
@@ -90,6 +120,8 @@ export default function BabyGeneticsPage() {
         {result ? (
           <ResultView
             result={result}
+            nickname={nickname.trim()}
+            shareCopied={shareCopied}
             onReset={reset}
             onShare={share}
           />
@@ -98,6 +130,8 @@ export default function BabyGeneticsPage() {
             father={father}
             mother={mother}
             babySex={babySex}
+            nickname={nickname}
+            onNicknameChange={setNickname}
             onFatherChange={setFather}
             onMotherChange={setMother}
             onBabySexChange={setBabySex}
@@ -116,6 +150,8 @@ function InputView({
   father,
   mother,
   babySex,
+  nickname,
+  onNicknameChange,
   onFatherChange,
   onMotherChange,
   onBabySexChange,
@@ -124,6 +160,8 @@ function InputView({
   father: ParentTraits;
   mother: ParentTraits;
   babySex: "boy" | "girl" | "unknown";
+  nickname: string;
+  onNicknameChange: (v: string) => void;
   onFatherChange: (t: ParentTraits) => void;
   onMotherChange: (t: ParentTraits) => void;
   onBabySexChange: (s: "boy" | "girl" | "unknown") => void;
@@ -147,6 +185,29 @@ function InputView({
       </div>
 
       <Card className="mt-6">
+        <CardHeader>
+          <CardTitle className="text-[15px]">
+            아기 정보{" "}
+            <span className="ml-1 text-[11.5px] font-normal text-[var(--color-ink-muted)]">
+              (선택)
+            </span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="space-y-1.5">
+            <Label htmlFor="baby-nickname">태명</Label>
+            <Input
+              id="baby-nickname"
+              value={nickname}
+              placeholder="예: 콩이, 복덩이"
+              onChange={(e) => onNicknameChange(e.target.value)}
+              maxLength={12}
+            />
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card className="mt-4">
         <CardHeader>
           <CardTitle className="text-[15px]">아빠 정보</CardTitle>
         </CardHeader>
@@ -214,25 +275,32 @@ function InputView({
  * ============================================================ */
 function ResultView({
   result,
+  nickname,
+  shareCopied,
   onReset,
   onShare,
 }: {
   result: BabyGeneticsResult;
+  nickname: string;
+  shareCopied: boolean;
   onReset: () => void;
   onShare: () => void;
 }) {
   const { babySex, estimatedHeight } = result;
+  const displayName = nickname || "아기";
+  const particle = josaEunNeun(displayName);
 
   return (
     <div className="px-4 py-6">
       <div className="text-center">
         <BabyIllustration className="mx-auto h-32 w-32" />
-        <h1 className="mt-3 text-[22px] font-bold tracking-tight text-[var(--color-ink)]">
+        <p className="mt-2 text-[12px] font-medium uppercase tracking-[0.14em] text-[var(--color-ink-muted)]">
           예상 결과 리포트
-        </h1>
-        <p className="mt-1 text-[12.5px] text-[var(--color-ink-muted)]">
-          우리 아기는 이런 모습일 거예요!
         </p>
+        <h1 className="mt-1 text-[22px] font-bold tracking-tight text-[var(--color-ink)]">
+          우리 {displayName}
+          {particle} 이런 모습일 거예요!
+        </h1>
       </div>
 
       <div className="mt-5 space-y-3">
@@ -362,7 +430,8 @@ function ResultView({
           <RotateCcw className="h-4 w-4" /> 다시 예측
         </Button>
         <Button className="flex-1" onClick={onShare}>
-          <Share2 className="h-4 w-4" /> 공유하기
+          <Share2 className="h-4 w-4" />
+          {shareCopied ? "복사됐어요!" : "공유하기"}
         </Button>
       </div>
     </div>
