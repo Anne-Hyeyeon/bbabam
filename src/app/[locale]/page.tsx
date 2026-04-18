@@ -39,7 +39,7 @@ const SECTIONS: Record<SectionKey, SectionDef> = {
   folkloreQuiz:       { key: "folkloreQuiz",       href: "/gender-folklore",          status: "new",  category: "catGuess", palette: "lilac" },
   geneticsPredict:    { key: "geneticsPredict",    href: "/genetics",                 status: "live", category: "catTools", palette: "sage" },
   nameGenerator:      { key: "nameGenerator",      href: null,                        status: "soon", category: "catTools", palette: "butter" },
-  parentMbti:         { key: "parentMbti",         href: null,                        status: "soon", category: "catQuiz",  palette: "blue" },
+  parentMbti:         { key: "parentMbti",         href: "/parent-mbti",              status: "live", category: "catQuiz",  palette: "blue" },
 };
 
 const POSTER_BG: Record<Palette, string> = {
