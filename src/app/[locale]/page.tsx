@@ -5,6 +5,7 @@ import { ScrollRow } from "@/components/scroll-row";
 
 type SectionKey =
   | "genderQuiz"
+  | "folkloreQuiz"
   | "geneticsPredict"
   | "announceCard"
   | "cardGenderScratch"
@@ -35,6 +36,7 @@ const SECTIONS: Record<SectionKey, SectionDef> = {
   cardGenderEnvelope: { key: "cardGenderEnvelope", href: "/create?template=envelope", status: "live", category: "catCards", palette: "peach",  prefix: "genderReveal" },
   announceCard:       { key: "announceCard",       href: "/create",                   status: "new",  category: "catCards", palette: "lilac",  prefix: "announce" },
   genderQuiz:         { key: "genderQuiz",         href: "/chinese-calendar",         status: "live", category: "catGuess", palette: "peach" },
+  folkloreQuiz:       { key: "folkloreQuiz",       href: "/gender-folklore",          status: "new",  category: "catGuess", palette: "lilac" },
   geneticsPredict:    { key: "geneticsPredict",    href: "/genetics",                 status: "live", category: "catTools", palette: "sage" },
   nameGenerator:      { key: "nameGenerator",      href: null,                        status: "soon", category: "catTools", palette: "butter" },
   parentMbti:         { key: "parentMbti",         href: null,                        status: "soon", category: "catQuiz",  palette: "blue" },
@@ -57,10 +59,10 @@ const CHIPS: { key: "all" | Category }[] = [
   { key: "catTools" },
 ];
 
-const BEST_KEYS: SectionKey[] = ["geneticsPredict", "genderQuiz", "cardGenderScratch", "parentMbti"];
-const NEW_KEYS: SectionKey[] = ["genderQuiz", "geneticsPredict", "announceCard"];
+const BEST_KEYS: SectionKey[] = ["geneticsPredict", "genderQuiz", "folkloreQuiz", "cardGenderScratch"];
+const NEW_KEYS: SectionKey[] = ["folkloreQuiz", "genderQuiz", "geneticsPredict", "announceCard"];
 const CARDS_KEYS: SectionKey[] = ["cardGenderScratch", "cardGenderFlip", "cardGenderEnvelope", "announceCard"];
-const QUIZ_KEYS: SectionKey[] = ["parentMbti", "genderQuiz", "geneticsPredict"];
+const QUIZ_KEYS: SectionKey[] = ["folkloreQuiz", "parentMbti", "genderQuiz", "geneticsPredict"];
 
 function StatusBadge({ status, label }: { status: "live" | "new"; label: string }) {
   return (

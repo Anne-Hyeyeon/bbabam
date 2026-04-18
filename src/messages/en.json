@@ -34,6 +34,7 @@
     },
     "phrases": {
       "genderQuiz": "Boy\nor girl?",
+      "folkloreQuiz": "Old wives'\ntales",
       "geneticsPredict": "Who will\nbaby look like?",
       "announceCard": "I'm\npregnant!",
       "cardGenderScratch": "Scratch\nto reveal",
@@ -46,6 +47,10 @@
       "genderQuiz": {
         "title": "Chinese royal gender calendar",
         "desc": "Predict boy or girl with the Qing dynasty's royal calendar"
+      },
+      "folkloreQuiz": {
+        "title": "Gender folklore test",
+        "desc": "Guess the gender with 12 old wives' tales — just for fun"
       },
       "geneticsPredict": {
         "title": "Baby genetics preview",

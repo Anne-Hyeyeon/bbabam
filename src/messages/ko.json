@@ -34,6 +34,7 @@
     },
     "phrases": {
       "genderQuiz": "아들일까\n딸일까?",
+      "folkloreQuiz": "속설로\n성별 맞추기",
       "geneticsPredict": "닮은 꼴\n누구?",
       "announceCard": "저 임신\n했어요!",
       "cardGenderScratch": "긁어서\n공개!",
@@ -46,6 +47,10 @@
       "genderQuiz": {
         "title": "황실 성별 달력",
         "desc": "청나라 황실의 비밀 달력으로 아들·딸 점쳐보기"
+      },
+      "folkloreQuiz": {
+        "title": "성별 속설 테스트",
+        "desc": "12가지 옛 속설로 아들·딸 맞혀보는 재미 테스트"
       },
       "geneticsPredict": {
         "title": "아기 유전자 예상",
