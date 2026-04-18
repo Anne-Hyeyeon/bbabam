@@ -46,22 +46,20 @@ export const PARENT_TRAIT_OPTIONS = {
 } as const;
 
 /**
- * 키 예측 (median parent 방식)
- * 아들: (아빠 + 엄마 + 13) / 2
- * 딸:   (아빠 + 엄마 - 13) / 2
+ * 키 예측 (median parent 방식) — 아들/딸 범위를 모두 반환.
+ * 아들: (아빠 + 엄마 + 13) / 2 ± 5
+ * 딸:   (아빠 + 엄마 - 13) / 2 ± 5
  */
 function predictHeight(
   father: number,
   mother: number,
-  sex: "boy" | "girl" | "unknown",
-): { min: number; max: number } {
-  const mid =
-    sex === "boy"
-      ? (father + mother + 13) / 2
-      : sex === "girl"
-      ? (father + mother - 13) / 2
-      : (father + mother) / 2;
-  return { min: Math.round(mid - 5), max: Math.round(mid + 5) };
+): { boy: { min: number; max: number }; girl: { min: number; max: number } } {
+  const boyMid = (father + mother + 13) / 2;
+  const girlMid = (father + mother - 13) / 2;
+  return {
+    boy: { min: Math.round(boyMid - 5), max: Math.round(boyMid + 5) },
+    girl: { min: Math.round(girlMid - 5), max: Math.round(girlMid + 5) },
+  };
 }
 
 /** 쌍꺼풀 (우성: 쌍꺼풀) */
@@ -84,9 +82,9 @@ function predictHairType(
 ): string {
   const weight = { curly: 3, wavy: 2, straight: 1 } as const;
   const avg = (weight[f] + weight[m]) / 2;
-  if (avg >= 2.5) return "곱슬머리 가능성 높음";
-  if (avg >= 1.5) return "반곱슬이 될 가능성";
-  return "직모 가능성 높음";
+  if (avg >= 2.5) return "곱슬머리가 될 가능성이 높아요!";
+  if (avg >= 1.5) return "반곱슬이 될 가능성이 높아요!";
+  return "직모일 가능성이 높아요!";
 }
 
 /** 보조개 (우성: 있음) */
@@ -164,16 +162,16 @@ function predictBaldness(
   let note: string;
   if (p && m) {
     base = 70;
-    note = "양가 할아버지 모두 영향 — 주기적 관리 권장";
+    note = "양가 할아버지 모두 영향이 있어요! 꾸준한 관리가 도움돼요.";
   } else if (m) {
     base = 55;
-    note = "외할아버지 영향 (X 염색체 유전)이 가장 강해요";
+    note = "외할아버지 쪽 X 염색체 영향이 가장 커요!";
   } else if (p) {
     base = 35;
-    note = "친할아버지 쪽 상염색체 영향";
+    note = "친할아버지 쪽 상염색체 영향을 받아요!";
   } else {
     base = 15;
-    note = "특별한 유전 위험 신호는 적어요";
+    note = "특별한 유전 신호는 적은 편이에요!";
   }
 
   const prob =
@@ -191,12 +189,12 @@ function predictPersonality(
   const weight = { introvert: -1, ambivert: 0, extrovert: 1 } as const;
   const sum = weight[f] + weight[m];
   let label: string;
-  if (sum >= 1) label = "외향적 성향이 나타날 가능성";
-  else if (sum <= -1) label = "내향적 성향이 나타날 가능성";
-  else label = "상황 따라 달라지는 중간 성향 가능성";
+  if (sum >= 1) label = "외향적인 아이가 될 가능성이 높아요!";
+  else if (sum <= -1) label = "내향적인 아이가 될 가능성이 높아요!";
+  else label = "상황에 따라 달라지는 중간 성향일 것 같아요!";
   return {
     label,
-    note: "성격은 유전 약 50% + 환경 50%로 알려져 있어요. 어떻게 키우느냐가 크게 작용해요.",
+    note: "성격은 유전 약 50% + 환경 50%로 알려져 있어요. 어떻게 키우느냐가 크게 작용해요!",
   };
 }
 
@@ -206,26 +204,26 @@ function generateResemblance(input: BabyGeneticsInput): string {
   const { father, mother } = input;
 
   if (father.heightCm > mother.heightCm + 10) {
-    phrases.push("키는 아빠를 닮을 확률이 높아요");
+    phrases.push("키는 아빠를 닮을 가능성이 높아요");
   } else if (mother.heightCm > father.heightCm + 10) {
-    phrases.push("키는 엄마를 닮을 확률이 높아요");
+    phrases.push("키는 엄마를 닮을 가능성이 높아요");
   } else {
-    phrases.push("키는 부모님 중간쯤");
+    phrases.push("키는 부모님 중간쯤이 될 것 같아요");
   }
 
   if (father.doubleEyelid === "yes" && mother.doubleEyelid !== "yes") {
-    phrases.push("눈매는 아빠 느낌");
+    phrases.push("눈매는 아빠를 닮을 것 같아요");
   } else if (mother.doubleEyelid === "yes" && father.doubleEyelid !== "yes") {
-    phrases.push("눈매는 엄마 느낌");
+    phrases.push("눈매는 엄마를 닮을 것 같아요");
   } else if (father.doubleEyelid === "yes" && mother.doubleEyelid === "yes") {
     phrases.push("또렷한 쌍꺼풀이 기대돼요");
   }
 
   if (father.dimples === "yes" || mother.dimples === "yes") {
-    phrases.push("웃을 때 보조개가 살짝 보일지도");
+    phrases.push("웃을 때 보조개가 살짝 보일지도 몰라요");
   }
 
-  return phrases.join(", ") + ".";
+  return phrases.join(", ") + "!";
 }
 
 export function predictBabyGenetics(
@@ -235,8 +233,8 @@ export function predictBabyGenetics(
     estimatedHeight: predictHeight(
       input.father.heightCm,
       input.mother.heightCm,
-      input.babySex,
     ),
+    babySex: input.babySex,
     doubleEyelidProb: predictDoubleEyelid(
       input.father.doubleEyelid,
       input.mother.doubleEyelid,

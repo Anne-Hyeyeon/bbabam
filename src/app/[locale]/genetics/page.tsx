@@ -69,7 +69,8 @@ export default function BabyGeneticsPage() {
 
   async function share() {
     if (!result) return;
-    const text = `우리 아기 예상 키: ${result.estimatedHeight.min}~${result.estimatedHeight.max}cm\n빠밤!에서 예측해보세요 → https://bbabam.com/genetics`;
+    const h = pickHeight(result);
+    const text = `우리 아기 예상 키: ${h.min}~${h.max}cm\n빠밤!에서 예측해보세요 → https://bbabam.com/genetics`;
     if (typeof navigator !== "undefined" && navigator.share) {
       try {
         await navigator.share({ title: "아기 유전자 예상", text });
@@ -220,33 +221,39 @@ function ResultView({
   onReset: () => void;
   onShare: () => void;
 }) {
+  const { babySex, estimatedHeight } = result;
+
   return (
     <div className="px-4 py-6">
       <div className="text-center">
-        <div
-          className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-full"
-          style={{ background: "var(--color-cat-sage)" }}
-        >
-          <DnaIcon className="h-7 w-7 text-[var(--color-ink)]" />
-        </div>
-        <h1 className="text-[22px] font-bold tracking-tight text-[var(--color-ink)]">
+        <BabyIllustration className="mx-auto h-32 w-32" />
+        <h1 className="mt-3 text-[22px] font-bold tracking-tight text-[var(--color-ink)]">
           예상 결과 리포트
         </h1>
         <p className="mt-1 text-[12.5px] text-[var(--color-ink-muted)]">
-          우리 아기는 이런 모습일 거예요
+          우리 아기는 이런 모습일 거예요!
         </p>
       </div>
 
       <div className="mt-5 space-y-3">
         <ResultCard title="예상 키 (성인 기준)" palette="butter">
-          <div className="text-[24px] font-bold leading-tight text-[var(--color-ink)]">
-            {result.estimatedHeight.min}~{result.estimatedHeight.max}
-            <span className="ml-1 text-[14px] font-normal text-[var(--color-ink-muted)]">
-              cm
-            </span>
-          </div>
-          <p className="mt-1 text-[11.5px] text-[var(--color-ink-muted)]">
-            성별·영양·환경에 따라 달라질 수 있어요.
+          {babySex === "unknown" ? (
+            <div className="space-y-1.5">
+              <HeightLine label="남자아이" range={estimatedHeight.boy} />
+              <HeightLine label="여자아이" range={estimatedHeight.girl} />
+            </div>
+          ) : (
+            <div className="text-[24px] font-bold leading-tight text-[var(--color-ink)]">
+              {(babySex === "boy" ? estimatedHeight.boy : estimatedHeight.girl).min}
+              ~
+              {(babySex === "boy" ? estimatedHeight.boy : estimatedHeight.girl).max}
+              <span className="ml-1 text-[14px] font-normal text-[var(--color-ink-muted)]">
+                cm
+              </span>
+            </div>
+          )}
+          <p className="mt-1.5 text-[11.5px] text-[var(--color-ink-muted)]">
+            영양·환경에 따라 달라질 수 있어요.
           </p>
         </ResultCard>
 
@@ -387,8 +394,19 @@ function TraitForm({
         <Input
           id={`${prefix}-height`}
           type="number"
-          value={traits.heightCm}
-          onChange={(e) => update("heightCm", Number(e.target.value))}
+          value={Number.isFinite(traits.heightCm) && traits.heightCm > 0 ? traits.heightCm : ""}
+          placeholder="예: 175"
+          onFocus={(e) => e.target.select()}
+          onChange={(e) => {
+            const v = e.target.value;
+            update("heightCm", v === "" ? NaN : Number(v));
+          }}
+          onBlur={(e) => {
+            const n = Number(e.target.value);
+            if (!Number.isFinite(n) || n <= 0) {
+              update("heightCm", side === "father" ? 175 : 162);
+            }
+          }}
           min={100}
           max={220}
           inputMode="numeric"
@@ -432,7 +450,7 @@ function TraitForm({
 
       {side === "father" && (
         <SelectField
-          label="친할아버지가 대머리인가요?"
+          label="아이의 친할아버지가 대머리인가요?"
           value={traits.paternalGrandfatherBald ?? "no"}
           options={PARENT_TRAIT_OPTIONS.grandfatherBald}
           onChange={(v) =>
@@ -442,7 +460,7 @@ function TraitForm({
       )}
       {side === "mother" && (
         <SelectField
-          label="외할아버지가 대머리인가요?"
+          label="아이의 외할아버지가 대머리인가요?"
           value={traits.maternalGrandfatherBald ?? "no"}
           options={PARENT_TRAIT_OPTIONS.grandfatherBald}
           onChange={(v) =>
@@ -522,6 +540,103 @@ function ProbRow({ label, value }: { label: string; value: number }) {
       </div>
       <Progress value={value} />
     </>
+  );
+}
+
+function pickHeight(result: BabyGeneticsResult) {
+  if (result.babySex === "boy") return result.estimatedHeight.boy;
+  if (result.babySex === "girl") return result.estimatedHeight.girl;
+  const { boy, girl } = result.estimatedHeight;
+  return { min: Math.min(boy.min, girl.min), max: Math.max(boy.max, girl.max) };
+}
+
+function HeightLine({
+  label,
+  range,
+}: {
+  label: string;
+  range: { min: number; max: number };
+}) {
+  return (
+    <div className="flex items-baseline justify-between">
+      <span className="text-[12.5px] text-[var(--color-ink-muted)]">{label}</span>
+      <span className="text-[18px] font-bold text-[var(--color-ink)]">
+        {range.min}~{range.max}
+        <span className="ml-1 text-[12px] font-normal text-[var(--color-ink-muted)]">
+          cm
+        </span>
+      </span>
+    </div>
+  );
+}
+
+/* Placeholder cute baby illustration — swap with Miricanvas art later */
+function BabyIllustration({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 160 160"
+      fill="none"
+      aria-hidden="true"
+    >
+      {/* soft halo */}
+      <circle cx="80" cy="80" r="78" fill="var(--color-cat-butter)" opacity="0.5" />
+      <circle cx="80" cy="80" r="62" fill="var(--color-cat-peach)" opacity="0.65" />
+      {/* head */}
+      <ellipse cx="80" cy="86" rx="42" ry="44" fill="#FFE3D1" stroke="#2B2B2B" strokeWidth="2" />
+      {/* hair tuft (single curl top) */}
+      <path
+        d="M72 42 Q80 30 88 42"
+        stroke="#2B2B2B"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        fill="none"
+      />
+      <path
+        d="M78 40 Q82 36 86 40"
+        stroke="#2B2B2B"
+        strokeWidth="2"
+        strokeLinecap="round"
+        fill="none"
+      />
+      {/* eyes (closed-smile arcs) */}
+      <path
+        d="M60 84 Q66 78 72 84"
+        stroke="#2B2B2B"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        fill="none"
+      />
+      <path
+        d="M88 84 Q94 78 100 84"
+        stroke="#2B2B2B"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        fill="none"
+      />
+      {/* cheeks */}
+      <circle cx="54" cy="98" r="5" fill="#FFB7C6" opacity="0.8" />
+      <circle cx="106" cy="98" r="5" fill="#FFB7C6" opacity="0.8" />
+      {/* smile */}
+      <path
+        d="M70 106 Q80 116 90 106"
+        stroke="#2B2B2B"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        fill="none"
+      />
+      {/* tiny sparkles */}
+      <path
+        d="M30 54 l2 -2 l2 2 l-2 2 z"
+        fill="var(--color-primary)"
+        opacity="0.8"
+      />
+      <path
+        d="M128 58 l2 -2 l2 2 l-2 2 z"
+        fill="var(--color-primary)"
+        opacity="0.8"
+      />
+    </svg>
   );
 }
 

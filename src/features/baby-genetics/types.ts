@@ -22,8 +22,15 @@ export interface BabyGeneticsInput {
   babySex: BabySex;
 }
 
+export interface HeightRange {
+  min: number;
+  max: number;
+}
+
 export interface BabyGeneticsResult {
-  estimatedHeight: { min: number; max: number };
+  /** Always returns both boy/girl ranges. UI picks based on babySex. */
+  estimatedHeight: { boy: HeightRange; girl: HeightRange };
+  babySex: BabySex;
   doubleEyelidProb: number;
   hairType: string;
   dimplesProb: number;
