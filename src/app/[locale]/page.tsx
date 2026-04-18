@@ -7,6 +7,7 @@ type SectionKey =
   | "genderQuiz"
   | "folkloreQuiz"
   | "geneticsPredict"
+  | "milestones"
   | "announceCard"
   | "announceCopy"
   | "cardGenderScratch"
@@ -40,6 +41,7 @@ const SECTIONS: Record<SectionKey, SectionDef> = {
   genderQuiz:         { key: "genderQuiz",         href: "/chinese-calendar",         status: "live", category: "catGuess", palette: "peach" },
   folkloreQuiz:       { key: "folkloreQuiz",       href: "/gender-folklore",          status: "new",  category: "catGuess", palette: "lilac" },
   geneticsPredict:    { key: "geneticsPredict",    href: "/genetics",                 status: "live", category: "catTools", palette: "sage" },
+  milestones:         { key: "milestones",         href: "/milestones",               status: "new",  category: "catTools", palette: "sage" },
   nameGenerator:      { key: "nameGenerator",      href: null,                        status: "soon", category: "catTools", palette: "butter" },
   parentMbti:         { key: "parentMbti",         href: "/parent-mbti",              status: "live", category: "catQuiz",  palette: "blue" },
 };
@@ -61,8 +63,8 @@ const CHIPS: { key: "all" | Category }[] = [
   { key: "catTools" },
 ];
 
-const BEST_KEYS: SectionKey[] = ["geneticsPredict", "genderQuiz", "folkloreQuiz", "cardGenderScratch"];
-const NEW_KEYS: SectionKey[] = ["folkloreQuiz", "announceCopy", "genderQuiz", "geneticsPredict"];
+const BEST_KEYS: SectionKey[] = ["geneticsPredict", "genderQuiz", "folkloreQuiz", "milestones"];
+const NEW_KEYS: SectionKey[] = ["milestones", "folkloreQuiz", "announceCopy", "parentMbti"];
 const CARDS_KEYS: SectionKey[] = ["cardGenderScratch", "cardGenderFlip", "cardGenderEnvelope", "announceCard", "announceCopy"];
 const QUIZ_KEYS: SectionKey[] = ["folkloreQuiz", "parentMbti", "genderQuiz", "geneticsPredict"];
 

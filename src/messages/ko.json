@@ -36,6 +36,7 @@
       "genderQuiz": "아들일까\n딸일까?",
       "folkloreQuiz": "속설로\n성별 맞추기",
       "geneticsPredict": "닮은 꼴\n누구?",
+      "milestones": "주차별\n마일스톤",
       "announceCard": "저 임신\n했어요!",
       "announceCopy": "상황별\n알림 문구",
       "cardGenderScratch": "긁어서\n공개!",
@@ -56,6 +57,10 @@
       "geneticsPredict": {
         "title": "아기 유전자 예상",
         "desc": "엄마 아빠 유전자로 아기 모습·성격 예측 + 유전 범인 사전"
+      },
+      "milestones": {
+        "title": "임신 주차별 마일스톤",
+        "desc": "4주부터 40주까지 — 아기가 자라는 10개의 결정적 순간"
       },
       "announceCard": {
         "title": "임밍아웃 카드",

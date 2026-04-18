@@ -36,6 +36,7 @@
       "genderQuiz": "Boy\nor girl?",
       "folkloreQuiz": "Old wives'\ntales",
       "geneticsPredict": "Who will\nbaby look like?",
+      "milestones": "Weekly\nmilestones",
       "announceCard": "I'm\npregnant!",
       "announceCopy": "Announcement\nmessages",
       "cardGenderScratch": "Scratch\nto reveal",
@@ -56,6 +57,10 @@
       "geneticsPredict": {
         "title": "Baby genetics preview",
         "desc": "Predict baby traits from parents + heredity fact sheet"
+      },
+      "milestones": {
+        "title": "Weekly pregnancy milestones",
+        "desc": "10 landmark moments from week 4 to 40"
       },
       "announceCard": {
         "title": "Pregnancy announcement card",
