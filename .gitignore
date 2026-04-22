@@ -44,3 +44,4 @@ next-env.d.ts
 # tooling state (bkit, superpowers)
 .bkit/
 .superpowers/
+.worktrees/
