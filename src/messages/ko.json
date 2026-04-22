@@ -42,6 +42,7 @@
       "cardGenderScratch": "긁어서\n공개!",
       "cardGenderFlip": "뒤집으면\n짜잔!",
       "cardGenderEnvelope": "봉투 열어\n확인해봐",
+      "cardGenderCastle": "용의 성에\n갇힌 아기를\n구출하세요",
       "nameGenerator": "우리 아기\n태명 짓기",
       "parentMbti": "나는 어떤\n엄마·아빠?"
     },
@@ -82,6 +83,7 @@
         "title": "봉투 열기",
         "desc": "봉투를 열면 편지가 나와요"
       },
+      "cardGenderCastle": { "title": "용성 퀘스트" },
       "nameGenerator": {
         "title": "태명 생성기",
         "desc": "우리 아기에게 딱 맞는 태명 찾기"
@@ -160,6 +162,21 @@
   "templates": {
     "scratch": "스크래치",
     "flip": "카드 뒤집기",
-    "envelope": "봉투 열기"
+    "envelope": "봉투 열기",
+    "castleQuest": "용성 퀘스트"
+  },
+  "castleQuest": {
+    "intro": {
+      "title": "용의 성에 갇힌 아기를 구출하라!",
+      "tapToStart": "탭해서 시작"
+    },
+    "hud": { "wave": "웨이브 {n}/3" },
+    "fail": { "title": "위기!" },
+    "reveal": {
+      "boyHeadline": "아들이에요!",
+      "girlHeadline": "딸이에요!",
+      "subline": "{name}",
+      "replay": "다시 보기"
+    }
   }
 }

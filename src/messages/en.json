@@ -42,6 +42,7 @@
       "cardGenderScratch": "Scratch\nto reveal",
       "cardGenderFlip": "Flip\nand ta-da!",
       "cardGenderEnvelope": "Open the\nenvelope",
+      "cardGenderCastle": "Rescue the baby\nfrom the\ndragon castle",
       "nameGenerator": "Find our\nnickname",
       "parentMbti": "What kind\nof parent?"
     },
@@ -82,6 +83,7 @@
         "title": "Open envelope",
         "desc": "Open the envelope to find a letter"
       },
+      "cardGenderCastle": { "title": "Castle Quest" },
       "nameGenerator": {
         "title": "Baby nickname generator",
         "desc": "Find the perfect pet-name for your little one"
@@ -160,6 +162,21 @@
   "templates": {
     "scratch": "Scratch",
     "flip": "Card Flip",
-    "envelope": "Open Envelope"
+    "envelope": "Open Envelope",
+    "castleQuest": "Castle Quest"
+  },
+  "castleQuest": {
+    "intro": {
+      "title": "Rescue the baby from the dragon castle!",
+      "tapToStart": "Tap to start"
+    },
+    "hud": { "wave": "Wave {n}/3" },
+    "fail": { "title": "Danger!" },
+    "reveal": {
+      "boyHeadline": "It's a boy!",
+      "girlHeadline": "It's a girl!",
+      "subline": "{name}",
+      "replay": "Play again"
+    }
   }
 }
