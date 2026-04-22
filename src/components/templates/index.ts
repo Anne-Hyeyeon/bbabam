@@ -39,11 +39,11 @@ export const templates: CardTemplate[] = [
     component: () => import("./envelope-card"),
   },
   {
-    id: "castle-quest",
-    nameKey: "castleQuest",
+    id: "egg-hatch",
+    nameKey: "eggHatch",
     interactionType: "game",
-    thumbnail: "🏰",
-    component: () => import("./castle-quest-card"),
+    thumbnail: "🥚",
+    component: () => import("./egg-hatch-card"),
   },
 ];
 

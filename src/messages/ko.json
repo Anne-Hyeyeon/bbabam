@@ -42,7 +42,7 @@
       "cardGenderScratch": "긁어서\n공개!",
       "cardGenderFlip": "뒤집으면\n짜잔!",
       "cardGenderEnvelope": "봉투 열어\n확인해봐",
-      "cardGenderCastle": "용의 성에\n갇힌 아기를\n구출하세요",
+      "cardGenderEgg": "반짝이는 알을\n깨뜨려\n아기를 만나요",
       "nameGenerator": "우리 아기\n태명 짓기",
       "parentMbti": "나는 어떤\n엄마·아빠?"
     },
@@ -83,7 +83,10 @@
         "title": "봉투 열기",
         "desc": "봉투를 열면 편지가 나와요"
       },
-      "cardGenderCastle": { "title": "용성 퀘스트" },
+      "cardGenderEgg": {
+        "title": "반짝이는 알 부화",
+        "desc": "탭으로 알을 깨뜨리면 안에서 아기가 나와요"
+      },
       "nameGenerator": {
         "title": "태명 생성기",
         "desc": "우리 아기에게 딱 맞는 태명 찾기"
@@ -163,15 +166,24 @@
     "scratch": "스크래치",
     "flip": "카드 뒤집기",
     "envelope": "봉투 열기",
-    "castleQuest": "용성 퀘스트"
+    "eggHatch": "반짝이는 알 부화"
   },
-  "castleQuest": {
+  "eggHatch": {
     "intro": {
-      "title": "용의 성에 갇힌 아기를 구출하라!",
-      "tapToStart": "탭해서 시작"
+      "title": "반짝이는 알이\n부화하려 해요",
+      "tapToStart": "탭해서 시작",
+      "instruction": "계속 탭해서 알을 깨뜨려요!"
     },
-    "hud": { "wave": "웨이브 {n}/3" },
-    "fail": { "title": "위기!" },
+    "hud": {
+      "tapLabel": "탭",
+      "speedLabel": "속도"
+    },
+    "tap": {
+      "stage0": "알을 탭해요!",
+      "stage1": "더 세게!",
+      "stage2": "거의 다 왔어요!",
+      "stage3": "마지막!!"
+    },
     "reveal": {
       "boyHeadline": "아들이에요!",
       "girlHeadline": "딸이에요!",

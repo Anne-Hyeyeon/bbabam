@@ -42,7 +42,7 @@
       "cardGenderScratch": "Scratch\nto reveal",
       "cardGenderFlip": "Flip\nand ta-da!",
       "cardGenderEnvelope": "Open the\nenvelope",
-      "cardGenderCastle": "Rescue the baby\nfrom the\ndragon castle",
+      "cardGenderEgg": "Crack the\nglowing egg\nto meet baby",
       "nameGenerator": "Find our\nnickname",
       "parentMbti": "What kind\nof parent?"
     },
@@ -83,7 +83,10 @@
         "title": "Open envelope",
         "desc": "Open the envelope to find a letter"
       },
-      "cardGenderCastle": { "title": "Castle Quest" },
+      "cardGenderEgg": {
+        "title": "Hatching Egg",
+        "desc": "Tap the glowing egg until it hatches — and meet baby"
+      },
       "nameGenerator": {
         "title": "Baby nickname generator",
         "desc": "Find the perfect pet-name for your little one"
@@ -163,15 +166,24 @@
     "scratch": "Scratch",
     "flip": "Card Flip",
     "envelope": "Open Envelope",
-    "castleQuest": "Castle Quest"
+    "eggHatch": "Hatching Egg"
   },
-  "castleQuest": {
+  "eggHatch": {
     "intro": {
-      "title": "Rescue the baby from the dragon castle!",
-      "tapToStart": "Tap to start"
+      "title": "A glowing egg\nis ready to hatch",
+      "tapToStart": "Tap to begin",
+      "instruction": "Keep tapping to crack the egg!"
     },
-    "hud": { "wave": "Wave {n}/3" },
-    "fail": { "title": "Danger!" },
+    "hud": {
+      "tapLabel": "Taps",
+      "speedLabel": "Speed"
+    },
+    "tap": {
+      "stage0": "Tap the egg!",
+      "stage1": "Harder!",
+      "stage2": "Almost there!",
+      "stage3": "Final!!"
+    },
     "reveal": {
       "boyHeadline": "It's a boy!",
       "girlHeadline": "It's a girl!",

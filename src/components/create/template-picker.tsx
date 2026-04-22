@@ -30,11 +30,11 @@ function TemplateIcon({ id }: { id: string }) {
         <path d="M2 5l10 7 10-7" />
       </svg>
     ),
-    "castle-quest": (
+    "egg-hatch": (
       <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M3 20V9l3 2V7l3 2V5l3 3V5l3 3v-2l3 2v2l3-2v11" />
-        <path d="M3 20h18" />
-        <path d="M10 20v-5h4v5" />
+        <path d="M12 3c-3.5 0-6.5 5-6.5 10a6.5 6.5 0 0 0 13 0c0-5-3-10-6.5-10z" />
+        <path d="M9 12l1.5 1.5L9 15" />
+        <path d="M15 14l-1.5 1-1 2" />
       </svg>
     ),
   };

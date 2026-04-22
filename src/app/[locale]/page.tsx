@@ -13,7 +13,7 @@ type SectionKey =
   | "cardGenderScratch"
   | "cardGenderFlip"
   | "cardGenderEnvelope"
-  | "cardGenderCastle"
+  | "cardGenderEgg"
   | "nameGenerator"
   | "parentMbti";
 
@@ -37,7 +37,7 @@ const SECTIONS: Record<SectionKey, SectionDef> = {
   cardGenderScratch:  { key: "cardGenderScratch",  href: "/create?template=scratch",  status: "live", category: "catCards", palette: "pink",   prefix: "genderReveal" },
   cardGenderFlip:     { key: "cardGenderFlip",     href: "/create?template=flip",     status: "live", category: "catCards", palette: "butter", prefix: "genderReveal" },
   cardGenderEnvelope: { key: "cardGenderEnvelope", href: "/create?template=envelope", status: "live", category: "catCards", palette: "peach",  prefix: "genderReveal" },
-  cardGenderCastle:   { key: "cardGenderCastle",   href: "/create?template=castle-quest", status: "new",  category: "catCards", palette: "blue",   prefix: "genderReveal" },
+  cardGenderEgg:      { key: "cardGenderEgg",      href: "/create?template=egg-hatch", status: "new",  category: "catCards", palette: "blue",   prefix: "genderReveal" },
   announceCard:       { key: "announceCard",       href: "/create",                   status: "new",  category: "catCards", palette: "lilac",  prefix: "announce" },
   announceCopy:       { key: "announceCopy",       href: "/announcements",            status: "new",  category: "catTools", palette: "butter", prefix: "announce" },
   genderQuiz:         { key: "genderQuiz",         href: "/chinese-calendar",         status: "live", category: "catGuess", palette: "peach" },
@@ -65,9 +65,9 @@ const CHIPS: { key: "all" | Category }[] = [
   { key: "catTools" },
 ];
 
-const BEST_KEYS: SectionKey[] = ["cardGenderCastle", "geneticsPredict", "genderQuiz", "folkloreQuiz", "milestones"];
-const NEW_KEYS: SectionKey[] = ["cardGenderCastle", "milestones", "folkloreQuiz", "announceCopy", "parentMbti"];
-const CARDS_KEYS: SectionKey[] = ["cardGenderCastle", "cardGenderScratch", "cardGenderFlip", "cardGenderEnvelope", "announceCard", "announceCopy"];
+const BEST_KEYS: SectionKey[] = ["cardGenderEgg", "geneticsPredict", "genderQuiz", "folkloreQuiz", "milestones"];
+const NEW_KEYS: SectionKey[] = ["cardGenderEgg", "milestones", "folkloreQuiz", "announceCopy", "parentMbti"];
+const CARDS_KEYS: SectionKey[] = ["cardGenderEgg", "cardGenderScratch", "cardGenderFlip", "cardGenderEnvelope", "announceCard", "announceCopy"];
 const QUIZ_KEYS: SectionKey[] = ["folkloreQuiz", "parentMbti", "genderQuiz", "geneticsPredict"];
 
 function StatusBadge({ status, label }: { status: "live" | "new"; label: string }) {
