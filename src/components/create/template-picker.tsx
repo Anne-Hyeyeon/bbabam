@@ -30,6 +30,13 @@ function TemplateIcon({ id }: { id: string }) {
         <path d="M2 5l10 7 10-7" />
       </svg>
     ),
+    "egg-hatch": (
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 3c-3.5 0-6.5 5-6.5 10a6.5 6.5 0 0 0 13 0c0-5-3-10-6.5-10z" />
+        <path d="M9 12l1.5 1.5L9 15" />
+        <path d="M15 14l-1.5 1-1 2" />
+      </svg>
+    ),
   };
   return <div className="text-pink-baby">{icons[id] || null}</div>;
 }

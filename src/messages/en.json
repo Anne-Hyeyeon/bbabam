@@ -42,6 +42,7 @@
       "cardGenderScratch": "Scratch\nto reveal",
       "cardGenderFlip": "Flip\nand ta-da!",
       "cardGenderEnvelope": "Open the\nenvelope",
+      "cardGenderEgg": "Crack the\nglowing egg\nto meet baby",
       "nameGenerator": "Find our\nnickname",
       "parentMbti": "What kind\nof parent?"
     },
@@ -81,6 +82,10 @@
       "cardGenderEnvelope": {
         "title": "Open envelope",
         "desc": "Open the envelope to find a letter"
+      },
+      "cardGenderEgg": {
+        "title": "Hatching Egg",
+        "desc": "Tap the glowing egg until it hatches — and meet baby"
       },
       "nameGenerator": {
         "title": "Baby nickname generator",
@@ -160,6 +165,30 @@
   "templates": {
     "scratch": "Scratch",
     "flip": "Card Flip",
-    "envelope": "Open Envelope"
+    "envelope": "Open Envelope",
+    "eggHatch": "Hatching Egg"
+  },
+  "eggHatch": {
+    "intro": {
+      "title": "A glowing egg\nis ready to hatch",
+      "tapToStart": "Tap to begin",
+      "instruction": "Keep tapping to crack the egg!"
+    },
+    "hud": {
+      "tapLabel": "Taps",
+      "speedLabel": "Speed"
+    },
+    "tap": {
+      "stage0": "Tap the egg!",
+      "stage1": "Harder!",
+      "stage2": "Almost there!",
+      "stage3": "Final!!"
+    },
+    "reveal": {
+      "boyHeadline": "It's a boy!",
+      "girlHeadline": "It's a girl!",
+      "subline": "{name}",
+      "replay": "Play again"
+    }
   }
 }

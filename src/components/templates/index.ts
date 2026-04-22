@@ -38,6 +38,13 @@ export const templates: CardTemplate[] = [
     thumbnail: "✉️",
     component: () => import("./envelope-card"),
   },
+  {
+    id: "egg-hatch",
+    nameKey: "eggHatch",
+    interactionType: "game",
+    thumbnail: "🥚",
+    component: () => import("./egg-hatch-card"),
+  },
 ];
 
 export function getTemplateById(id: string): CardTemplate | undefined {
