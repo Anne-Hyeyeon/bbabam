@@ -38,17 +38,17 @@ export default function CastleQuestCard({
             onReplay={restart}
           />
         ) : (
+          // `showReveal` guarantees state.phase !== "reveal" here, so the cast
+          // excludes that variant. TS can't narrow through a derived boolean.
           <Stage
             phase={
-              state.phase === "reveal"
-                ? "finale"
-                : (state.phase as
-                    | "idle"
-                    | "intro"
-                    | "wave1"
-                    | "wave2"
-                    | "wave3"
-                    | "finale")
+              state.phase as
+                | "idle"
+                | "intro"
+                | "wave1"
+                | "wave2"
+                | "wave3"
+                | "finale"
             }
             waveIndex={state.waveIndex}
             hearts={state.hearts}

@@ -108,7 +108,9 @@ function reducer(s: State, a: Action): State {
 }
 
 function pickSpawnPoint(exclude?: { x: number; y: number }) {
-  const pool = exclude ? SPAWN_POINTS.filter((p) => p !== exclude) : SPAWN_POINTS;
+  const pool = exclude
+    ? SPAWN_POINTS.filter((p) => p.x !== exclude.x || p.y !== exclude.y)
+    : SPAWN_POINTS;
   return pool[Math.floor(Math.random() * pool.length)];
 }
 

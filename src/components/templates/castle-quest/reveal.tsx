@@ -48,6 +48,9 @@ export function Reveal({ gender, babyNickname, onReveal, onReplay }: Props) {
   const [revealFired, setRevealFired] = useState(false);
   const [replayVisible, setReplayVisible] = useState(false);
 
+  // onReveal fires at 900ms, replay unlocks at REPLAY_BUTTON_DELAY_MS (2000ms).
+  // The 900<2000 ordering guarantees onReveal fires before the only user-facing
+  // unmount path (replay → restart → phase flips off "reveal") becomes reachable.
   useEffect(() => {
     if (revealFired) return;
     const t1 = setTimeout(() => {
@@ -148,13 +151,16 @@ export function Reveal({ gender, babyNickname, onReveal, onReplay }: Props) {
       >
         <span style={{ fontSize: 30, fontWeight: 800, color }}>{headline}</span>
         {babyNickname && (
-          <span style={{ fontSize: 16, fontWeight: 600 }}>{babyNickname}</span>
+          <span style={{ fontSize: 16, fontWeight: 600 }}>
+            {t("subline", { name: babyNickname })}
+          </span>
         )}
       </motion.div>
 
       {/* Replay */}
       {replayVisible && (
         <motion.button
+          type="button"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           onClick={onReplay}
