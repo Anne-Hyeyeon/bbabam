@@ -34,13 +34,8 @@ export function Stage({
   return (
     <div
       onClick={phase === "intro" ? onStart : undefined}
+      className="relative w-[280px] aspect-[9/16] overflow-hidden rounded-2xl"
       style={{
-        position: "relative",
-        width: "100%",
-        aspectRatio: "9 / 16",
-        maxWidth: 360,
-        overflow: "hidden",
-        borderRadius: 20,
         background: "linear-gradient(180deg, #87cefa 0%, #b5e0ff 60%, #c8d8bf 100%)",
         touchAction: "manipulation",
         WebkitUserSelect: "none",

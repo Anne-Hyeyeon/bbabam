@@ -66,13 +66,8 @@ export function Reveal({ gender, babyNickname, onReveal, onReplay }: Props) {
 
   return (
     <div
+      className="relative w-[280px] aspect-[9/16] overflow-hidden rounded-2xl"
       style={{
-        position: "relative",
-        width: "100%",
-        aspectRatio: "9 / 16",
-        maxWidth: 360,
-        overflow: "hidden",
-        borderRadius: 20,
         background: `linear-gradient(180deg, #87cefa 0%, ${color}44 60%, #c8d8bf 100%)`,
       }}
     >
