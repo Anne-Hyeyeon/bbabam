@@ -38,6 +38,13 @@ export const templates: CardTemplate[] = [
     thumbnail: "✉️",
     component: () => import("./envelope-card"),
   },
+  {
+    id: "castle-quest",
+    nameKey: "castleQuest",
+    interactionType: "game",
+    thumbnail: "🏰",
+    component: () => import("./castle-quest-card"),
+  },
 ];
 
 export function getTemplateById(id: string): CardTemplate | undefined {

@@ -30,6 +30,13 @@ function TemplateIcon({ id }: { id: string }) {
         <path d="M2 5l10 7 10-7" />
       </svg>
     ),
+    "castle-quest": (
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M3 20V9l3 2V7l3 2V5l3 3V5l3 3v-2l3 2v2l3-2v11" />
+        <path d="M3 20h18" />
+        <path d="M10 20v-5h4v5" />
+      </svg>
+    ),
   };
   return <div className="text-pink-baby">{icons[id] || null}</div>;
 }
