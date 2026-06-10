@@ -9,8 +9,22 @@ import { CardInfoForm, type CardInfoData } from "./card-info-form";
 import { CardPreview } from "./card-preview";
 import { CardComplete } from "./card-complete";
 import { getTemplateById } from "@/components/templates";
+import { createCard, uploadUltrasound } from "@/lib/card-api";
+import { rememberCardId } from "@/lib/stored-cards";
 
 type Step = 1 | 2 | 3 | 4;
+
+// Pure step-gating rule, kept outside the component for testability.
+const canProceedFrom = (step: Step, templateId: string | null, cardInfo: CardInfoData): boolean => {
+  if (step === 1) return templateId !== null;
+  if (step === 2) {
+    return (
+      cardInfo.babyNickname.trim() !== "" &&
+      (cardInfo.recipientMode === "input" || cardInfo.recipientName.trim() !== "")
+    );
+  }
+  return true;
+};
 
 export function CreateWizard() {
   const t = useTranslations("create");
@@ -35,53 +49,29 @@ export function CreateWizard() {
 
   const stepTitles = [t("step1Title"), t("step2Title"), t("step3Title"), t("step4Title")];
 
-  const canProceed = () => {
-    if (step === 1) return templateId !== null;
-    if (step === 2) {
-      return (
-        cardInfo.babyNickname.trim() !== "" &&
-        (cardInfo.recipientMode === "input" || cardInfo.recipientName.trim() !== "")
-      );
-    }
-    return true;
-  };
+  const canProceed = () => canProceedFrom(step, templateId, cardInfo);
 
   const handleCreate = async () => {
     if (!templateId || isSubmitting) return;
     setIsSubmitting(true);
 
     try {
-      let ultrasoundImageUrl: string | undefined;
+      const ultrasoundImageUrl = cardInfo.ultrasoundFile
+        ? await uploadUltrasound(cardInfo.ultrasoundFile)
+        : undefined;
 
-      if (cardInfo.ultrasoundFile) {
-        const formData = new FormData();
-        formData.append("file", cardInfo.ultrasoundFile);
-        const uploadRes = await fetch("/api/upload", { method: "POST", body: formData });
-        const uploadData = await uploadRes.json();
-        ultrasoundImageUrl = uploadData.url;
-      }
-
-      const res = await fetch("/api/cards", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          templateId,
-          babyNickname: cardInfo.babyNickname,
-          gender: cardInfo.gender,
-          recipientMode: cardInfo.recipientMode,
-          recipientName: cardInfo.recipientMode === "preset" ? cardInfo.recipientName : undefined,
-          ogMode: cardInfo.ogMode,
-          ultrasoundImageUrl,
-        }),
+      const created = await createCard({
+        templateId,
+        babyNickname: cardInfo.babyNickname,
+        gender: cardInfo.gender,
+        recipientMode: cardInfo.recipientMode,
+        recipientName: cardInfo.recipientMode === "preset" ? cardInfo.recipientName : undefined,
+        ogMode: cardInfo.ogMode,
+        ultrasoundImageUrl,
       });
 
-      const data = await res.json();
-
-      const stored = JSON.parse(localStorage.getItem("bbabam_cards") || "[]");
-      stored.push(data.id);
-      localStorage.setItem("bbabam_cards", JSON.stringify(stored));
-
-      setCreatedSlug(data.slug);
+      rememberCardId(created.id);
+      setCreatedSlug(created.slug);
       setStep(4);
     } catch (error) {
       console.error("Failed to create card:", error);
