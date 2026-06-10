@@ -1,20 +1,20 @@
 import { use } from "react";
 import { useTranslations } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
-import Image from "next/image";
-import { Link } from "@/i18n/navigation";
 import { Header } from "@/components/layout/header";
-import { ScrollRow } from "@/components/scroll-row";
 import { HeroBanner, type HeroSlide } from "@/components/home/hero-banner";
 import { BigBannerCard, type BigBannerData } from "@/components/home/big-banner-card";
-import { StatusBadge } from "@/components/home/status-badge";
-import { POSTER_BG, type Palette } from "@/components/home/palette";
+import { type Palette } from "@/components/home/palette";
 import {
   PHRASE_THUMBNAIL,
   resolveThumbnail,
-  type ResolvedThumbnail,
   type Thumbnail,
 } from "@/components/home/thumbnail";
+
+// Temporarily hidden while the catalog is small: the chips tab and section
+// subheadings come back by flipping these once there is enough content.
+const SHOW_CATEGORY_CHIPS = false as boolean;
+const SHOW_SECTION_HEADERS = false as boolean;
 
 type SectionKey =
   | "genderQuiz"
@@ -55,12 +55,26 @@ const GENDER_QUIZ_THUMBNAIL: Thumbnail = {
   textMode: "baked",
 };
 
+const GENETICS_THUMBNAIL: Thumbnail = {
+  kind: "image",
+  images: { hero: "baby-genetics.png", wide: "baby-genetics.png" },
+  localized: true,
+  textMode: "baked",
+};
+
+const FOLKLORE_THUMBNAIL: Thumbnail = {
+  kind: "image",
+  images: { hero: "gender-folklore.png", wide: "gender-folklore.png" },
+  localized: true,
+  textMode: "baked",
+};
+
 const SECTIONS: Record<SectionKey, SectionDef> = {
   announceCard:       { key: "announceCard",       href: "/gender-reveal-card",                 status: "new",  category: "catCards", palette: "lilac",  prefix: "announce", thumbnail: ANNOUNCE_CARD_THUMBNAIL },
   announceCopy:       { key: "announceCopy",       href: "/announcements",            status: "new",  category: "catTools", palette: "butter", prefix: "announce", thumbnail: PHRASE_THUMBNAIL },
   genderQuiz:         { key: "genderQuiz",         href: "/chinese-calendar",         status: "live", category: "catGuess", palette: "peach",  thumbnail: GENDER_QUIZ_THUMBNAIL },
-  folkloreQuiz:       { key: "folkloreQuiz",       href: "/gender-folklore",          status: "new",  category: "catGuess", palette: "lilac",  thumbnail: PHRASE_THUMBNAIL },
-  geneticsPredict:    { key: "geneticsPredict",    href: "/genetics",                 status: "live", category: "catTools", palette: "sage",   thumbnail: PHRASE_THUMBNAIL },
+  folkloreQuiz:       { key: "folkloreQuiz",       href: "/gender-folklore",          status: "new",  category: "catGuess", palette: "lilac",  thumbnail: FOLKLORE_THUMBNAIL },
+  geneticsPredict:    { key: "geneticsPredict",    href: "/genetics",                 status: "live", category: "catTools", palette: "sage",   thumbnail: GENETICS_THUMBNAIL },
   milestones:         { key: "milestones",         href: "/milestones",               status: "new",  category: "catTools", palette: "sage",   thumbnail: PHRASE_THUMBNAIL },
   nameGenerator:      { key: "nameGenerator",      href: null,                        status: "soon", category: "catTools", palette: "butter", thumbnail: PHRASE_THUMBNAIL },
   parentMbti:         { key: "parentMbti",         href: "/parent-mbti",              status: "live", category: "catQuiz",  palette: "blue",   thumbnail: PHRASE_THUMBNAIL },
@@ -75,101 +89,17 @@ const CHIPS: { key: "all" | Category }[] = [
 ];
 
 const BEST_KEYS: SectionKey[] = ["announceCard", "geneticsPredict", "genderQuiz", "folkloreQuiz", "milestones"];
-const NEW_KEYS: SectionKey[] = ["announceCard", "milestones", "folkloreQuiz", "announceCopy", "parentMbti"];
-const QUIZ_KEYS: SectionKey[] = ["folkloreQuiz", "parentMbti", "genderQuiz", "geneticsPredict"];
-
-function PosterCard({
-  section,
-  image,
-  phrase,
-  catLabel,
-  prefixLabel,
-  size,
-  t,
-}: {
-  section: SectionDef;
-  image: ResolvedThumbnail | null;
-  phrase: string;
-  catLabel: string;
-  prefixLabel?: string;
-  size: "lg" | "md";
-  t: ReturnType<typeof useTranslations>;
-}) {
-  const aspect = size === "lg" ? "aspect-[3/4]" : "aspect-[4/5]";
-  const widthClass = size === "lg" ? "w-[148px]" : "w-[124px]";
-  const sizes = size === "lg" ? "148px" : "124px";
-  const isDisabled = section.href === null;
-  const showPhrase = image === null || image.textMode === "overlay";
-
-  const poster = (
-    <article
-      className={[
-        "group relative shrink-0 overflow-hidden",
-        widthClass,
-        "transition",
-        isDisabled ? "opacity-80" : "hover:-translate-y-[2px]",
-      ].join(" ")}
-    >
-      <div
-        className={[
-          "relative w-full overflow-hidden rounded-[12px]",
-          aspect,
-          POSTER_BG[section.palette],
-        ].join(" ")}
-      >
-        {image && (
-          <Image
-            src={image.src}
-            alt={image.textMode === "baked" ? t(`sections.${section.key}.title`) : ""}
-            fill
-            sizes={sizes}
-            className="object-cover"
-          />
-        )}
-        {showPhrase && (
-          <div className="relative flex h-full w-full items-center justify-center px-3">
-            <p className="text-center text-[20px] font-bold leading-[1.15] text-[var(--color-ink)] whitespace-pre-line">
-              {phrase}
-            </p>
-          </div>
-        )}
-
-        {section.status === "live" && <StatusBadge status="live" label={t("live")} />}
-        {section.status === "new" && <StatusBadge status="new" label={t("new")} />}
-        {section.status === "soon" && (
-          <span className="absolute top-2 left-2 rounded-full bg-white/90 backdrop-blur px-2 py-[2px] text-[10px] font-medium text-[var(--color-ink-muted)] shadow-card">
-            {t("comingSoon")}
-          </span>
-        )}
-      </div>
-
-      <div className="mt-2 px-0.5">
-        <p className="text-[10px] font-medium uppercase tracking-[0.1em] text-[var(--color-ink-muted)]">
-          {catLabel}
-        </p>
-        <h3 className="mt-0.5 text-[13px] font-semibold leading-tight text-[var(--color-ink)] line-clamp-2">
-          {prefixLabel && (
-            <span className="text-[var(--color-ink-muted)] font-normal">({prefixLabel}) </span>
-          )}
-          {t(`sections.${section.key}.title`)}
-        </h3>
-      </div>
-    </article>
-  );
-
-  if (isDisabled) {
-    return (
-      <div aria-disabled className="block shrink-0">
-        {poster}
-      </div>
-    );
-  }
-  return (
-    <Link href={section.href!} className="block shrink-0">
-      {poster}
-    </Link>
-  );
-}
+// One vertical feed of everything: the catalog is too small for sub-sections.
+const FEED_KEYS: SectionKey[] = [
+  "announceCard",
+  "genderQuiz",
+  "folkloreQuiz",
+  "geneticsPredict",
+  "milestones",
+  "parentMbti",
+  "announceCopy",
+  "nameGenerator",
+];
 
 function SectionHeader({ title, sub }: { title: string; sub: string }) {
   const t = useTranslations("portal");
@@ -199,23 +129,6 @@ export default function PortalLandingPage({ params }: { params: Promise<{ locale
   setRequestLocale(locale);
 
   const t = useTranslations("portal");
-
-  const render = (keys: SectionKey[], size: "lg" | "md") =>
-    keys.map((k) => {
-      const s = SECTIONS[k];
-      return (
-        <PosterCard
-          key={k}
-          section={s}
-          image={resolveThumbnail(s.thumbnail, "poster", locale)}
-          phrase={t(`phrases.${k}`)}
-          catLabel={t(`chips.${s.category}`)}
-          prefixLabel={s.prefix ? t(`prefix.${s.prefix}`) : undefined}
-          size={size}
-          t={t}
-        />
-      );
-    });
 
   // Pure: resolve a section into plain serializable banner data.
   const toBannerData = (k: SectionKey, slot: "hero" | "wide"): BigBannerData & HeroSlide => {
@@ -272,37 +185,35 @@ export default function PortalLandingPage({ params }: { params: Promise<{ locale
           />
         </div>
 
-        {/* ------- NEW ------- */}
-        <section className="pt-1">
-          <SectionHeader title={t("sectionNew")} sub={t("sectionNewSub")} />
-          <ScrollRow>{render(NEW_KEYS, "lg")}</ScrollRow>
-        </section>
+        {/* ------- Category chips (hidden until the catalog grows) ------- */}
+        {SHOW_CATEGORY_CHIPS && (
+          <nav aria-label="categories" className="pt-5">
+            <div className="flex gap-2 overflow-x-auto px-4 py-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+              {CHIPS.map((chip, idx) => (
+                <button
+                  key={chip.key}
+                  type="button"
+                  className={[
+                    "shrink-0 rounded-full border px-3.5 py-1.5 text-[12.5px] font-medium transition",
+                    idx === 0
+                      ? "border-[var(--color-ink)] bg-[var(--color-ink)] text-white"
+                      : "border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]",
+                  ].join(" ")}
+                >
+                  {t(`chips.${chip.key}`)}
+                </button>
+              ))}
+            </div>
+            <div className="h-px w-full bg-[var(--color-border)]" />
+          </nav>
+        )}
 
-        {/* ------- Category chips (horizontal slide only) ------- */}
-        <nav aria-label="categories" className="pt-5">
-          <div className="flex gap-2 overflow-x-auto px-4 py-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            {CHIPS.map((chip, idx) => (
-              <button
-                key={chip.key}
-                type="button"
-                className={[
-                  "shrink-0 rounded-full border px-3.5 py-1.5 text-[12.5px] font-medium transition",
-                  idx === 0
-                    ? "border-[var(--color-ink)] bg-[var(--color-ink)] text-white"
-                    : "border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]",
-                ].join(" ")}
-              >
-                {t(`chips.${chip.key}`)}
-              </button>
-            ))}
-          </div>
-          <div className="h-px w-full bg-[var(--color-border)]" />
-        </nav>
-
-        {/* ------- 나는 어떤 부모? ------- */}
-        <section className="pt-6">
-          <SectionHeader title={t("sectionQuiz")} sub={t("sectionQuizSub")} />
-          {renderBigBanners(QUIZ_KEYS)}
+        {/* ------- Full vertical feed ------- */}
+        <section className="pt-4">
+          {SHOW_SECTION_HEADERS && (
+            <SectionHeader title={t("sectionQuiz")} sub={t("sectionQuizSub")} />
+          )}
+          {renderBigBanners(FEED_KEYS)}
         </section>
       </main>
     </>

@@ -1,9 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { templates } from "@/components/templates";
 import { POSTER_BG, type Palette } from "@/components/home/palette";
+import { resolveThumbnail } from "@/components/home/thumbnail";
 
 const PICKER_SIZES = "(max-width: 480px) 100vw, 480px";
 
@@ -15,18 +16,21 @@ interface TemplatePickerProps {
 // Same category tints the home banners use, one per template.
 const TEMPLATE_PALETTES: Record<string, Palette> = {
   scratch: "pink",
+  omurice: "butter",
   "egg-hatch": "blue",
 };
 
 export function TemplatePicker({ selected, onSelect }: TemplatePickerProps) {
   const t = useTranslations("create");
   const tName = useTranslations("templates");
+  const locale = useLocale();
 
   return (
     <div className="flex flex-col gap-3 p-4">
       {templates.map((tpl, idx) => {
         const isSelected = selected === tpl.id;
         const eager = idx === 0;
+        const image = tpl.thumbnail ? resolveThumbnail(tpl.thumbnail, "wide", locale) : null;
         return (
           <button
             key={tpl.id}
@@ -41,9 +45,9 @@ export function TemplatePicker({ selected, onSelect }: TemplatePickerProps) {
                 : "hover:-translate-y-[2px]",
             ].join(" ")}
           >
-            {tpl.imageSrc ? (
+            {image ? (
               <Image
-                src={tpl.imageSrc}
+                src={image.src}
                 alt={tName(tpl.nameKey)}
                 fill
                 sizes={PICKER_SIZES}

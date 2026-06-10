@@ -1,4 +1,5 @@
 import type { ComponentType } from "react";
+import type { Thumbnail } from "@/components/home/thumbnail";
 
 export interface TemplateInteractionProps {
   gender: "boy" | "girl";
@@ -12,9 +13,11 @@ export interface CardTemplate {
   id: string;
   nameKey: string; // i18n key under "templates"
   interactionType: string;
-  thumbnail: string; // emoji placeholder
-  /** Baked picker thumbnail (typography included); hides the text overlay when set. */
-  imageSrc?: string;
+  /**
+   * Picker thumbnail, sharing the home thumbnail asset model
+   * (resolved against the "wide" slot). Baked images hide the text overlay.
+   */
+  thumbnail?: Thumbnail;
   component: () => Promise<{ default: ComponentType<TemplateInteractionProps> }>;
 }
 
@@ -23,15 +26,18 @@ export const templates: CardTemplate[] = [
     id: "scratch",
     nameKey: "scratch",
     interactionType: "scratch",
-    thumbnail: "🎫",
-    imageSrc: "/thumbnails/shared/gender-reveal-lottery.png",
+    thumbnail: {
+      kind: "image",
+      images: { wide: "gender-reveal-lottery.png" },
+      localized: true,
+      textMode: "baked",
+    },
     component: () => import("./scratch-card"),
   },
   {
     id: "egg-hatch",
     nameKey: "eggHatch",
     interactionType: "game",
-    thumbnail: "🥚",
     component: () => import("./egg-hatch-card"),
   },
 ];
