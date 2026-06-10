@@ -31,7 +31,7 @@ interface State {
 type Action =
   | { type: "toIntro" }
   | { type: "toHatching" }
-  | { type: "tap"; x: number; y: number }
+  | { type: "tap"; x: number; y: number; size: number; hue: number }
   | { type: "setSpeed"; speed: number }
   | { type: "toClimax" }
   | { type: "toReveal" }
@@ -49,6 +49,11 @@ const initial: State = {
 
 const BURST_CAP = 14;
 
+// Randomness lives at the event boundary (tap callback), keeping the
+// reducer a pure function of (state, action).
+const randomBurstSize = () => 14 + Math.floor(Math.random() * 22);
+const randomBurstHue = () => Math.floor(Math.random() * 360);
+
 function reducer(s: State, a: Action): State {
   switch (a.type) {
     case "toIntro":
@@ -65,8 +70,8 @@ function reducer(s: State, a: Action): State {
         id: s.burstCursor,
         x: a.x,
         y: a.y,
-        size: 14 + Math.floor(Math.random() * 22),
-        hue: Math.floor(Math.random() * 360),
+        size: a.size,
+        hue: a.hue,
       };
       return {
         ...s,
@@ -139,8 +144,8 @@ export function useEggState() {
     []
   );
   const tap = useCallback((x: number, y: number) => {
-    tapTimesRef.current.push(Date.now());
-    dispatch({ type: "tap", x, y });
+    tapTimesRef.current = [...tapTimesRef.current, Date.now()];
+    dispatch({ type: "tap", x, y, size: randomBurstSize(), hue: randomBurstHue() });
   }, []);
 
   return { state, start, tap, restart, clearBurst };
