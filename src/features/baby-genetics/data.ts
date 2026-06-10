@@ -101,45 +101,45 @@ function predictDimples(
  * 혈액형 ABO 확률 계산.
  * A → AA/AO 50:50, B → BB/BO 50:50 로 가정.
  */
+type BloodPhenotype = "A" | "B" | "O" | "AB";
+
+const BLOOD_GENOTYPES: Record<ParentTraits["bloodType"], string[]> = {
+  A: ["AA", "AO"],
+  B: ["BB", "BO"],
+  O: ["OO"],
+  AB: ["AB"],
+};
+
+function phenotypeOf(alleleA: string, alleleB: string): BloodPhenotype {
+  const pair = [alleleA, alleleB].sort().join("");
+  if (pair === "AB") return "AB";
+  if (pair.includes("A")) return "A";
+  if (pair.includes("B")) return "B";
+  return "O";
+}
+
+const crossPhenotypes = (fGenos: string[], mGenos: string[]): BloodPhenotype[] =>
+  fGenos.flatMap((fg) =>
+    mGenos.flatMap((mg) =>
+      [...fg].flatMap((fa) => [...mg].map((ma) => phenotypeOf(fa, ma))),
+    ),
+  );
+
 function predictBloodType(
   f: ParentTraits["bloodType"],
   m: ParentTraits["bloodType"],
 ): { type: string; prob: number }[] {
-  const genotypes: Record<ParentTraits["bloodType"], string[]> = {
-    A: ["AA", "AO"],
-    B: ["BB", "BO"],
-    O: ["OO"],
-    AB: ["AB"],
-  };
-
-  const fGenos = genotypes[f];
-  const mGenos = genotypes[m];
-
-  const childCounts: Record<string, number> = { A: 0, B: 0, O: 0, AB: 0 };
-  let total = 0;
-
-  for (const fg of fGenos) {
-    for (const mg of mGenos) {
-      for (const fa of fg) {
-        for (const ma of mg) {
-          total++;
-          const alleles = [fa, ma].sort().join("");
-          let phenotype: string;
-          if (alleles === "AB" || alleles === "BA") phenotype = "AB";
-          else if (alleles.includes("A")) phenotype = "A";
-          else if (alleles.includes("B")) phenotype = "B";
-          else phenotype = "O";
-          childCounts[phenotype]++;
-        }
-      }
-    }
-  }
+  const outcomes = crossPhenotypes(BLOOD_GENOTYPES[f], BLOOD_GENOTYPES[m]);
+  const childCounts = outcomes.reduce<Record<BloodPhenotype, number>>(
+    (counts, phenotype) => ({ ...counts, [phenotype]: counts[phenotype] + 1 }),
+    { A: 0, B: 0, O: 0, AB: 0 },
+  );
 
   return Object.entries(childCounts)
     .filter(([, count]) => count > 0)
     .map(([type, count]) => ({
       type: type + "형",
-      prob: Math.round((count / total) * 100),
+      prob: Math.round((count / outcomes.length) * 100),
     }))
     .sort((a, b) => b.prob - a.prob);
 }
@@ -198,31 +198,40 @@ function predictPersonality(
   };
 }
 
-/** 누구 닮을지 짧은 멘트 */
+/** 누구 닮을지 짧은 멘트 — 규칙(순수 함수) 목록을 합성해서 생성 */
+type ResemblanceRule = (input: BabyGeneticsInput) => string | null;
+
+const heightResemblance: ResemblanceRule = ({ father, mother }) => {
+  if (father.heightCm > mother.heightCm + 10) return "키는 아빠를 닮을 가능성이 높아요";
+  if (mother.heightCm > father.heightCm + 10) return "키는 엄마를 닮을 가능성이 높아요";
+  return "키는 부모님 중간쯤이 될 것 같아요";
+};
+
+const eyelidResemblance: ResemblanceRule = ({ father, mother }) => {
+  if (father.doubleEyelid === "yes" && mother.doubleEyelid !== "yes")
+    return "눈매는 아빠를 닮을 것 같아요";
+  if (mother.doubleEyelid === "yes" && father.doubleEyelid !== "yes")
+    return "눈매는 엄마를 닮을 것 같아요";
+  if (father.doubleEyelid === "yes" && mother.doubleEyelid === "yes")
+    return "또렷한 쌍꺼풀이 기대돼요";
+  return null;
+};
+
+const dimplesResemblance: ResemblanceRule = ({ father, mother }) =>
+  father.dimples === "yes" || mother.dimples === "yes"
+    ? "웃을 때 보조개가 살짝 보일지도 몰라요"
+    : null;
+
+const RESEMBLANCE_RULES: ResemblanceRule[] = [
+  heightResemblance,
+  eyelidResemblance,
+  dimplesResemblance,
+];
+
 function generateResemblance(input: BabyGeneticsInput): string {
-  const phrases: string[] = [];
-  const { father, mother } = input;
-
-  if (father.heightCm > mother.heightCm + 10) {
-    phrases.push("키는 아빠를 닮을 가능성이 높아요");
-  } else if (mother.heightCm > father.heightCm + 10) {
-    phrases.push("키는 엄마를 닮을 가능성이 높아요");
-  } else {
-    phrases.push("키는 부모님 중간쯤이 될 것 같아요");
-  }
-
-  if (father.doubleEyelid === "yes" && mother.doubleEyelid !== "yes") {
-    phrases.push("눈매는 아빠를 닮을 것 같아요");
-  } else if (mother.doubleEyelid === "yes" && father.doubleEyelid !== "yes") {
-    phrases.push("눈매는 엄마를 닮을 것 같아요");
-  } else if (father.doubleEyelid === "yes" && mother.doubleEyelid === "yes") {
-    phrases.push("또렷한 쌍꺼풀이 기대돼요");
-  }
-
-  if (father.dimples === "yes" || mother.dimples === "yes") {
-    phrases.push("웃을 때 보조개가 살짝 보일지도 몰라요");
-  }
-
+  const phrases = RESEMBLANCE_RULES.map((rule) => rule(input)).filter(
+    (phrase): phrase is string => phrase !== null,
+  );
   return phrases.join(", ") + "!";
 }
 
