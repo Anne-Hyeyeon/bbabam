@@ -1,7 +1,10 @@
 {
   "common": {
     "appName": "bbabam!",
-    "tagline": "Little tools to smile about — from pregnancy to birth"
+    "tagline": "Little tools to smile about — from pregnancy to birth",
+    "copyLink": "Copy Link",
+    "copied": "Copied!",
+    "shareKakao": "Share via KakaoTalk"
   },
   "portal": {
     "searchPlaceholder": "Looking for something fun?",
@@ -17,8 +20,6 @@
     "sectionBestSub": "Popular this week",
     "sectionNew": "NEW",
     "sectionNewSub": "Just added",
-    "sectionCards": "Create a card",
-    "sectionCardsSub": "Pregnancy & birth card templates",
     "sectionQuiz": "What kind of parent?",
     "sectionQuizSub": "Self-tests & MBTI",
     "more": "See all",
@@ -30,7 +31,6 @@
     "catCards": "Card",
     "catQuiz": "Test",
     "prefix": {
-      "genderReveal": "Gender reveal",
       "announce": "Announcement"
     },
     "phrases": {
@@ -40,10 +40,6 @@
       "milestones": "Weekly\nmilestones",
       "announceCard": "I'm\npregnant!",
       "announceCopy": "Announcement\nmessages",
-      "cardGenderScratch": "Scratch\nto reveal",
-      "cardGenderFlip": "Flip\nand ta-da!",
-      "cardGenderEnvelope": "Open the\nenvelope",
-      "cardGenderEgg": "Crack the\nglowing egg\nto meet baby",
       "nameGenerator": "Find our\nnickname",
       "parentMbti": "What kind\nof parent?"
     },
@@ -66,27 +62,11 @@
       },
       "announceCard": {
         "title": "Pregnancy announcement card",
-        "desc": "Share your surprise in a warm, special way"
+        "desc": "Share the surprise with scratch, flip, envelope, and egg templates"
       },
       "announceCopy": {
         "title": "Pregnancy announcement copy",
         "desc": "Ready-to-use phrases for parents, partner, friends, and work"
-      },
-      "cardGenderScratch": {
-        "title": "Scratch card",
-        "desc": "Scratch the foil to reveal the gender"
-      },
-      "cardGenderFlip": {
-        "title": "Card flip",
-        "desc": "Flip the card to see the gender"
-      },
-      "cardGenderEnvelope": {
-        "title": "Open envelope",
-        "desc": "Open the envelope to find a letter"
-      },
-      "cardGenderEgg": {
-        "title": "Hatching Egg",
-        "desc": "Tap the glowing egg until it hatches — and meet baby"
       },
       "nameGenerator": {
         "title": "Baby nickname generator",
@@ -124,28 +104,18 @@
     "gender": "Gender",
     "boy": "Boy",
     "girl": "Girl",
-    "recipientMode": "Recipient",
-    "recipientPreset": "Enter name now",
-    "recipientInput": "Let recipient enter their name",
-    "recipientName": "Recipient Name",
-    "recipientNamePlaceholder": "e.g., Grandma",
     "ultrasound": "Ultrasound Photo",
     "ultrasoundOptional": "(optional)",
     "ultrasoundUpload": "Upload Photo",
-    "ogMode": "Card Preview Style",
-    "ogDefault": "Default",
-    "ogDefaultDesc": "Shows it's a gender reveal card",
-    "ogFakeSurprise": "Fake Surprise",
-    "ogFakeSurpriseDesc": "Shows something completely different",
     "next": "Next",
     "prev": "Back",
     "preview": "Preview",
     "create": "Create Card",
     "complete": "Your card is ready!",
+    "completeDesc": "Share the link and the recipient enters their name to see {babyNickname}'s news",
     "copyLink": "Copy Link",
     "copied": "Copied!",
-    "shareKakao": "Share via KakaoTalk",
-    "manageDashboard": "Manage My Cards"
+    "shareKakao": "Share via KakaoTalk"
   },
   "viewer": {
     "enterName": "What's your name?",

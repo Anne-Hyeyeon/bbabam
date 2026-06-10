@@ -14,15 +14,11 @@ type SectionKey =
   | "milestones"
   | "announceCard"
   | "announceCopy"
-  | "cardGenderScratch"
-  | "cardGenderFlip"
-  | "cardGenderEnvelope"
-  | "cardGenderEgg"
   | "nameGenerator"
   | "parentMbti";
 
 type Category = "catGuess" | "catCards" | "catQuiz" | "catTools";
-type PrefixKey = "genderReveal" | "announce";
+type PrefixKey = "announce";
 
 type SectionDef = {
   key: SectionKey;
@@ -37,10 +33,6 @@ type SectionDef = {
 };
 
 const SECTIONS: Record<SectionKey, SectionDef> = {
-  cardGenderScratch:  { key: "cardGenderScratch",  href: "/create?template=scratch",  status: "live", category: "catCards", palette: "pink",   prefix: "genderReveal" },
-  cardGenderFlip:     { key: "cardGenderFlip",     href: "/create?template=flip",     status: "live", category: "catCards", palette: "butter", prefix: "genderReveal" },
-  cardGenderEnvelope: { key: "cardGenderEnvelope", href: "/create?template=envelope", status: "live", category: "catCards", palette: "peach",  prefix: "genderReveal" },
-  cardGenderEgg:      { key: "cardGenderEgg",      href: "/create?template=egg-hatch", status: "new",  category: "catCards", palette: "blue",   prefix: "genderReveal" },
   announceCard:       { key: "announceCard",       href: "/create",                   status: "new",  category: "catCards", palette: "lilac",  prefix: "announce" },
   announceCopy:       { key: "announceCopy",       href: "/announcements",            status: "new",  category: "catTools", palette: "butter", prefix: "announce" },
   genderQuiz:         { key: "genderQuiz",         href: "/chinese-calendar",         status: "live", category: "catGuess", palette: "peach" },
@@ -59,9 +51,8 @@ const CHIPS: { key: "all" | Category }[] = [
   { key: "catTools" },
 ];
 
-const BEST_KEYS: SectionKey[] = ["cardGenderEgg", "geneticsPredict", "genderQuiz", "folkloreQuiz", "milestones"];
-const NEW_KEYS: SectionKey[] = ["cardGenderEgg", "milestones", "folkloreQuiz", "announceCopy", "parentMbti"];
-const CARDS_KEYS: SectionKey[] = ["cardGenderEgg", "cardGenderScratch", "cardGenderFlip", "cardGenderEnvelope", "announceCard", "announceCopy"];
+const BEST_KEYS: SectionKey[] = ["announceCard", "geneticsPredict", "genderQuiz", "folkloreQuiz", "milestones"];
+const NEW_KEYS: SectionKey[] = ["announceCard", "milestones", "folkloreQuiz", "announceCopy", "parentMbti"];
 const QUIZ_KEYS: SectionKey[] = ["folkloreQuiz", "parentMbti", "genderQuiz", "geneticsPredict"];
 
 function PosterCard({
@@ -267,12 +258,6 @@ export default function PortalLandingPage() {
           </div>
           <div className="h-px w-full bg-[var(--color-border)]" />
         </nav>
-
-        {/* ------- 카드 만들기 ------- */}
-        <section className="pt-6">
-          <SectionHeader title={t("sectionCards")} sub={t("sectionCardsSub")} />
-          {renderBigBanners(CARDS_KEYS)}
-        </section>
 
         {/* ------- 나는 어떤 부모? ------- */}
         <section className="pt-6">

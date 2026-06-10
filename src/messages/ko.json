@@ -1,7 +1,10 @@
 {
   "common": {
     "appName": "빠밤!",
-    "tagline": "임신부터 출산까지, 함께 웃을 수 있는 작은 도구들"
+    "tagline": "임신부터 출산까지, 함께 웃을 수 있는 작은 도구들",
+    "copyLink": "링크 복사",
+    "copied": "복사되었어요!",
+    "shareKakao": "카카오톡으로 공유"
   },
   "portal": {
     "searchPlaceholder": "뭐 재밌는 거 없나?",
@@ -17,8 +20,6 @@
     "sectionBestSub": "이번 주 인기 테스트",
     "sectionNew": "NEW",
     "sectionNewSub": "새로 올라온 콘텐츠",
-    "sectionCards": "카드 만들기",
-    "sectionCardsSub": "임신·출산 축하 카드 템플릿",
     "sectionQuiz": "나는 어떤 부모?",
     "sectionQuizSub": "자가 테스트·MBTI 모음",
     "more": "더보기",
@@ -30,7 +31,6 @@
     "catCards": "카드",
     "catQuiz": "테스트",
     "prefix": {
-      "genderReveal": "젠더리빌",
       "announce": "임밍아웃"
     },
     "phrases": {
@@ -40,10 +40,6 @@
       "milestones": "주차별\n마일스톤",
       "announceCard": "저 임신\n했어요!",
       "announceCopy": "상황별\n알림 문구",
-      "cardGenderScratch": "긁어서\n공개!",
-      "cardGenderFlip": "뒤집으면\n짜잔!",
-      "cardGenderEnvelope": "봉투 열어\n확인해봐",
-      "cardGenderEgg": "반짝이는 알을\n깨뜨려\n아기를 만나요",
       "nameGenerator": "우리 아기\n태명 짓기",
       "parentMbti": "나는 어떤\n엄마·아빠?"
     },
@@ -66,27 +62,11 @@
       },
       "announceCard": {
         "title": "임밍아웃 카드",
-        "desc": "깜짝 임신 소식, 특별하게 알리기"
+        "desc": "스크래치·뒤집기·봉투·알 부화 템플릿으로 깜짝 소식 알리기"
       },
       "announceCopy": {
         "title": "임밍아웃 문구 모음",
         "desc": "부모님·배우자·친구·회사까지 상황별 알림 문구 복사"
-      },
-      "cardGenderScratch": {
-        "title": "스크래치 카드",
-        "desc": "은박을 긁으면 성별이 나타나요"
-      },
-      "cardGenderFlip": {
-        "title": "카드 뒤집기",
-        "desc": "카드를 뒤집으면 성별이 보여요"
-      },
-      "cardGenderEnvelope": {
-        "title": "봉투 열기",
-        "desc": "봉투를 열면 편지가 나와요"
-      },
-      "cardGenderEgg": {
-        "title": "반짝이는 알 부화",
-        "desc": "탭으로 알을 깨뜨리면 안에서 아기가 나와요"
       },
       "nameGenerator": {
         "title": "태명 생성기",
@@ -124,28 +104,18 @@
     "gender": "성별",
     "boy": "아들",
     "girl": "딸",
-    "recipientMode": "받는 사람",
-    "recipientPreset": "직접 입력하기",
-    "recipientInput": "받는 사람이 적게 하기",
-    "recipientName": "받는 사람 이름",
-    "recipientNamePlaceholder": "예: 할머니",
     "ultrasound": "초음파 사진",
     "ultrasoundOptional": "(선택사항)",
     "ultrasoundUpload": "사진 업로드",
-    "ogMode": "카드 미리보기 스타일",
-    "ogDefault": "기본",
-    "ogDefaultDesc": "성별 공개 카드임을 알 수 있어요",
-    "ogFakeSurprise": "페이크 서프라이즈",
-    "ogFakeSurpriseDesc": "전혀 다른 내용으로 보여요",
     "next": "다음",
     "prev": "이전",
     "preview": "미리보기",
     "create": "카드 만들기",
     "complete": "카드가 완성되었어요!",
+    "completeDesc": "링크를 공유하면 받은 사람이 이름을 입력하고 {babyNickname}의 소식을 확인해요",
     "copyLink": "링크 복사",
     "copied": "복사되었어요!",
-    "shareKakao": "카카오톡으로 공유",
-    "manageDashboard": "내 카드 관리하기"
+    "shareKakao": "카카오톡으로 공유"
   },
   "viewer": {
     "enterName": "이름을 알려주세요",
