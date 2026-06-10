@@ -9,20 +9,13 @@ import { CardInfoForm, type CardInfoData } from "./card-info-form";
 import { CardPreview } from "./card-preview";
 import { CardComplete } from "./card-complete";
 import { getTemplateById } from "@/components/templates";
-import { createCard, uploadUltrasound } from "@/lib/card-api";
-import { rememberCardId } from "@/lib/stored-cards";
 
 type Step = 1 | 2 | 3 | 4;
 
 // Pure step-gating rule, kept outside the component for testability.
 const canProceedFrom = (step: Step, templateId: string | null, cardInfo: CardInfoData): boolean => {
   if (step === 1) return templateId !== null;
-  if (step === 2) {
-    return (
-      cardInfo.babyNickname.trim() !== "" &&
-      (cardInfo.recipientMode === "input" || cardInfo.recipientName.trim() !== "")
-    );
-  }
+  if (step === 2) return cardInfo.babyNickname.trim() !== "";
   return true;
 };
 
@@ -39,46 +32,11 @@ export function CreateWizard() {
   const [cardInfo, setCardInfo] = useState<CardInfoData>({
     babyNickname: "",
     gender: "boy",
-    recipientMode: "input",
-    recipientName: "",
-    ogMode: "default",
-    ultrasoundFile: null,
   });
-  const [createdSlug, setCreatedSlug] = useState<string | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const stepTitles = [t("step1Title"), t("step2Title"), t("step3Title"), t("step4Title")];
 
   const canProceed = () => canProceedFrom(step, templateId, cardInfo);
-
-  const handleCreate = async () => {
-    if (!templateId || isSubmitting) return;
-    setIsSubmitting(true);
-
-    try {
-      const ultrasoundImageUrl = cardInfo.ultrasoundFile
-        ? await uploadUltrasound(cardInfo.ultrasoundFile)
-        : undefined;
-
-      const created = await createCard({
-        templateId,
-        babyNickname: cardInfo.babyNickname,
-        gender: cardInfo.gender,
-        recipientMode: cardInfo.recipientMode,
-        recipientName: cardInfo.recipientMode === "preset" ? cardInfo.recipientName : undefined,
-        ogMode: cardInfo.ogMode,
-        ultrasoundImageUrl,
-      });
-
-      rememberCardId(created.id);
-      setCreatedSlug(created.slug);
-      setStep(4);
-    } catch (error) {
-      console.error("Failed to create card:", error);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
 
   return (
     <div className="flex flex-col min-h-[calc(100vh-56px)]">
@@ -121,13 +79,14 @@ export function CreateWizard() {
                 templateId={templateId}
                 gender={cardInfo.gender}
                 babyNickname={cardInfo.babyNickname}
-                recipientName={
-                  cardInfo.recipientMode === "preset" ? cardInfo.recipientName : undefined
-                }
               />
             )}
-            {step === 4 && createdSlug && (
-              <CardComplete slug={createdSlug} babyNickname={cardInfo.babyNickname} />
+            {step === 4 && templateId && (
+              <CardComplete
+                templateId={templateId}
+                babyNickname={cardInfo.babyNickname}
+                gender={cardInfo.gender}
+              />
             )}
           </motion.div>
         </AnimatePresence>
@@ -153,11 +112,10 @@ export function CreateWizard() {
             </button>
           ) : (
             <button
-              onClick={handleCreate}
-              disabled={isSubmitting}
-              className="flex-1 py-3 rounded-xl bg-gradient-to-r from-pink-baby to-blue-baby text-white disabled:opacity-50 transition-opacity"
+              onClick={() => setStep(4)}
+              className="flex-1 py-3 rounded-xl bg-gradient-to-r from-pink-baby to-blue-baby text-white transition-opacity"
             >
-              {isSubmitting ? "..." : t("create")}
+              {t("create")}
             </button>
           )}
         </div>

@@ -5,10 +5,6 @@ import { useTranslations } from "next-intl";
 export interface CardInfoData {
   babyNickname: string;
   gender: "boy" | "girl";
-  recipientMode: "preset" | "input";
-  recipientName: string;
-  ogMode: "default" | "fake-surprise";
-  ultrasoundFile: File | null;
 }
 
 interface CardInfoFormProps {
@@ -64,43 +60,7 @@ export function CardInfoForm({ data, onChange }: CardInfoFormProps) {
         </div>
       </div>
 
-      {/* Recipient mode */}
-      <div>
-        <label className="block text-sm mb-1">{t("recipientMode")}</label>
-        <div className="flex flex-col gap-2">
-          <button
-            onClick={() => update({ recipientMode: "preset" })}
-            className={`px-4 py-3 rounded-xl border text-left transition-all cursor-pointer ${
-              data.recipientMode === "preset"
-                ? "border-pink-baby bg-pink-light"
-                : "border-gray-200"
-            }`}
-          >
-            {t("recipientPreset")}
-          </button>
-          <button
-            onClick={() => update({ recipientMode: "input" })}
-            className={`px-4 py-3 rounded-xl border text-left transition-all cursor-pointer ${
-              data.recipientMode === "input"
-                ? "border-pink-baby bg-pink-light"
-                : "border-gray-200"
-            }`}
-          >
-            {t("recipientInput")}
-          </button>
-        </div>
-        {data.recipientMode === "preset" && (
-          <input
-            type="text"
-            value={data.recipientName}
-            onChange={(e) => update({ recipientName: e.target.value })}
-            placeholder={t("recipientNamePlaceholder")}
-            className="w-full mt-2 px-4 py-3 rounded-xl border border-gray-200 focus:border-pink-baby outline-none"
-          />
-        )}
-      </div>
-
-      {/* Ultrasound photo */}
+      {/* Ultrasound photo upload: temporarily disabled (query-link cards carry no uploads).
       <div>
         <label className="block text-sm mb-1">
           {t("ultrasound")} <span className="text-text-secondary">{t("ultrasoundOptional")}</span>
@@ -112,35 +72,7 @@ export function CardInfoForm({ data, onChange }: CardInfoFormProps) {
           className="w-full text-sm file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:bg-pink-light file:text-pink-baby"
         />
       </div>
-
-      {/* OG mode */}
-      <div>
-        <label className="block text-sm mb-1">{t("ogMode")}</label>
-        <div className="flex flex-col gap-2">
-          <button
-            onClick={() => update({ ogMode: "default" })}
-            className={`px-4 py-3 rounded-xl border text-left transition-all cursor-pointer ${
-              data.ogMode === "default"
-                ? "border-pink-baby bg-pink-light"
-                : "border-gray-200"
-            }`}
-          >
-            <span className="font-bold">{t("ogDefault")}</span>
-            <span className="block text-xs text-text-secondary mt-0.5">{t("ogDefaultDesc")}</span>
-          </button>
-          <button
-            onClick={() => update({ ogMode: "fake-surprise" })}
-            className={`px-4 py-3 rounded-xl border text-left transition-all cursor-pointer ${
-              data.ogMode === "fake-surprise"
-                ? "border-pink-baby bg-pink-light"
-                : "border-gray-200"
-            }`}
-          >
-            <span className="font-bold">{t("ogFakeSurprise")}</span>
-            <span className="block text-xs text-text-secondary mt-0.5">{t("ogFakeSurpriseDesc")}</span>
-          </button>
-        </div>
-      </div>
+      */}
     </div>
   );
 }

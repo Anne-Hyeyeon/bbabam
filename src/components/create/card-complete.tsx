@@ -1,18 +1,16 @@
 "use client";
 
-import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/navigation";
+import { useLocale, useTranslations } from "next-intl";
 import { ShareButtons } from "@/components/share-buttons";
+import { buildCardQuery, type CardLinkData } from "@/lib/card-link";
 
-interface CardCompleteProps {
-  slug: string;
-  babyNickname: string;
-}
+type CardCompleteProps = CardLinkData;
 
-export function CardComplete({ slug, babyNickname }: CardCompleteProps) {
+export function CardComplete({ templateId, babyNickname, gender }: CardCompleteProps) {
   const t = useTranslations("create");
+  const locale = useLocale();
 
-  const shareUrl = `/c/${slug}`;
+  const shareUrl = `/${locale}/card?${buildCardQuery({ templateId, babyNickname, gender })}`;
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] p-6 text-center">
@@ -21,13 +19,6 @@ export function CardComplete({ slug, babyNickname }: CardCompleteProps) {
 
       <div className="w-full max-w-[320px] flex flex-col gap-3">
         <ShareButtons url={shareUrl} babyNickname={babyNickname} />
-
-        <Link
-          href="/dashboard"
-          className="text-text-secondary text-sm mt-2 hover:text-text-primary transition-colors"
-        >
-          {t("manageDashboard")}
-        </Link>
       </div>
     </div>
   );
