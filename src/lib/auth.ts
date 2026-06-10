@@ -5,6 +5,17 @@ import { db } from "@/db";
 import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
+async function findUserByEmail(email: string) {
+  const rows = await db.select().from(users).where(eq(users.email, email)).limit(1);
+  return rows[0] ?? null;
+}
+
+async function ensureUserExists(email: string, name: string | null, provider: string) {
+  const existing = await findUserByEmail(email);
+  if (existing) return;
+  await db.insert(users).values({ email, name, provider });
+}
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
     Google({
@@ -19,32 +30,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   callbacks: {
     async signIn({ user, account }) {
       if (!user.email || !account) return false;
-      const existing = await db
-        .select()
-        .from(users)
-        .where(eq(users.email, user.email))
-        .limit(1);
-      if (existing.length === 0) {
-        await db.insert(users).values({
-          email: user.email,
-          name: user.name ?? null,
-          provider: account.provider,
-        });
-      }
+      await ensureUserExists(user.email, user.name ?? null, account.provider);
       return true;
     },
     async session({ session }) {
-      if (session.user?.email) {
-        const dbUser = await db
-          .select()
-          .from(users)
-          .where(eq(users.email, session.user.email))
-          .limit(1);
-        if (dbUser[0]) {
-          session.user.id = dbUser[0].id;
-        }
-      }
-      return session;
+      if (!session.user?.email) return session;
+      const dbUser = await findUserByEmail(session.user.email);
+      return dbUser
+        ? { ...session, user: { ...session.user, id: dbUser.id } }
+        : session;
     },
   },
 });
