@@ -4,6 +4,9 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Confetti } from "@/components/confetti";
 import { motion } from "framer-motion";
+import { BabyIllustration } from "@/components/templates/egg-hatch/baby-illustration";
+import { jua } from "@/components/templates/egg-hatch/font";
+import { topicJosa } from "@/lib/korean";
 
 interface RevealResultProps {
   gender: "boy" | "girl";
@@ -12,6 +15,8 @@ interface RevealResultProps {
   ultrasoundImageUrl?: string;
 }
 
+const GENDER_DEEP = { boy: "#6E9CC4", girl: "#E2849B" } as const;
+
 export function RevealResult({
   gender,
   babyNickname,
@@ -19,7 +24,7 @@ export function RevealResult({
   ultrasoundImageUrl,
 }: RevealResultProps) {
   const t = useTranslations("viewer");
-  const genderColor = gender === "girl" ? "#FFB6C1" : "#89CFF0";
+  const deep = GENDER_DEEP[gender];
   const genderText = gender === "girl" ? "딸" : "아들";
 
   return (
@@ -30,30 +35,39 @@ export function RevealResult({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <p className="text-lg mb-2">{t("congratulations")}</p>
-        <div
-          className="w-20 h-20 rounded-full flex items-center justify-center my-4"
-          style={{ backgroundColor: `${genderColor}20` }}
-        >
-          <span className="text-3xl font-bold" style={{ color: genderColor }}>
-            {genderText === "딸" ? "G" : "B"}
-          </span>
-        </div>
-        <h2 className="text-2xl mb-1">
-          <span style={{ color: genderColor }}>{babyNickname}</span>는
-        </h2>
-        <p className="text-3xl font-bold" style={{ color: genderColor }}>
-          {genderText}이에요!
+        <p className="text-sm font-medium text-[var(--color-ink-muted)] mb-3">
+          {t("congratulations")}
         </p>
 
+        <motion.div
+          initial={{ scale: 0.6, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ type: "spring", stiffness: 180, damping: 15, delay: 0.15 }}
+          className="w-[150px] mb-3"
+          style={{ aspectRatio: "200 / 210" }}
+        >
+          <BabyIllustration gender={gender} />
+        </motion.div>
+
+        <div className={jua.className}>
+          <h2 className="text-2xl text-[var(--color-ink)]">
+            {babyNickname}
+            {topicJosa(babyNickname)} 바로
+          </h2>
+          <p className="text-4xl mt-1" style={{ color: deep }}>
+            {genderText}이랍니다!
+          </p>
+        </div>
+
         {recipientName && (
-          <p className="text-text-secondary mt-4 text-sm">
-            {recipientName}님, 축하해주세요!
+          <p className="text-[var(--color-ink-muted)] mt-4 text-sm">
+            {recipientName}님, 함께 축하해 주세요!
           </p>
         )}
 
         {ultrasoundImageUrl && (
           <div className="mt-6 w-full max-w-[240px]">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={ultrasoundImageUrl}
               alt="초음파 사진"
@@ -62,12 +76,20 @@ export function RevealResult({
           </div>
         )}
 
-        <Link
-          href="/create"
-          className="mt-8 px-6 py-3 rounded-xl bg-gradient-to-r from-pink-baby to-blue-baby text-white text-lg"
-        >
-          {t("createMyCard")}
-        </Link>
+        <div className="mt-9 w-full max-w-[300px] flex flex-col gap-2.5">
+          <Link
+            href="/"
+            className="w-full py-3 rounded-xl bg-[var(--color-ink)] text-white text-sm font-semibold hover:opacity-90 transition-opacity"
+          >
+            {t("goToBbabam")}
+          </Link>
+          <Link
+            href="/gender-reveal-card"
+            className="w-full py-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] text-sm font-semibold text-[var(--color-ink)] hover:border-[var(--color-ink)] transition-colors"
+          >
+            {t("createMyCard")}
+          </Link>
+        </div>
       </motion.div>
     </>
   );

@@ -114,16 +114,8 @@
     "previewDesc": "This is the card people will see!",
     "templateBanners": {
       "scratch": {
-        "phrase": "Scratch\nto reveal",
+        "phrase": "100% win!\nGender reveal lottery",
         "desc": "Scratch the foil to reveal the gender"
-      },
-      "flip": {
-        "phrase": "Flip\nand ta-da!",
-        "desc": "Flip the card to see the gender"
-      },
-      "envelope": {
-        "phrase": "Open the\nenvelope",
-        "desc": "Open the envelope to find a letter"
       },
       "eggHatch": {
         "phrase": "Crack the\nglowing egg",
@@ -138,12 +130,17 @@
     "shareKakao": "Share via KakaoTalk"
   },
   "viewer": {
-    "enterName": "What's your name?",
-    "namePlaceholder": "Enter your name",
+    "arrivalTitle": "A gender reveal card has arrived",
+    "whoAreYou": "Who are you to\nbaby {name}?",
+    "namePlaceholder": "e.g., Grandma, Auntie Mia",
     "confirm": "OK",
+    "greeting": "{recipient}, this card\nis just for you!",
+    "greetingSub": "Let's find out precious {name}'s\ngender together",
+    "start": "Start",
     "tapToReveal": "Tap to reveal",
     "congratulations": "Congratulations!",
-    "createMyCard": "Create My Card"
+    "goToBbabam": "Explore bbabam, pregnancy & parenting",
+    "createMyCard": "Create my own gender reveal card"
   },
   "dashboard": {
     "title": "My Cards",
@@ -154,16 +151,14 @@
     "deleteConfirm": "Are you sure you want to delete?"
   },
   "templates": {
-    "scratch": "Scratch",
-    "flip": "Card Flip",
-    "envelope": "Open Envelope",
+    "scratch": "Gender Reveal Lottery",
     "eggHatch": "Hatching Egg"
   },
   "eggHatch": {
     "intro": {
-      "title": "A glowing egg\nis ready to hatch",
+      "title": "Curious about lovely\n{name}'s gender?",
       "tapToStart": "Tap to begin",
-      "instruction": "Keep tapping to crack the egg!"
+      "instruction": "Crack the egg to find out\n{name}'s gender!"
     },
     "hud": {
       "tapLabel": "Taps",
@@ -176,9 +171,9 @@
       "stage3": "Final!!"
     },
     "reveal": {
-      "boyHeadline": "It's a boy!",
-      "girlHeadline": "It's a girl!",
-      "subline": "{name}",
+      "lead": "Lovely {name} is...",
+      "boyHeadline": "a baby boy!",
+      "girlHeadline": "a baby girl!",
       "replay": "Play again"
     }
   }

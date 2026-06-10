@@ -46,7 +46,7 @@ export function HamburgerMenu({ onClose }: HamburgerMenuProps) {
               </Link>
             </li>
             <li>
-              <Link href="/create" onClick={onClose} className="block py-2 px-3 rounded-lg hover:bg-pink-light/50">
+              <Link href="/gender-reveal-card" onClick={onClose} className="block py-2 px-3 rounded-lg hover:bg-pink-light/50">
                 {t("createCard")}
               </Link>
             </li>

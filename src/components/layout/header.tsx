@@ -7,9 +7,11 @@ import { HamburgerMenu } from "./hamburger-menu";
 interface HeaderProps {
   showBack?: boolean;
   showHamburger?: boolean;
+  /** Optional product label shown after the logo (e.g. "젠더리빌 카드"). */
+  subtitle?: string;
 }
 
-export function Header({ showBack = true, showHamburger = true }: HeaderProps) {
+export function Header({ showBack = true, showHamburger = true, subtitle }: HeaderProps) {
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -29,8 +31,11 @@ export function Header({ showBack = true, showHamburger = true }: HeaderProps) {
             </button>
           )}
         </div>
-        <h1 className="text-[20px] font-bold tracking-tight text-ink">
+        <h1 className="text-[20px] font-bold tracking-tight text-ink whitespace-nowrap">
           빠밤<span className="text-primary">!</span>
+          {subtitle && (
+            <span className="ml-1.5 text-[15px] font-semibold text-ink-muted">{subtitle}</span>
+          )}
         </h1>
         <div className="w-10 text-right">
           {showHamburger && (

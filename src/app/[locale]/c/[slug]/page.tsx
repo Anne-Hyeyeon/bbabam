@@ -74,7 +74,7 @@ export default async function CardPage({ params }: CardPageProps) {
 
   return (
     <>
-      <Header showBack={false} showHamburger={false} />
+      <Header showBack={false} showHamburger={false} subtitle="젠더리빌 카드" />
       <CardViewer
         templateId={card.templateId}
         gender={card.gender as "boy" | "girl"}

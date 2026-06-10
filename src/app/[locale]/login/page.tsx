@@ -24,7 +24,7 @@ export default function LoginPage() {
         >
           {t("google")}
         </button>
-        <Link href="/create" className="mt-2 text-text-secondary text-sm">
+        <Link href="/gender-reveal-card" className="mt-2 text-text-secondary text-sm">
           {t("continueWithout")}
         </Link>
       </div>

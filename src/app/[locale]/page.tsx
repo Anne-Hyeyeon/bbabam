@@ -56,7 +56,7 @@ const GENDER_QUIZ_THUMBNAIL: Thumbnail = {
 };
 
 const SECTIONS: Record<SectionKey, SectionDef> = {
-  announceCard:       { key: "announceCard",       href: "/create",                   status: "new",  category: "catCards", palette: "lilac",  prefix: "announce", thumbnail: ANNOUNCE_CARD_THUMBNAIL },
+  announceCard:       { key: "announceCard",       href: "/gender-reveal-card",                 status: "new",  category: "catCards", palette: "lilac",  prefix: "announce", thumbnail: ANNOUNCE_CARD_THUMBNAIL },
   announceCopy:       { key: "announceCopy",       href: "/announcements",            status: "new",  category: "catTools", palette: "butter", prefix: "announce", thumbnail: PHRASE_THUMBNAIL },
   genderQuiz:         { key: "genderQuiz",         href: "/chinese-calendar",         status: "live", category: "catGuess", palette: "peach",  thumbnail: GENDER_QUIZ_THUMBNAIL },
   folkloreQuiz:       { key: "folkloreQuiz",       href: "/gender-folklore",          status: "new",  category: "catGuess", palette: "lilac",  thumbnail: PHRASE_THUMBNAIL },

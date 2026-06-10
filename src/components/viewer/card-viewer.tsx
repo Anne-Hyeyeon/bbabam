@@ -69,7 +69,7 @@ export function CardViewer({
 
       {phase === "recipient" && (
         <motion.div key="recipient" exit={{ opacity: 0 }}>
-          <RecipientInput onSubmit={handleRecipientSubmit} />
+          <RecipientInput babyNickname={babyNickname} onSubmit={handleRecipientSubmit} />
         </motion.div>
       )}
 

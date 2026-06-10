@@ -13,6 +13,8 @@ export interface CardTemplate {
   nameKey: string; // i18n key under "templates"
   interactionType: string;
   thumbnail: string; // emoji placeholder
+  /** Baked picker thumbnail (typography included); hides the text overlay when set. */
+  imageSrc?: string;
   component: () => Promise<{ default: ComponentType<TemplateInteractionProps> }>;
 }
 
@@ -22,21 +24,8 @@ export const templates: CardTemplate[] = [
     nameKey: "scratch",
     interactionType: "scratch",
     thumbnail: "🎫",
+    imageSrc: "/thumbnails/shared/gender-reveal-lottery.png",
     component: () => import("./scratch-card"),
-  },
-  {
-    id: "flip",
-    nameKey: "flip",
-    interactionType: "flip",
-    thumbnail: "🃏",
-    component: () => import("./flip-card"),
-  },
-  {
-    id: "envelope",
-    nameKey: "envelope",
-    interactionType: "envelope",
-    thumbnail: "✉️",
-    component: () => import("./envelope-card"),
   },
   {
     id: "egg-hatch",

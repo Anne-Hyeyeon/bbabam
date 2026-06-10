@@ -2,15 +2,7 @@
 
 import { memo, useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
-import { KENNEY_PARTICLES } from "./constants";
-
-const BURST_SRCS = [
-  KENNEY_PARTICLES.spark1,
-  KENNEY_PARTICLES.spark2,
-  KENNEY_PARTICLES.spark3,
-  KENNEY_PARTICLES.magic1,
-  KENNEY_PARTICLES.magic2,
-];
+import { PASTEL_CONFETTI } from "./constants";
 
 interface Props {
   id: number;
@@ -21,26 +13,29 @@ interface Props {
   /** Base size in px */
   size: number;
   onDone: (id: number) => void;
-  tint?: string;
 }
 
-function TapBurstImpl({ id, x, y, size, onDone, tint }: Props) {
+const HEART_PATH =
+  "M12 21 C5 15 2 11 2 7.5 C2 4.5 4.5 2 7.5 2 C9.5 2 11.2 3.1 12 4.7 C12.8 3.1 14.5 2 16.5 2 C19.5 2 22 4.5 22 7.5 C22 11 19 15 12 21 Z";
+
+function TapBurstImpl({ id, x, y, size, onDone }: Props) {
   useEffect(() => {
     const t = setTimeout(() => onDone(id), 650);
     return () => clearTimeout(t);
   }, [id, onDone]);
 
-  // 6 particles scattering from tap point. Stable layout per burst instance.
+  // 6 pastel particles scattering from the tap point; stable per burst.
   const particles = useMemo(() => {
     /* eslint-disable react-hooks/purity */
     return Array.from({ length: 6 }, (_, i) => {
       const angle = (i / 6) * Math.PI * 2 + Math.random() * 0.4;
-      const distance = 22 + Math.random() * 18;
+      const distance = 24 + Math.random() * 20;
       return {
         dx: Math.cos(angle) * distance,
         dy: Math.sin(angle) * distance,
-        src: BURST_SRCS[i % BURST_SRCS.length],
-        rotate: Math.random() * 180,
+        color: PASTEL_CONFETTI[i % PASTEL_CONFETTI.length],
+        isHeart: i % 2 === 0,
+        rotate: Math.random() * 160 - 80,
       };
     });
     /* eslint-enable react-hooks/purity */
@@ -58,45 +53,46 @@ function TapBurstImpl({ id, x, y, size, onDone, tint }: Props) {
         pointerEvents: "none",
       }}
     >
-      {/* Center flash */}
-      <motion.img
-        src={KENNEY_PARTICLES.flare}
-        alt=""
-        initial={{ opacity: 0.9, scale: 0.3 }}
-        animate={{ opacity: 0, scale: 1.6 }}
-        transition={{ duration: 0.45, ease: "easeOut" }}
+      {/* Soft center pop */}
+      <motion.div
+        initial={{ opacity: 0.8, scale: 0.3 }}
+        animate={{ opacity: 0, scale: 1.5 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
         style={{
           position: "absolute",
           left: -size / 2,
           top: -size / 2,
           width: size,
           height: size,
-          filter: tint ? `drop-shadow(0 0 6px ${tint})` : undefined,
+          borderRadius: "50%",
+          background:
+            "radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0) 70%)",
         }}
       />
       {particles.map((p, i) => (
-        <motion.img
+        <motion.span
           key={i}
-          src={p.src}
-          alt=""
-          initial={{ opacity: 1, x: 0, y: 0, scale: 0.8, rotate: 0 }}
-          animate={{
-            opacity: 0,
-            x: p.dx,
-            y: p.dy,
-            scale: 0.2,
-            rotate: p.rotate,
-          }}
+          initial={{ opacity: 1, x: 0, y: 0, scale: 0.9, rotate: 0 }}
+          animate={{ opacity: 0, x: p.dx, y: p.dy, scale: 0.3, rotate: p.rotate }}
           transition={{ duration: 0.55, ease: "easeOut" }}
-          style={{
-            position: "absolute",
-            left: -7,
-            top: -7,
-            width: 14,
-            height: 14,
-            filter: tint ? `drop-shadow(0 0 4px ${tint})` : undefined,
-          }}
-        />
+          style={{ position: "absolute", left: -6, top: -6 }}
+        >
+          {p.isHeart ? (
+            <svg viewBox="0 0 24 24" width="13" height="13">
+              <path d={HEART_PATH} fill={p.color} />
+            </svg>
+          ) : (
+            <span
+              style={{
+                display: "block",
+                width: 9,
+                height: 9,
+                borderRadius: "50%",
+                background: p.color,
+              }}
+            />
+          )}
+        </motion.span>
       ))}
     </div>
   );

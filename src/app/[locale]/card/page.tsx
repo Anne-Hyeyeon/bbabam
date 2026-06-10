@@ -30,7 +30,7 @@ export default async function QueryCardPage({ searchParams }: QueryCardPageProps
 
   return (
     <>
-      <Header showBack={false} showHamburger={false} />
+      <Header showBack={false} showHamburger={false} subtitle="젠더리빌 카드" />
       <CardViewer
         templateId={card.templateId}
         gender={card.gender}
