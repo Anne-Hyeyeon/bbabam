@@ -1,4 +1,7 @@
+import { use } from "react";
 import { useTranslations } from "next-intl";
+import { setRequestLocale } from "next-intl/server";
+import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { Header } from "@/components/layout/header";
 import { ScrollRow } from "@/components/scroll-row";
@@ -6,6 +9,12 @@ import { HeroBanner, type HeroSlide } from "@/components/home/hero-banner";
 import { BigBannerCard, type BigBannerData } from "@/components/home/big-banner-card";
 import { StatusBadge } from "@/components/home/status-badge";
 import { POSTER_BG, type Palette } from "@/components/home/palette";
+import {
+  PHRASE_THUMBNAIL,
+  resolveThumbnail,
+  type ResolvedThumbnail,
+  type Thumbnail,
+} from "@/components/home/thumbnail";
 
 type SectionKey =
   | "genderQuiz"
@@ -28,19 +37,33 @@ type SectionDef = {
   palette: Palette;
   /** Product line prefix (e.g. "젠더리빌", "임밍아웃"). Shown as `(...)` before the title. */
   prefix?: PrefixKey;
-  /** Future: Miricanvas-designed thumbnail URL. Replaces the phrase placeholder. */
-  imageUrl?: string;
+  /** Required: every content declares how its thumbnail renders (see thumbnail.ts). */
+  thumbnail: Thumbnail;
+};
+
+const ANNOUNCE_CARD_THUMBNAIL: Thumbnail = {
+  kind: "image",
+  images: { hero: "announce-card.png" },
+  localized: true,
+  textMode: "baked",
+};
+
+const GENDER_QUIZ_THUMBNAIL: Thumbnail = {
+  kind: "image",
+  images: { hero: "royal-calendar.png", wide: "royal-calendar.png" },
+  localized: true,
+  textMode: "baked",
 };
 
 const SECTIONS: Record<SectionKey, SectionDef> = {
-  announceCard:       { key: "announceCard",       href: "/create",                   status: "new",  category: "catCards", palette: "lilac",  prefix: "announce" },
-  announceCopy:       { key: "announceCopy",       href: "/announcements",            status: "new",  category: "catTools", palette: "butter", prefix: "announce" },
-  genderQuiz:         { key: "genderQuiz",         href: "/chinese-calendar",         status: "live", category: "catGuess", palette: "peach" },
-  folkloreQuiz:       { key: "folkloreQuiz",       href: "/gender-folklore",          status: "new",  category: "catGuess", palette: "lilac" },
-  geneticsPredict:    { key: "geneticsPredict",    href: "/genetics",                 status: "live", category: "catTools", palette: "sage" },
-  milestones:         { key: "milestones",         href: "/milestones",               status: "new",  category: "catTools", palette: "sage" },
-  nameGenerator:      { key: "nameGenerator",      href: null,                        status: "soon", category: "catTools", palette: "butter" },
-  parentMbti:         { key: "parentMbti",         href: "/parent-mbti",              status: "live", category: "catQuiz",  palette: "blue" },
+  announceCard:       { key: "announceCard",       href: "/create",                   status: "new",  category: "catCards", palette: "lilac",  prefix: "announce", thumbnail: ANNOUNCE_CARD_THUMBNAIL },
+  announceCopy:       { key: "announceCopy",       href: "/announcements",            status: "new",  category: "catTools", palette: "butter", prefix: "announce", thumbnail: PHRASE_THUMBNAIL },
+  genderQuiz:         { key: "genderQuiz",         href: "/chinese-calendar",         status: "live", category: "catGuess", palette: "peach",  thumbnail: GENDER_QUIZ_THUMBNAIL },
+  folkloreQuiz:       { key: "folkloreQuiz",       href: "/gender-folklore",          status: "new",  category: "catGuess", palette: "lilac",  thumbnail: PHRASE_THUMBNAIL },
+  geneticsPredict:    { key: "geneticsPredict",    href: "/genetics",                 status: "live", category: "catTools", palette: "sage",   thumbnail: PHRASE_THUMBNAIL },
+  milestones:         { key: "milestones",         href: "/milestones",               status: "new",  category: "catTools", palette: "sage",   thumbnail: PHRASE_THUMBNAIL },
+  nameGenerator:      { key: "nameGenerator",      href: null,                        status: "soon", category: "catTools", palette: "butter", thumbnail: PHRASE_THUMBNAIL },
+  parentMbti:         { key: "parentMbti",         href: "/parent-mbti",              status: "live", category: "catQuiz",  palette: "blue",   thumbnail: PHRASE_THUMBNAIL },
 };
 
 const CHIPS: { key: "all" | Category }[] = [
@@ -57,6 +80,7 @@ const QUIZ_KEYS: SectionKey[] = ["folkloreQuiz", "parentMbti", "genderQuiz", "ge
 
 function PosterCard({
   section,
+  image,
   phrase,
   catLabel,
   prefixLabel,
@@ -64,6 +88,7 @@ function PosterCard({
   t,
 }: {
   section: SectionDef;
+  image: ResolvedThumbnail | null;
   phrase: string;
   catLabel: string;
   prefixLabel?: string;
@@ -72,7 +97,9 @@ function PosterCard({
 }) {
   const aspect = size === "lg" ? "aspect-[3/4]" : "aspect-[4/5]";
   const widthClass = size === "lg" ? "w-[148px]" : "w-[124px]";
+  const sizes = size === "lg" ? "148px" : "124px";
   const isDisabled = section.href === null;
+  const showPhrase = image === null || image.textMode === "overlay";
 
   const poster = (
     <article
@@ -90,11 +117,17 @@ function PosterCard({
           POSTER_BG[section.palette],
         ].join(" ")}
       >
-        {section.imageUrl ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={section.imageUrl} alt="" className="h-full w-full object-cover" />
-        ) : (
-          <div className="flex h-full w-full items-center justify-center px-3">
+        {image && (
+          <Image
+            src={image.src}
+            alt={image.textMode === "baked" ? t(`sections.${section.key}.title`) : ""}
+            fill
+            sizes={sizes}
+            className="object-cover"
+          />
+        )}
+        {showPhrase && (
+          <div className="relative flex h-full w-full items-center justify-center px-3">
             <p className="text-center text-[20px] font-bold leading-[1.15] text-[var(--color-ink)] whitespace-pre-line">
               {phrase}
             </p>
@@ -159,7 +192,12 @@ function SectionHeader({ title, sub }: { title: string; sub: string }) {
   );
 }
 
-export default function PortalLandingPage() {
+export default function PortalLandingPage({ params }: { params: Promise<{ locale: string }> }) {
+  // Pages render concurrently with layouts, so the locale must be seeded
+  // here as well (Next 16 drops the next-intl proxy request header).
+  const { locale } = use(params);
+  setRequestLocale(locale);
+
   const t = useTranslations("portal");
 
   const render = (keys: SectionKey[], size: "lg" | "md") =>
@@ -169,6 +207,7 @@ export default function PortalLandingPage() {
         <PosterCard
           key={k}
           section={s}
+          image={resolveThumbnail(s.thumbnail, "poster", locale)}
           phrase={t(`phrases.${k}`)}
           catLabel={t(`chips.${s.category}`)}
           prefixLabel={s.prefix ? t(`prefix.${s.prefix}`) : undefined}
@@ -179,13 +218,14 @@ export default function PortalLandingPage() {
     });
 
   // Pure: resolve a section into plain serializable banner data.
-  const toBannerData = (k: SectionKey): BigBannerData & HeroSlide => {
+  const toBannerData = (k: SectionKey, slot: "hero" | "wide"): BigBannerData & HeroSlide => {
     const s = SECTIONS[k];
     return {
       key: k,
       href: s.href,
       palette: s.palette,
       status: s.status,
+      image: resolveThumbnail(s.thumbnail, slot, locale),
       phrase: t(`phrases.${k}`),
       title: t(`sections.${k}.title`),
       catLabel: t(`chips.${s.category}`),
@@ -193,7 +233,7 @@ export default function PortalLandingPage() {
     };
   };
 
-  const heroSlides = BEST_KEYS.map(toBannerData);
+  const heroSlides = BEST_KEYS.map((k) => toBannerData(k, "hero"));
   const statusLabels = {
     live: t("live"),
     new: t("new"),
@@ -203,7 +243,7 @@ export default function PortalLandingPage() {
   const renderBigBanners = (keys: SectionKey[]) => (
     <div className="flex flex-col gap-3 px-4">
       {keys.map((k) => (
-        <BigBannerCard key={k} banner={toBannerData(k)} statusLabels={statusLabels} />
+        <BigBannerCard key={k} banner={toBannerData(k, "wide")} statusLabels={statusLabels} />
       ))}
     </div>
   );
