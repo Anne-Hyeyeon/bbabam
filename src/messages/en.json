@@ -99,8 +99,9 @@
     "step2Title": "Enter Info",
     "step3Title": "Preview",
     "step4Title": "Done!",
-    "babyNickname": "Baby Nickname",
+    "babyNickname": "Baby Bump Name",
     "babyNicknamePlaceholder": "e.g., Bean, Peanut",
+    "babyNicknameHint": "Tell us your baby's bump name!",
     "gender": "Gender",
     "boy": "Boy",
     "girl": "Girl",
@@ -110,6 +111,25 @@
     "next": "Next",
     "prev": "Back",
     "preview": "Preview",
+    "previewDesc": "This is the card people will see!",
+    "templateBanners": {
+      "scratch": {
+        "phrase": "Scratch\nto reveal",
+        "desc": "Scratch the foil to reveal the gender"
+      },
+      "flip": {
+        "phrase": "Flip\nand ta-da!",
+        "desc": "Flip the card to see the gender"
+      },
+      "envelope": {
+        "phrase": "Open the\nenvelope",
+        "desc": "Open the envelope to find a letter"
+      },
+      "eggHatch": {
+        "phrase": "Crack the\nglowing egg",
+        "desc": "Tap until it hatches and meet baby"
+      }
+    },
     "create": "Create Card",
     "complete": "Your card is ready!",
     "completeDesc": "Share the link and the recipient enters their name to see {babyNickname}'s news",

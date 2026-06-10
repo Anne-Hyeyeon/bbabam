@@ -28,10 +28,13 @@ export function CardPreview({
 
   return (
     <div className="p-4">
-      <p className="text-center text-sm text-text-secondary mb-4">
-        {t("preview")}
-      </p>
-      <div className="border-2 border-dashed border-gray-200 rounded-2xl overflow-hidden">
+      <div className="mb-4 flex flex-col items-center gap-2 text-center">
+        <span className="rounded-full bg-[var(--color-ink)] px-3 py-1 text-xs font-semibold text-white">
+          {t("preview")}
+        </span>
+        <p className="text-[15px] font-bold text-[var(--color-ink)]">{t("previewDesc")}</p>
+      </div>
+      <div className="border border-[var(--color-border)] bg-[var(--color-surface)] rounded-2xl overflow-hidden shadow-card">
         <Suspense
           fallback={
             <div className="flex items-center justify-center h-[300px]">

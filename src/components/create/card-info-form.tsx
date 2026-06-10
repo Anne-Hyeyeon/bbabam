@@ -12,6 +12,15 @@ interface CardInfoFormProps {
   onChange: (data: CardInfoData) => void;
 }
 
+// Pure: neutral-tone toggle styling shared by the gender buttons.
+const toggleButtonClass = (isSelected: boolean): string =>
+  [
+    "py-3 rounded-xl border transition-all cursor-pointer",
+    isSelected
+      ? "border-[var(--color-ink)] bg-[var(--color-ink)] text-white"
+      : "border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]",
+  ].join(" ");
+
 export function CardInfoForm({ data, onChange }: CardInfoFormProps) {
   const t = useTranslations("create");
 
@@ -21,39 +30,32 @@ export function CardInfoForm({ data, onChange }: CardInfoFormProps) {
 
   return (
     <div className="p-4 flex flex-col gap-5">
-      {/* Baby nickname */}
+      {/* Baby name (taemyeong) */}
       <div>
-        <label className="block text-sm mb-1">{t("babyNickname")}</label>
+        <label className="block text-sm font-medium text-[var(--color-ink)] mb-1">{t("babyNickname")}</label>
         <input
           type="text"
           value={data.babyNickname}
           onChange={(e) => update({ babyNickname: e.target.value })}
           placeholder={t("babyNicknamePlaceholder")}
-          className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-pink-baby outline-none"
+          className="w-full px-4 py-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] focus:border-[var(--color-ink)] outline-none transition-colors"
         />
+        <p className="mt-1.5 text-xs text-[var(--color-ink-muted)]">{t("babyNicknameHint")}</p>
       </div>
 
       {/* Gender */}
       <div>
-        <label className="block text-sm mb-1">{t("gender")}</label>
+        <label className="block text-sm font-medium text-[var(--color-ink)] mb-1">{t("gender")}</label>
         <div className="grid grid-cols-2 gap-3">
           <button
             onClick={() => update({ gender: "boy" })}
-            className={`py-3 rounded-xl border transition-all cursor-pointer ${
-              data.gender === "boy"
-                ? "border-blue-baby bg-blue-light"
-                : "border-gray-200"
-            }`}
+            className={toggleButtonClass(data.gender === "boy")}
           >
             {t("boy")}
           </button>
           <button
             onClick={() => update({ gender: "girl" })}
-            className={`py-3 rounded-xl border transition-all cursor-pointer ${
-              data.gender === "girl"
-                ? "border-pink-baby bg-pink-light"
-                : "border-gray-200"
-            }`}
+            className={toggleButtonClass(data.gender === "girl")}
           >
             {t("girl")}
           </button>

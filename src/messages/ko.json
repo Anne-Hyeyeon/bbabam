@@ -99,8 +99,9 @@
     "step2Title": "정보 입력",
     "step3Title": "미리보기",
     "step4Title": "완료!",
-    "babyNickname": "아기 별명",
+    "babyNickname": "아기 태명",
     "babyNicknamePlaceholder": "예: 콩이, 복덩이",
+    "babyNicknameHint": "아기의 태명을 알려주세요!",
     "gender": "성별",
     "boy": "아들",
     "girl": "딸",
@@ -110,6 +111,25 @@
     "next": "다음",
     "prev": "이전",
     "preview": "미리보기",
+    "previewDesc": "사람들에게 보여지는 카드예요!",
+    "templateBanners": {
+      "scratch": {
+        "phrase": "긁어서\n공개!",
+        "desc": "은박을 긁으면 성별이 나타나요"
+      },
+      "flip": {
+        "phrase": "뒤집으면\n짜잔!",
+        "desc": "카드를 뒤집으면 성별이 보여요"
+      },
+      "envelope": {
+        "phrase": "봉투 열어\n확인해봐",
+        "desc": "봉투를 열면 편지가 나와요"
+      },
+      "eggHatch": {
+        "phrase": "반짝이는 알을\n깨뜨려요",
+        "desc": "탭으로 알을 깨뜨리면 아기가 나와요"
+      }
+    },
     "create": "카드 만들기",
     "complete": "카드가 완성되었어요!",
     "completeDesc": "링크를 공유하면 받은 사람이 이름을 입력하고 {babyNickname}의 소식을 확인해요",
