@@ -161,9 +161,9 @@
   },
   "eggHatch": {
     "intro": {
-      "title": "A glowing egg\nis ready to hatch",
+      "title": "Curious about lovely\n{name}'s gender?",
       "tapToStart": "Tap to begin",
-      "instruction": "Keep tapping to crack the egg!"
+      "instruction": "Crack the egg to find out\n{name}'s gender!"
     },
     "hud": {
       "tapLabel": "Taps",

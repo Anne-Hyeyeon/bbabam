@@ -161,9 +161,9 @@
   },
   "eggHatch": {
     "intro": {
-      "title": "반짝이는 알이\n부화하려 해요",
+      "title": "사랑스러운 {name}의 성별을\n알고 싶다고요?",
       "tapToStart": "탭해서 시작",
-      "instruction": "계속 탭해서 알을 깨뜨려요!"
+      "instruction": "알을 깨서 {name}의 성별을\n확인해 보세요!"
     },
     "hud": {
       "tapLabel": "탭",
