@@ -241,8 +241,14 @@ export default function PortalLandingPage() {
           />
         </div>
 
-        {/* ------- Category chips ------- */}
-        <nav aria-label="categories" className="sticky top-[52px] z-30 bg-[var(--color-surface)]/95 backdrop-blur-sm">
+        {/* ------- NEW ------- */}
+        <section className="pt-1">
+          <SectionHeader title={t("sectionNew")} sub={t("sectionNewSub")} />
+          <ScrollRow>{render(NEW_KEYS, "lg")}</ScrollRow>
+        </section>
+
+        {/* ------- Category chips (horizontal slide only) ------- */}
+        <nav aria-label="categories" className="pt-5">
           <div className="flex gap-2 overflow-x-auto px-4 py-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {CHIPS.map((chip, idx) => (
               <button
@@ -261,12 +267,6 @@ export default function PortalLandingPage() {
           </div>
           <div className="h-px w-full bg-[var(--color-border)]" />
         </nav>
-
-        {/* ------- NEW ------- */}
-        <section className="pt-4">
-          <SectionHeader title={t("sectionNew")} sub={t("sectionNewSub")} />
-          <ScrollRow>{render(NEW_KEYS, "lg")}</ScrollRow>
-        </section>
 
         {/* ------- 카드 만들기 ------- */}
         <section className="pt-6">
