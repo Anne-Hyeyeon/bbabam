@@ -5,6 +5,8 @@ export interface TemplateInteractionProps {
   gender: "boy" | "girl";
   babyNickname: string;
   recipientName?: string;
+  /** Expected due date as YYYY-MM-DD; shown in the reveal copy when present. */
+  dueDate?: string;
   ultrasoundImageUrl?: string;
   onReveal: () => void;
 }
@@ -33,6 +35,18 @@ export const templates: CardTemplate[] = [
       textMode: "baked",
     },
     component: () => import("./scratch-card"),
+  },
+  {
+    id: "omurice",
+    nameKey: "omurice",
+    interactionType: "dialog",
+    thumbnail: {
+      kind: "image",
+      images: { wide: "omurice-reveal.png" },
+      localized: true,
+      textMode: "baked",
+    },
+    component: () => import("./omurice-card"),
   },
   {
     id: "egg-hatch",

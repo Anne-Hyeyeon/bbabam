@@ -120,6 +120,10 @@
       "eggHatch": {
         "phrase": "반짝이는 알을\n깨뜨려요",
         "desc": "탭으로 알을 깨뜨리면 아기가 나와요"
+      },
+      "omurice": {
+        "phrase": "두근두근!\n오므라이스 젠더리빌",
+        "desc": "계란 속에 숨겨진 우리 아기의 비밀!"
       }
     },
     "create": "카드 만들기",
@@ -127,7 +131,10 @@
     "completeDesc": "링크를 공유하면 받은 사람이 이름을 입력하고 {babyNickname}의 소식을 확인해요",
     "copyLink": "링크 복사",
     "copied": "복사되었어요!",
-    "shareKakao": "카카오톡으로 공유"
+    "shareKakao": "카카오톡으로 공유",
+    "dueDate": "출생예정일",
+    "dueDateOptional": "(선택)",
+    "dueDateHint": "입력하면 카드에 만날 날짜가 함께 나와요!"
   },
   "viewer": {
     "arrivalTitle": "젠더리빌 카드가 도착했어요",
@@ -140,7 +147,10 @@
     "tapToReveal": "탭해서 확인하기",
     "congratulations": "축하해요!",
     "goToBbabam": "임신·육아 콘텐츠, 빠밤 구경하기",
-    "createMyCard": "나도 젠더리빌 카드 만들기"
+    "createMyCard": "나도 젠더리빌 카드 만들기",
+    "pageSubtitle": "젠더리빌 카드",
+    "ogTitle": "{name}의 성별은?",
+    "ogSurpriseTitle": "선물이 도착했어요!"
   },
   "dashboard": {
     "title": "내 카드",
@@ -152,7 +162,8 @@
   },
   "templates": {
     "scratch": "젠더리빌 복권",
-    "eggHatch": "반짝이는 알 부화"
+    "eggHatch": "반짝이는 알 부화",
+    "omurice": "오므라이스 젠더리빌"
   },
   "eggHatch": {
     "intro": {
@@ -176,5 +187,16 @@
       "girlHeadline": "딸이랍니다!",
       "replay": "다시 보기"
     }
+  },
+  "omurice": {
+    "title": "{baby}의 성별은?",
+    "dialog1": "{recipient}, 안녕하세요!\n{baby}의 성별이 궁금하다고요?",
+    "dialog2": "오므라이스를 들추면,\n제가 남자인지 여자인지 알 수 있어요!",
+    "dialog3": "그럼 시작해 볼까요?\n이미지를 클릭해 보세요!",
+    "revealBoy": "{recipient}, 저는 <g>남자</g>아기랍니다!",
+    "revealGirl": "{recipient}, 저는 <g>여자</g>아기랍니다!",
+    "fallbackRecipient": "홍길동님",
+    "meetDue": "{date, date, ::MMMMd}에 만나요!",
+    "meetSoon": "무럭무럭 자라서 곧 만나러 갈게요!"
   }
 }

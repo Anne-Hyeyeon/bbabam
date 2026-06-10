@@ -5,6 +5,8 @@ import { useTranslations } from "next-intl";
 export interface CardInfoData {
   babyNickname: string;
   gender: "boy" | "girl";
+  /** Expected due date as YYYY-MM-DD; empty string when skipped. */
+  dueDate: string;
 }
 
 interface CardInfoFormProps {
@@ -65,6 +67,21 @@ export function CardInfoForm({ data, onChange }: CardInfoFormProps) {
             {t("girl")}
           </button>
         </div>
+      </div>
+
+      {/* Due date (optional) */}
+      <div>
+        <label className="block text-sm font-medium text-[var(--color-ink)] mb-1">
+          {t("dueDate")}{" "}
+          <span className="font-normal text-[var(--color-ink-muted)]">{t("dueDateOptional")}</span>
+        </label>
+        <input
+          type="date"
+          value={data.dueDate}
+          onChange={(e) => update({ dueDate: e.target.value })}
+          className="w-full px-4 py-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] focus:border-[var(--color-ink)] outline-none transition-colors"
+        />
+        <p className="mt-1.5 text-xs text-[var(--color-ink-muted)]">{t("dueDateHint")}</p>
       </div>
 
       {/* Ultrasound photo upload: temporarily disabled (query-link cards carry no uploads).

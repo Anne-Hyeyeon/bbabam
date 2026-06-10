@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { isMemoryMode, memoryStore } from "@/db/memory-store";
 import { Header } from "@/components/layout/header";
 import { CardViewer } from "@/components/viewer/card-viewer";
@@ -39,21 +40,18 @@ async function getCard(slug: string) {
   return result[0];
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}): Promise<Metadata> {
-  const { slug } = await params;
+export async function generateMetadata({ params }: CardPageProps): Promise<Metadata> {
+  const { slug, locale } = await params;
   const card = await getCard(slug);
 
   if (!card) return {};
 
+  const t = await getTranslations({ locale, namespace: "viewer" });
   const ogUrl = `/api/og/${slug}`;
   const title =
     card.ogMode === "fake-surprise"
-      ? "선물이 도착했어요!"
-      : `${card.babyNickname}의 성별은?`;
+      ? t("ogSurpriseTitle")
+      : t("ogTitle", { name: card.babyNickname });
 
   return {
     title,
@@ -65,16 +63,22 @@ export async function generateMetadata({
 }
 
 export default async function CardPage({ params }: CardPageProps) {
-  const { slug } = await params;
+  const { slug, locale } = await params;
+  // Pages render concurrently with layouts, so the locale must be seeded
+  // here as well (Next 16 drops the next-intl proxy request header).
+  setRequestLocale(locale);
+
   const card = await getCard(slug);
 
   if (!card) {
     notFound();
   }
 
+  const t = await getTranslations("viewer");
+
   return (
     <>
-      <Header showBack={false} showHamburger={false} subtitle="젠더리빌 카드" />
+      <Header showBack={false} showHamburger={false} subtitle={t("pageSubtitle")} />
       <CardViewer
         templateId={card.templateId}
         gender={card.gender as "boy" | "girl"}

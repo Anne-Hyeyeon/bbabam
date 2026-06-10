@@ -16,6 +16,7 @@ interface CardViewerProps {
   babyNickname: string;
   recipientMode: "preset" | "input";
   recipientName?: string;
+  dueDate?: string;
   ogMode: "default" | "fake-surprise";
   ultrasoundImageUrl?: string;
 }
@@ -26,6 +27,7 @@ export function CardViewer({
   babyNickname,
   recipientMode,
   recipientName: presetName,
+  dueDate,
   ogMode,
   ultrasoundImageUrl,
 }: CardViewerProps) {
@@ -86,6 +88,7 @@ export function CardViewer({
               gender={gender}
               babyNickname={babyNickname}
               recipientName={viewerName}
+              dueDate={dueDate}
               ultrasoundImageUrl={ultrasoundImageUrl}
               onReveal={handleReveal}
             />
