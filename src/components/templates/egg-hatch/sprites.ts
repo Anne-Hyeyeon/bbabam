@@ -17,64 +17,62 @@ const EGG_PALETTE = {
 const EGG_WIDTH = 36;
 const EGG_HEIGHT = 46;
 
-function buildEggRows(): string[] {
-  const w = EGG_WIDTH;
-  const h = EGG_HEIGHT;
+const EGG_SPOTS: ReadonlyArray<readonly [number, number, "g" | "G"]> = [
+  [9, 12, "g"],
+  [24, 14, "g"],
+  [12, 22, "g"],
+  [26, 26, "G"],
+  [16, 30, "g"],
+  [22, 38, "G"],
+  [10, 34, "g"],
+];
+
+// Pure: shade character for one pixel of the egg body.
+function eggCellChar(x: number, y: number, w: number, h: number): string {
   const cx = (w - 1) / 2;
-  const rows: string[] = [];
+  const ny = (y / (h - 1)) * 2 - 1;
+  const squeeze =
+    ny < 0 ? 1 - Math.pow(-ny, 2) * 0.32 : 1 - Math.pow(ny, 1.8) * 0.08;
+  const halfW = (w / 2 - 0.5) * squeeze;
+  const dist = Math.abs(x - cx) / halfW;
+  if (dist > 1) return T;
 
-  for (let y = 0; y < h; y++) {
-    const ny = (y / (h - 1)) * 2 - 1;
-    const squeeze =
-      ny < 0 ? 1 - Math.pow(-ny, 2) * 0.32 : 1 - Math.pow(ny, 1.8) * 0.08;
-    const halfW = (w / 2 - 0.5) * squeeze;
-    let row = "";
-    for (let x = 0; x < w; x++) {
-      const dx = x - cx;
-      const dist = Math.abs(dx) / halfW;
-      if (dist > 1) {
-        row += T;
-        continue;
-      }
-      const lightDx = (x - w * 0.32) / w;
-      const lightDy = (y - h * 0.28) / h;
-      const shade = lightDx * 1.0 + lightDy * 1.15;
-      const edge = 1 - dist;
-      const rim = edge < 0.1 ? 1 : 0;
-      if (rim && shade > 0.15) {
-        row += "D";
-      } else if (shade < -0.38) {
-        row += "H";
-      } else if (shade < -0.12) {
-        row += "C";
-      } else if (shade < 0.18) {
-        row += "c";
-      } else if (shade < 0.42) {
-        row += "b";
-      } else if (shade < 0.65) {
-        row += "d";
-      } else {
-        row += "D";
-      }
-    }
-    rows.push(row);
-  }
+  const lightDx = (x - w * 0.32) / w;
+  const lightDy = (y - h * 0.28) / h;
+  const shade = lightDx * 1.0 + lightDy * 1.15;
+  const rim = 1 - dist < 0.1;
+  if (rim && shade > 0.15) return "D";
+  if (shade < -0.38) return "H";
+  if (shade < -0.12) return "C";
+  if (shade < 0.18) return "c";
+  if (shade < 0.42) return "b";
+  if (shade < 0.65) return "d";
+  return "D";
+}
 
-  const spots: Array<[number, number, "g" | "G"]> = [
-    [9, 12, "g"],
-    [24, 14, "g"],
-    [12, 22, "g"],
-    [26, 26, "G"],
-    [16, 30, "g"],
-    [22, 38, "G"],
-    [10, 34, "g"],
-  ];
-  const grid = rows.map((r) => r.split(""));
-  for (const [sx, sy, ch] of spots) {
-    const cell = grid[sy]?.[sx];
-    if (cell && cell !== T) grid[sy][sx] = ch;
-  }
-  return grid.map((r) => r.join(""));
+// Pure: overlays spots on body cells without mutating the source rows.
+function applySpots(
+  rows: string[],
+  spots: ReadonlyArray<readonly [number, number, "g" | "G"]>,
+): string[] {
+  const spotAt = new Map(spots.map(([x, y, ch]) => [`${x},${y}`, ch]));
+  return rows.map((row, y) =>
+    [...row]
+      .map((cell, x) => {
+        const spot = spotAt.get(`${x},${y}`);
+        return spot && cell !== T ? spot : cell;
+      })
+      .join(""),
+  );
+}
+
+function buildEggRows(): string[] {
+  const baseRows = Array.from({ length: EGG_HEIGHT }, (_, y) =>
+    Array.from({ length: EGG_WIDTH }, (_, x) =>
+      eggCellChar(x, y, EGG_WIDTH, EGG_HEIGHT),
+    ).join(""),
+  );
+  return applySpots(baseRows, EGG_SPOTS);
 }
 
 export const EGG_BASE: PixelSpriteDef = {
@@ -88,14 +86,9 @@ export const EGG_HEIGHT_PX = EGG_HEIGHT;
 // Rough egg silhouette mask for crack placement / particle spawning.
 // Returns array of {x, y} in pixel-art grid coords.
 export function eggSilhouettePoints(): Array<{ x: number; y: number }> {
-  const out: Array<{ x: number; y: number }> = [];
-  const rows = EGG_BASE.rows;
-  for (let y = 0; y < rows.length; y++) {
-    for (let x = 0; x < rows[y].length; x++) {
-      if (rows[y][x] !== T) out.push({ x, y });
-    }
-  }
-  return out;
+  return EGG_BASE.rows.flatMap((row, y) =>
+    [...row].flatMap((cell, x) => (cell === T ? [] : [{ x, y }])),
+  );
 }
 
 // 20×18 glossy pixel heart for the reveal hero.
