@@ -1,7 +1,8 @@
 "use client";
 
-import { Suspense, lazy, useMemo } from "react";
+import { Suspense } from "react";
 import { getTemplateById } from "@/components/templates";
+import { lazyTemplateComponents } from "@/components/templates/lazy-components";
 import { useTranslations } from "next-intl";
 
 interface CardPreviewProps {
@@ -19,11 +20,7 @@ export function CardPreview({
 }: CardPreviewProps) {
   const t = useTranslations("create");
   const template = getTemplateById(templateId);
-
-  const TemplateComponent = useMemo(() => {
-    if (!template) return null;
-    return lazy(template.component);
-  }, [template]);
+  const TemplateComponent = template ? lazyTemplateComponents[template.id] : null;
 
   if (!template || !TemplateComponent) {
     return <div className="p-6 text-center text-text-secondary">{t("selectTemplate")}</div>;

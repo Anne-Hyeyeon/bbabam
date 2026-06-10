@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, Suspense, lazy, useMemo } from "react";
+import { useState, Suspense } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { getTemplateById } from "@/components/templates";
+import { lazyTemplateComponents } from "@/components/templates/lazy-components";
 import { RecipientInput } from "./recipient-input";
 import { FakeSurprise } from "./fake-surprise";
 import { RevealResult } from "./reveal-result";
@@ -39,10 +40,7 @@ export function CardViewer({
   const [viewerName, setViewerName] = useState(presetName || "");
 
   const template = getTemplateById(templateId);
-  const TemplateComponent = useMemo(() => {
-    if (!template) return null;
-    return lazy(template.component);
-  }, [template]);
+  const TemplateComponent = template ? lazyTemplateComponents[template.id] : null;
 
   if (!template || !TemplateComponent) {
     return <div className="p-6 text-center">템플릿을 찾을 수 없습니다.</div>;
