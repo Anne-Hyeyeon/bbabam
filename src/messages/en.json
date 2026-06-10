@@ -120,6 +120,10 @@
       "eggHatch": {
         "phrase": "Crack the\nglowing egg",
         "desc": "Tap until it hatches and meet baby"
+      },
+      "omurice": {
+        "phrase": "Exciting!\nOmurice gender reveal",
+        "desc": "Our baby's secret hidden in the egg!"
       }
     },
     "create": "Create Card",
@@ -127,7 +131,10 @@
     "completeDesc": "Share the link and the recipient enters their name to see {babyNickname}'s news",
     "copyLink": "Copy Link",
     "copied": "Copied!",
-    "shareKakao": "Share via KakaoTalk"
+    "shareKakao": "Share via KakaoTalk",
+    "dueDate": "Due Date",
+    "dueDateOptional": "(optional)",
+    "dueDateHint": "If you add it, the card will show the date you'll meet!"
   },
   "viewer": {
     "arrivalTitle": "A gender reveal card has arrived",
@@ -155,7 +162,8 @@
   },
   "templates": {
     "scratch": "Gender Reveal Lottery",
-    "eggHatch": "Hatching Egg"
+    "eggHatch": "Hatching Egg",
+    "omurice": "Omurice Gender Reveal"
   },
   "eggHatch": {
     "intro": {
@@ -179,5 +187,16 @@
       "girlHeadline": "a baby girl!",
       "replay": "Play again"
     }
+  },
+  "omurice": {
+    "title": "What's {baby}'s gender?",
+    "dialog1": "Hi {recipient}!\nCurious about {baby}'s gender?",
+    "dialog2": "Lift the omurice and you'll find out\nif I'm a boy or a girl!",
+    "dialog3": "Shall we start?\nTap the picture!",
+    "revealBoy": "{recipient}, I'm a baby <g>boy</g>!",
+    "revealGirl": "{recipient}, I'm a baby <g>girl</g>!",
+    "fallbackRecipient": "Dear friend",
+    "meetDue": "See you on {date, date, ::MMMMd}!",
+    "meetSoon": "I'm growing fast, see you very soon!"
   }
 }
