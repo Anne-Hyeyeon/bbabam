@@ -1,12 +1,17 @@
+import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { POSTER_BG, type Palette } from "./palette";
 import { StatusBadge } from "./status-badge";
+import type { ResolvedThumbnail } from "./thumbnail";
+
+const BANNER_SIZES = "(max-width: 480px) 100vw, 480px";
 
 export interface BigBannerData {
   key: string;
   href: string | null;
   palette: Palette;
   status: "live" | "new" | "soon";
+  image: ResolvedThumbnail | null;
   phrase: string;
   title: string;
   catLabel: string;
@@ -24,6 +29,7 @@ interface BigBannerCardProps {
  */
 export function BigBannerCard({ banner, statusLabels }: BigBannerCardProps) {
   const isDisabled = banner.href === null;
+  const showCopy = banner.image === null || banner.image.textMode === "overlay";
 
   const content = (
     <article
@@ -34,6 +40,16 @@ export function BigBannerCard({ banner, statusLabels }: BigBannerCardProps) {
         isDisabled ? "opacity-80" : "hover:-translate-y-[2px]",
       ].join(" ")}
     >
+      {banner.image && (
+        <Image
+          src={banner.image.src}
+          alt={banner.image.textMode === "baked" ? banner.title : ""}
+          fill
+          sizes={BANNER_SIZES}
+          className="object-cover"
+        />
+      )}
+
       {banner.status === "live" && <StatusBadge status="live" label={statusLabels.live} />}
       {banner.status === "new" && <StatusBadge status="new" label={statusLabels.new} />}
       {banner.status === "soon" && (
@@ -42,15 +58,17 @@ export function BigBannerCard({ banner, statusLabels }: BigBannerCardProps) {
         </span>
       )}
 
-      <div className="flex h-full flex-col justify-end gap-1 p-4 pb-4">
-        <p className="text-[22px] font-bold leading-[1.15] text-[var(--color-ink)] whitespace-pre-line">
-          {banner.phrase}
-        </p>
-        <p className="text-[12px] font-medium text-[var(--color-ink-muted)]">
-          {banner.prefixLabel && <span>({banner.prefixLabel}) </span>}
-          {banner.title} · {banner.catLabel}
-        </p>
-      </div>
+      {showCopy && (
+        <div className="relative flex h-full flex-col justify-end gap-1 p-4 pb-4">
+          <p className="text-[22px] font-bold leading-[1.15] text-[var(--color-ink)] whitespace-pre-line">
+            {banner.phrase}
+          </p>
+          <p className="text-[12px] font-medium text-[var(--color-ink-muted)]">
+            {banner.prefixLabel && <span>({banner.prefixLabel}) </span>}
+            {banner.title} · {banner.catLabel}
+          </p>
+        </div>
+      )}
 
       <svg
         width="18"
