@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { isMemoryMode, memoryStore } from "@/db/memory-store";
+import { isMemoryMode } from "@/db/memory-store";
 
 export async function DELETE(
   _request: NextRequest,
