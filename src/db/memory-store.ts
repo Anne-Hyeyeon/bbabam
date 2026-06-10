@@ -32,14 +32,22 @@ if (!globalData.__bbabam_memory) {
 
 const data = globalData.__bbabam_memory;
 
+const buildCard = (
+  cardData: Omit<Card, "id" | "createdAt">,
+  id: string,
+  createdAt: Date,
+): Card => ({ ...cardData, id, createdAt });
+
+const withoutCard = (cards: Card[], id: string, userId: string): Card[] =>
+  cards.filter((c) => !(c.id === id && c.userId === userId));
+
+// The store is the single mutation boundary: state changes happen only
+// here, by replacing the cards array with a new immutable snapshot.
 export const memoryStore = {
   createCard(cardData: Omit<Card, "id" | "createdAt">) {
-    const card: Card = {
-      ...cardData,
-      id: String(++data.cardIdCounter),
-      createdAt: new Date(),
-    };
-    data.cards.push(card);
+    const card = buildCard(cardData, String(data.cardIdCounter + 1), new Date());
+    data.cardIdCounter += 1;
+    data.cards = [...data.cards, card];
     return card;
   },
 
@@ -52,10 +60,7 @@ export const memoryStore = {
   },
 
   deleteCard(id: string, userId: string) {
-    const index = data.cards.findIndex((c) => c.id === id && c.userId === userId);
-    if (index !== -1) {
-      data.cards.splice(index, 1);
-    }
+    data.cards = withoutCard(data.cards, id, userId);
   },
 };
 
