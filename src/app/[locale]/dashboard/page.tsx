@@ -53,7 +53,7 @@ export default function DashboardPage() {
           <div className="text-center py-12">
             <p className="text-text-secondary mb-4">{t("empty")}</p>
             <Link
-              href="/create"
+              href="/gender-reveal-card"
               className="inline-block px-6 py-3 rounded-xl bg-gradient-to-r from-pink-baby to-blue-baby text-white"
             >
               {t("createFirst")}

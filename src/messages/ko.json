@@ -114,16 +114,8 @@
     "previewDesc": "사람들에게 보여지는 카드예요!",
     "templateBanners": {
       "scratch": {
-        "phrase": "긁어서\n공개!",
+        "phrase": "100% 당첨!\n젠더리빌 복권",
         "desc": "은박을 긁으면 성별이 나타나요"
-      },
-      "flip": {
-        "phrase": "뒤집으면\n짜잔!",
-        "desc": "카드를 뒤집으면 성별이 보여요"
-      },
-      "envelope": {
-        "phrase": "봉투 열어\n확인해봐",
-        "desc": "봉투를 열면 편지가 나와요"
       },
       "eggHatch": {
         "phrase": "반짝이는 알을\n깨뜨려요",
@@ -138,12 +130,17 @@
     "shareKakao": "카카오톡으로 공유"
   },
   "viewer": {
-    "enterName": "이름을 알려주세요",
-    "namePlaceholder": "이름 입력",
+    "arrivalTitle": "젠더리빌 카드가 도착했어요",
+    "whoAreYou": "당신은 아기 {name}에게\n어떤 사람인가요?",
+    "namePlaceholder": "예: 할머니, 혜연이모, 민재삼촌",
     "confirm": "확인",
+    "greeting": "젠더리빌 카드를 받은\n{recipient}님!",
+    "greetingSub": "소중한 {name}의 성별,\n지금 함께 확인해 봐요",
+    "start": "시작하기",
     "tapToReveal": "탭해서 확인하기",
     "congratulations": "축하해요!",
-    "createMyCard": "나도 카드 만들기"
+    "goToBbabam": "임신·육아 콘텐츠, 빠밤 구경하기",
+    "createMyCard": "나도 젠더리빌 카드 만들기"
   },
   "dashboard": {
     "title": "내 카드",
@@ -154,9 +151,7 @@
     "deleteConfirm": "정말 삭제할까요?"
   },
   "templates": {
-    "scratch": "스크래치",
-    "flip": "카드 뒤집기",
-    "envelope": "봉투 열기",
+    "scratch": "젠더리빌 복권",
     "eggHatch": "반짝이는 알 부화"
   },
   "eggHatch": {
@@ -176,9 +171,9 @@
       "stage3": "마지막!!"
     },
     "reveal": {
-      "boyHeadline": "아들이에요!",
-      "girlHeadline": "딸이에요!",
-      "subline": "{name}",
+      "lead": "사랑스러운 {name}{josa} 바로",
+      "boyHeadline": "아들이랍니다!",
+      "girlHeadline": "딸이랍니다!",
       "replay": "다시 보기"
     }
   }

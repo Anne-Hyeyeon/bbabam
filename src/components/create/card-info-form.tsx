@@ -12,12 +12,17 @@ interface CardInfoFormProps {
   onChange: (data: CardInfoData) => void;
 }
 
-// Pure: neutral-tone toggle styling shared by the gender buttons.
-const toggleButtonClass = (isSelected: boolean): string =>
+// Pure: gender toggle styling — selected boy turns pastel blue, girl pastel pink.
+const GENDER_SELECTED_BG: Record<"boy" | "girl", string> = {
+  boy: "border-transparent bg-[var(--color-cat-blue)] text-[var(--color-ink)] font-semibold",
+  girl: "border-transparent bg-[var(--color-cat-pink)] text-[var(--color-ink)] font-semibold",
+};
+
+const toggleButtonClass = (isSelected: boolean, gender: "boy" | "girl"): string =>
   [
     "py-3 rounded-xl border transition-all cursor-pointer",
     isSelected
-      ? "border-[var(--color-ink)] bg-[var(--color-ink)] text-white"
+      ? GENDER_SELECTED_BG[gender]
       : "border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]",
   ].join(" ");
 
@@ -49,13 +54,13 @@ export function CardInfoForm({ data, onChange }: CardInfoFormProps) {
         <div className="grid grid-cols-2 gap-3">
           <button
             onClick={() => update({ gender: "boy" })}
-            className={toggleButtonClass(data.gender === "boy")}
+            className={toggleButtonClass(data.gender === "boy", "boy")}
           >
             {t("boy")}
           </button>
           <button
             onClick={() => update({ gender: "girl" })}
-            className={toggleButtonClass(data.gender === "girl")}
+            className={toggleButtonClass(data.gender === "girl", "girl")}
           >
             {t("girl")}
           </button>

@@ -4,6 +4,7 @@ import type { TemplateInteractionProps } from "./index";
 import { Stage } from "./egg-hatch/stage";
 import { Reveal } from "./egg-hatch/reveal";
 import { useEggState } from "./egg-hatch/use-egg-state";
+import { jua } from "./egg-hatch/font";
 
 export default function EggHatchCard({
   gender,
@@ -15,7 +16,7 @@ export default function EggHatchCard({
   const showReveal = state.phase === "reveal";
 
   return (
-    <div className="flex flex-col items-center gap-4 p-6">
+    <div className={`flex flex-col items-center gap-4 p-6 ${jua.className}`}>
       {recipientName && (
         <p className="text-text-secondary text-sm">
           {recipientName}님을 위한 카드

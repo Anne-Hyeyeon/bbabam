@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { BabyIllustration } from "./baby-illustration";
+import { topicJosa } from "@/lib/korean";
 import {
   GENDER_PASTEL,
   PASTEL_CONFETTI,
@@ -110,12 +111,11 @@ export function Reveal({ gender, babyNickname, onReveal, onReplay }: Props) {
       className="relative w-full max-w-[320px] aspect-[9/16] overflow-hidden rounded-3xl shadow-xl"
       style={{ background: pastel.bg }}
     >
-      {/* Soft white halo behind the baby */}
-      <motion.div
+      {/* Soft white halo behind the baby.
+          Centering lives on a plain wrapper: framer-motion owns `transform`
+          on the animated node, so translate(-50%,-50%) must not sit there. */}
+      <div
         aria-hidden
-        initial={{ opacity: 0, scale: 0.3 }}
-        animate={{ opacity: [0, 0.95, 0.7], scale: [0.3, 1.15, 1] }}
-        transition={{ duration: 1, ease: "easeOut" }}
         style={{
           position: "absolute",
           left: "50%",
@@ -123,11 +123,21 @@ export function Reveal({ gender, babyNickname, onReveal, onReplay }: Props) {
           width: "120%",
           aspectRatio: "1",
           transform: "translate(-50%, -50%)",
-          background:
-            "radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0) 62%)",
           pointerEvents: "none",
         }}
-      />
+      >
+        <motion.div
+          initial={{ opacity: 0, scale: 0.3 }}
+          animate={{ opacity: [0, 0.95, 0.7], scale: [0.3, 1.15, 1] }}
+          transition={{ duration: 1, ease: "easeOut" }}
+          style={{
+            width: "100%",
+            height: "100%",
+            background:
+              "radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0) 62%)",
+          }}
+        />
+      </div>
 
       {/* Gentle sun rays */}
       <motion.div
@@ -162,11 +172,8 @@ export function Reveal({ gender, babyNickname, onReveal, onReplay }: Props) {
         ))}
       </motion.div>
 
-      {/* Baby pops out */}
-      <motion.div
-        initial={{ scale: 0.2, opacity: 0, y: 46 }}
-        animate={{ scale: 1, opacity: 1, y: 0 }}
-        transition={{ type: "spring", stiffness: 160, damping: 14, delay: 0.25 }}
+      {/* Baby pops out (outer div centers, inner motion nodes animate) */}
+      <div
         style={{
           position: "absolute",
           left: "50%",
@@ -177,13 +184,20 @@ export function Reveal({ gender, babyNickname, onReveal, onReplay }: Props) {
         }}
       >
         <motion.div
-          animate={{ y: [0, -6, 0] }}
-          transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
+          initial={{ scale: 0.2, opacity: 0, y: 46 }}
+          animate={{ scale: 1, opacity: 1, y: 0 }}
+          transition={{ type: "spring", stiffness: 160, damping: 14, delay: 0.25 }}
           style={{ width: "100%", height: "100%" }}
         >
-          <BabyIllustration gender={gender} />
+          <motion.div
+            animate={{ y: [0, -6, 0] }}
+            transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
+            style={{ width: "100%", height: "100%" }}
+          >
+            <BabyIllustration gender={gender} />
+          </motion.div>
         </motion.div>
-      </motion.div>
+      </div>
 
       {/* Pastel confetti falling */}
       {confetti.map((c) => (
@@ -223,7 +237,7 @@ export function Reveal({ gender, babyNickname, onReveal, onReplay }: Props) {
         </motion.svg>
       ))}
 
-      {/* Headline + subline */}
+      {/* Lead line + headline: "사랑스러운 {태명}은 바로 / 아들·딸이랍니다!" */}
       <AnimatePresence>
         {showText && (
           <motion.div
@@ -236,23 +250,39 @@ export function Reveal({ gender, babyNickname, onReveal, onReplay }: Props) {
               position: "absolute",
               left: 0,
               right: 0,
-              bottom: "15%",
+              bottom: "14%",
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              gap: 6,
+              gap: 10,
               textAlign: "center",
               padding: "0 20px",
               pointerEvents: "none",
             }}
           >
+            {babyNickname && (
+              <motion.span
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.15 }}
+                style={{
+                  fontSize: 16,
+                  color: SCENE_INK,
+                  background: "rgba(255,255,255,0.85)",
+                  borderRadius: 999,
+                  padding: "6px 18px",
+                  boxShadow: "0 2px 10px rgba(92,74,82,0.15)",
+                }}
+              >
+                {t("lead", { name: babyNickname, josa: topicJosa(babyNickname) })}
+              </motion.span>
+            )}
             <motion.span
               initial={{ scale: 0.6 }}
               animate={{ scale: 1 }}
-              transition={{ type: "spring", stiffness: 220, damping: 14 }}
+              transition={{ delay: 0.35, type: "spring", stiffness: 220, damping: 14 }}
               style={{
-                fontSize: 40,
-                fontWeight: 900,
+                fontSize: 42,
                 letterSpacing: -1,
                 color: "#FFFFFF",
                 textShadow: `0 3px 0 ${pastel.deep}, 0 8px 22px rgba(92,74,82,0.3)`,
@@ -261,58 +291,47 @@ export function Reveal({ gender, babyNickname, onReveal, onReplay }: Props) {
             >
               {headline}
             </motion.span>
-            {babyNickname && (
-              <motion.span
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                style={{
-                  fontSize: 15,
-                  fontWeight: 800,
-                  color: SCENE_INK,
-                  background: "rgba(255,255,255,0.85)",
-                  borderRadius: 999,
-                  padding: "6px 16px",
-                  boxShadow: "0 2px 10px rgba(92,74,82,0.15)",
-                }}
-              >
-                {t("subline", { name: babyNickname })}
-              </motion.span>
-            )}
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Replay button */}
-      <AnimatePresence>
-        {replayVisible && (
-          <motion.button
-            key="replay"
-            type="button"
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0 }}
-            onClick={onReplay}
-            style={{
-              position: "absolute",
-              bottom: 16,
-              left: "50%",
-              transform: "translateX(-50%)",
-              padding: "8px 20px",
-              background: "rgba(255,255,255,0.95)",
-              border: "none",
-              borderRadius: 999,
-              fontSize: 13,
-              fontWeight: 700,
-              color: pastel.deep,
-              cursor: "pointer",
-              boxShadow: "0 4px 14px rgba(92,74,82,0.18)",
-            }}
-          >
-            {t("replay")}
-          </motion.button>
-        )}
-      </AnimatePresence>
+      {/* Replay button (wrapper centers; motion must not own translateX) */}
+      <div
+        style={{
+          position: "absolute",
+          bottom: 16,
+          left: 0,
+          right: 0,
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <AnimatePresence>
+          {replayVisible && (
+            <motion.button
+              key="replay"
+              type="button"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              onClick={onReplay}
+              style={{
+                padding: "8px 20px",
+                background: "rgba(255,255,255,0.95)",
+                border: "none",
+                borderRadius: 999,
+                fontSize: 13,
+                fontWeight: 700,
+                color: pastel.deep,
+                cursor: "pointer",
+                boxShadow: "0 4px 14px rgba(92,74,82,0.18)",
+              }}
+            >
+              {t("replay")}
+            </motion.button>
+          )}
+        </AnimatePresence>
+      </div>
     </div>
   );
 }

@@ -96,14 +96,14 @@ export function CreateWizard() {
             <button
               onClick={() => setStep((s) => (s + 1) as Step)}
               disabled={!canProceed()}
-              className="flex-1 py-3 rounded-xl bg-[var(--color-ink)] text-white hover:opacity-90 disabled:opacity-40 transition-opacity"
+              className="flex-1 py-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface-muted)] font-medium text-[var(--color-ink)] hover:bg-[var(--color-border)] disabled:opacity-40 transition-colors"
             >
               {t("next")}
             </button>
           ) : (
             <button
               onClick={() => setStep(4)}
-              className="flex-1 py-3 rounded-xl bg-[var(--color-ink)] text-white hover:opacity-90 transition-opacity"
+              className="flex-1 py-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface-muted)] font-medium text-[var(--color-ink)] hover:bg-[var(--color-border)] transition-colors"
             >
               {t("create")}
             </button>

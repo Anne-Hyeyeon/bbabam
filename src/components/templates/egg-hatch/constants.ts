@@ -13,7 +13,8 @@ export const STAGE_LABELS = [
 
 export const INTRO_MS = 1600 as const;
 export const CLIMAX_MS = 1100 as const;
-export const REVEAL_FIRE_MS = 800 as const;
+// Let the in-game reveal play out before the viewer swaps to the result screen.
+export const REVEAL_FIRE_MS = 3400 as const;
 export const REPLAY_BUTTON_DELAY_MS = 2200 as const;
 
 export const TAP_SPEED_WINDOW_MS = 1500 as const;
