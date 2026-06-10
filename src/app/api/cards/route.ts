@@ -1,28 +1,46 @@
 import { NextRequest, NextResponse } from "next/server";
-import { nanoid } from "nanoid";
 import { isMemoryMode, memoryStore } from "@/db/memory-store";
+import { generateSlug } from "@/lib/slug";
+
+interface NewCardInput {
+  templateId: string;
+  babyNickname: string;
+  gender: "boy" | "girl";
+  recipientMode: "preset" | "input";
+  recipientName: string | null;
+  ogMode: "default" | "fake-surprise";
+  ultrasoundImageUrl: string | null;
+}
+
+// Pure: validates and normalizes the request body shared by both store modes.
+function normalizeCardInput(body: Record<string, unknown>): NewCardInput | null {
+  const { templateId, babyNickname, gender, recipientMode, recipientName, ogMode, ultrasoundImageUrl } = body;
+  if (!templateId || !babyNickname || !gender || !recipientMode) return null;
+  return {
+    templateId,
+    babyNickname,
+    gender,
+    recipientMode,
+    recipientName: recipientMode === "preset" ? recipientName : null,
+    ogMode: ogMode || "default",
+    ultrasoundImageUrl: ultrasoundImageUrl || null,
+  } as NewCardInput;
+}
 
 export async function POST(request: NextRequest) {
-  const body = await request.json();
-  const { templateId, babyNickname, gender, recipientMode, recipientName, ogMode, ultrasoundImageUrl } = body;
+  const input = normalizeCardInput(await request.json());
 
-  if (!templateId || !babyNickname || !gender || !recipientMode) {
+  if (!input) {
     return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
   }
 
-  const slug = nanoid(12);
+  const slug = generateSlug();
 
   if (isMemoryMode) {
     const card = memoryStore.createCard({
+      ...input,
       userId: null,
       slug,
-      templateId,
-      babyNickname,
-      gender,
-      recipientMode,
-      recipientName: recipientMode === "preset" ? recipientName : null,
-      ogMode: ogMode || "default",
-      ultrasoundImageUrl: ultrasoundImageUrl || null,
       language: "ko",
     });
     return NextResponse.json({ id: card.id, slug: card.slug });
@@ -36,15 +54,9 @@ export async function POST(request: NextRequest) {
   const [card] = await db
     .insert(cards)
     .values({
+      ...input,
       slug,
       userId: session?.user?.id || null,
-      templateId,
-      babyNickname,
-      gender,
-      recipientMode,
-      recipientName: recipientMode === "preset" ? recipientName : null,
-      ogMode: ogMode || "default",
-      ultrasoundImageUrl: ultrasoundImageUrl || null,
     })
     .returning();
 
