@@ -32,6 +32,7 @@ export function CreateWizard() {
   const [cardInfo, setCardInfo] = useState<CardInfoData>({
     babyNickname: "",
     gender: "boy",
+    dueDate: "",
   });
 
   const stepTitles = [t("step1Title"), t("step2Title"), t("step3Title"), t("step4Title")];
@@ -69,6 +70,7 @@ export function CreateWizard() {
                 templateId={templateId}
                 gender={cardInfo.gender}
                 babyNickname={cardInfo.babyNickname}
+                dueDate={cardInfo.dueDate || undefined}
               />
             )}
             {step === 4 && templateId && (
@@ -76,6 +78,7 @@ export function CreateWizard() {
                 templateId={templateId}
                 babyNickname={cardInfo.babyNickname}
                 gender={cardInfo.gender}
+                dueDate={cardInfo.dueDate || undefined}
               />
             )}
           </motion.div>

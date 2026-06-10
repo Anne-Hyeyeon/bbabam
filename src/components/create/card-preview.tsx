@@ -10,6 +10,7 @@ interface CardPreviewProps {
   gender: "boy" | "girl";
   babyNickname: string;
   recipientName?: string;
+  dueDate?: string;
 }
 
 export function CardPreview({
@@ -17,6 +18,7 @@ export function CardPreview({
   gender,
   babyNickname,
   recipientName,
+  dueDate,
 }: CardPreviewProps) {
   const t = useTranslations("create");
   const template = getTemplateById(templateId);
@@ -46,6 +48,7 @@ export function CardPreview({
             gender={gender}
             babyNickname={babyNickname}
             recipientName={recipientName}
+            dueDate={dueDate}
             onReveal={() => {}}
           />
         </Suspense>

@@ -8,7 +8,11 @@ export interface CardLinkData {
   templateId: string;
   babyNickname: string;
   gender: "boy" | "girl";
+  /** Expected due date as YYYY-MM-DD; omitted when the creator skipped it. */
+  dueDate?: string;
 }
+
+const DUE_DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
 
 type SearchParamsObject = Record<string, string | string[] | undefined>;
 
@@ -30,6 +34,7 @@ export function buildCardQuery(data: CardLinkData): string {
     template: data.templateId,
     baby: data.babyNickname,
     g: encodeGender(data.gender),
+    ...(data.dueDate ? { due: data.dueDate } : {}),
   });
   return params.toString();
 }
@@ -49,5 +54,8 @@ export function parseCardQuery(searchParams: SearchParamsObject): CardLinkData |
   const gender = decodeGender(encodedGender);
   if (!gender) return null;
 
-  return { templateId, babyNickname: babyNickname.trim(), gender };
+  const due = firstValue(searchParams.due);
+  const dueDate = due && DUE_DATE_PATTERN.test(due) ? due : undefined;
+
+  return { templateId, babyNickname: babyNickname.trim(), gender, dueDate };
 }

@@ -47,6 +47,7 @@ export default async function QueryCardPage({ params, searchParams }: QueryCardP
         templateId={card.templateId}
         gender={card.gender}
         babyNickname={card.babyNickname}
+        dueDate={card.dueDate}
         recipientMode="input"
         ogMode="default"
       />

@@ -6,11 +6,11 @@ import { buildCardQuery, type CardLinkData } from "@/lib/card-link";
 
 type CardCompleteProps = CardLinkData;
 
-export function CardComplete({ templateId, babyNickname, gender }: CardCompleteProps) {
+export function CardComplete({ templateId, babyNickname, gender, dueDate }: CardCompleteProps) {
   const t = useTranslations("create");
   const locale = useLocale();
 
-  const shareUrl = `/${locale}/card?${buildCardQuery({ templateId, babyNickname, gender })}`;
+  const shareUrl = `/${locale}/card?${buildCardQuery({ templateId, babyNickname, gender, dueDate })}`;
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] p-6 text-center">
