@@ -140,7 +140,10 @@
     "tapToReveal": "Tap to reveal",
     "congratulations": "Congratulations!",
     "goToBbabam": "Explore bbabam, pregnancy & parenting",
-    "createMyCard": "Create my own gender reveal card"
+    "createMyCard": "Create my own gender reveal card",
+    "pageSubtitle": "Gender Reveal Card",
+    "ogTitle": "What's {name}'s gender?",
+    "ogSurpriseTitle": "A gift has arrived!"
   },
   "dashboard": {
     "title": "My Cards",

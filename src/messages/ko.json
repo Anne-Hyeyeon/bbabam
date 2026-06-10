@@ -140,7 +140,10 @@
     "tapToReveal": "탭해서 확인하기",
     "congratulations": "축하해요!",
     "goToBbabam": "임신·육아 콘텐츠, 빠밤 구경하기",
-    "createMyCard": "나도 젠더리빌 카드 만들기"
+    "createMyCard": "나도 젠더리빌 카드 만들기",
+    "pageSubtitle": "젠더리빌 카드",
+    "ogTitle": "{name}의 성별은?",
+    "ogSurpriseTitle": "선물이 도착했어요!"
   },
   "dashboard": {
     "title": "내 카드",
