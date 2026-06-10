@@ -1,5 +1,5 @@
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
+import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { MobileLayout } from "@/components/layout/mobile-layout";
@@ -17,6 +17,10 @@ export default async function LocaleLayout({
   if (!routing.locales.includes(locale as "ko" | "en")) {
     notFound();
   }
+
+  // Next 16 no longer propagates the request header set by the next-intl
+  // proxy, so the locale must be seeded from the route param explicitly.
+  setRequestLocale(locale);
 
   const messages = await getMessages();
 
