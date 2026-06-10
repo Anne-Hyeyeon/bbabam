@@ -42,17 +42,7 @@ export function CreateWizard() {
     <div className="flex flex-col min-h-[calc(100vh-56px)]">
       {step < 4 && (
         <div className="px-4 pt-4">
-          <div className="flex items-center gap-2 mb-2">
-            {[1, 2, 3].map((s) => (
-              <div
-                key={s}
-                className={`h-2 flex-1 rounded-full transition-colors ${
-                  s <= step ? "bg-gradient-to-r from-pink-baby to-blue-baby" : "bg-gray-200"
-                }`}
-              />
-            ))}
-          </div>
-          <h2 className="text-lg mb-2">{stepTitles[step - 1]}</h2>
+          <h2 className="text-lg font-bold text-[var(--color-ink)] mb-2">{stepTitles[step - 1]}</h2>
         </div>
       )}
 
@@ -97,7 +87,7 @@ export function CreateWizard() {
           {step > 1 && (
             <button
               onClick={() => setStep((s) => (s - 1) as Step)}
-              className="flex-1 py-3 rounded-xl border border-gray-200 text-text-secondary hover:bg-gray-50 transition-colors"
+              className="flex-1 py-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-ink-muted)] hover:text-[var(--color-ink)] transition-colors"
             >
               {t("prev")}
             </button>
@@ -106,14 +96,14 @@ export function CreateWizard() {
             <button
               onClick={() => setStep((s) => (s + 1) as Step)}
               disabled={!canProceed()}
-              className="flex-1 py-3 rounded-xl bg-gradient-to-r from-pink-baby to-blue-baby text-white disabled:opacity-50 transition-opacity"
+              className="flex-1 py-3 rounded-xl bg-[var(--color-ink)] text-white hover:opacity-90 disabled:opacity-40 transition-opacity"
             >
               {t("next")}
             </button>
           ) : (
             <button
               onClick={() => setStep(4)}
-              className="flex-1 py-3 rounded-xl bg-gradient-to-r from-pink-baby to-blue-baby text-white transition-opacity"
+              className="flex-1 py-3 rounded-xl bg-[var(--color-ink)] text-white hover:opacity-90 transition-opacity"
             >
               {t("create")}
             </button>

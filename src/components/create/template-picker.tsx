@@ -2,67 +2,62 @@
 
 import { useTranslations } from "next-intl";
 import { templates } from "@/components/templates";
+import { POSTER_BG, type Palette } from "@/components/home/palette";
 
 interface TemplatePickerProps {
   selected: string | null;
   onSelect: (id: string) => void;
 }
 
-function TemplateIcon({ id }: { id: string }) {
-  const icons: Record<string, React.ReactNode> = {
-    scratch: (
-      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="3" y="5" width="18" height="14" rx="2" />
-        <path d="M3 10h18" />
-        <path d="M7 15h4" />
-      </svg>
-    ),
-    flip: (
-      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="4" y="3" width="16" height="18" rx="2" />
-        <path d="M12 8v4" />
-        <path d="M12 16h.01" />
-      </svg>
-    ),
-    envelope: (
-      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="2" y="5" width="20" height="14" rx="2" />
-        <path d="M2 5l10 7 10-7" />
-      </svg>
-    ),
-    "egg-hatch": (
-      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 3c-3.5 0-6.5 5-6.5 10a6.5 6.5 0 0 0 13 0c0-5-3-10-6.5-10z" />
-        <path d="M9 12l1.5 1.5L9 15" />
-        <path d="M15 14l-1.5 1-1 2" />
-      </svg>
-    ),
-  };
-  return <div className="text-pink-baby">{icons[id] || null}</div>;
-}
+// Same category tints the home banners use, one per template.
+const TEMPLATE_PALETTES: Record<string, Palette> = {
+  scratch: "pink",
+  flip: "butter",
+  envelope: "peach",
+  "egg-hatch": "blue",
+};
 
 export function TemplatePicker({ selected, onSelect }: TemplatePickerProps) {
-  const t = useTranslations("templates");
+  const t = useTranslations("create");
+  const tName = useTranslations("templates");
 
   return (
-    <div className="p-4">
-      <div className="grid grid-cols-2 gap-3">
-        {templates.map((tpl) => (
+    <div className="flex flex-col gap-3 p-4">
+      {templates.map((tpl) => {
+        const isSelected = selected === tpl.id;
+        return (
           <button
             key={tpl.id}
+            type="button"
             onClick={() => onSelect(tpl.id)}
-            className={`flex flex-col items-center gap-2 p-4 rounded-xl border transition-all cursor-pointer ${
-              selected === tpl.id
-                ? "border-pink-baby bg-pink-light shadow-sm"
-                : "border-gray-200 bg-white hover:border-pink-baby/50"
-            }`}
+            aria-pressed={isSelected}
+            className={[
+              "group relative w-full overflow-hidden rounded-[16px] aspect-[5/2] text-left transition cursor-pointer",
+              POSTER_BG[TEMPLATE_PALETTES[tpl.id] ?? "butter"],
+              isSelected
+                ? "ring-2 ring-[var(--color-ink)] ring-offset-2 ring-offset-[var(--color-bg)]"
+                : "hover:-translate-y-[2px]",
+            ].join(" ")}
           >
-            <TemplateIcon id={tpl.id} />
-            <span className="text-sm">{t(tpl.nameKey)}</span>
-            <span className="text-xs text-text-secondary">{tpl.interactionType}</span>
+            <div className="flex h-full flex-col justify-end gap-1 p-4">
+              <p className="text-[22px] font-bold leading-[1.15] text-[var(--color-ink)] whitespace-pre-line">
+                {t(`templateBanners.${tpl.nameKey}.phrase`)}
+              </p>
+              <p className="text-[12px] font-medium text-[var(--color-ink-muted)]">
+                {tName(tpl.nameKey)} · {t(`templateBanners.${tpl.nameKey}.desc`)}
+              </p>
+            </div>
+
+            {isSelected && (
+              <span className="absolute top-3 right-3 flex h-6 w-6 items-center justify-center rounded-full bg-[var(--color-ink)] text-white">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden>
+                  <path d="M5 12l5 5L19 7" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </span>
+            )}
           </button>
-        ))}
-      </div>
+        );
+      })}
     </div>
   );
 }
