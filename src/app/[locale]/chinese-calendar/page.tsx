@@ -17,13 +17,21 @@ import {
   predictChineseGender,
 } from "@/features/chinese-calendar/data";
 import type { ChineseGenderResult } from "@/features/chinese-calendar/types";
+import { useShare } from "@/hooks/use-share";
+import { currentPageUrl } from "@/lib/share";
+
+// Pure: share message for a calendar prediction.
+const calendarShareText = (result: ChineseGenderResult, url: string) => {
+  const label = result.prediction === "boy" ? "아들" : "딸";
+  return `황실 달력은 "${label}"이래요!\n빠밤!에서 직접 예측해보세요 → ${url}`;
+};
 
 export default function ChineseCalendarPage() {
   const [motherBirth, setMotherBirth] = useState("");
   const [conception, setConception] = useState("");
   const [result, setResult] = useState<ChineseGenderResult | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [shareCopied, setShareCopied] = useState(false);
+  const { copied: shareCopied, share: shareResult, resetCopied } = useShare();
 
   function predict() {
     setError(null);
@@ -56,31 +64,16 @@ export default function ChineseCalendarPage() {
   function reset() {
     setResult(null);
     setError(null);
-    setShareCopied(false);
+    resetCopied();
   }
 
   async function share() {
     if (!result) return;
-    const label = result.prediction === "boy" ? "아들" : "딸";
-    const url =
-      typeof window !== "undefined"
-        ? `${window.location.origin}${window.location.pathname}`
-        : "https://bbabam.com/chinese-calendar";
-    const text = `황실 달력은 "${label}"이래요!\n빠밤!에서 직접 예측해보세요 → ${url}`;
-
-    if (typeof navigator !== "undefined" && navigator.share) {
-      try {
-        await navigator.share({ title: "황실 성별 달력", text });
-        return;
-      } catch {
-        /* cancelled */
-      }
-    }
-    if (typeof navigator !== "undefined" && navigator.clipboard) {
-      await navigator.clipboard.writeText(text);
-      setShareCopied(true);
-      setTimeout(() => setShareCopied(false), 2000);
-    }
+    const url = currentPageUrl("https://bbabam.com/chinese-calendar");
+    await shareResult({
+      title: "황실 성별 달력",
+      text: calendarShareText(result, url),
+    });
   }
 
   return (

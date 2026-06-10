@@ -15,13 +15,19 @@ import {
   computeMBTI,
 } from "@/features/parent-mbti/data";
 import type { MBTIAxis, MBTIResult } from "@/features/parent-mbti/types";
+import { useShare } from "@/hooks/use-share";
+import { currentPageUrl } from "@/lib/share";
 
 type Stage = "intro" | "quiz" | "result";
+
+// Pure: share message for an MBTI result.
+const mbtiShareText = (result: MBTIResult, url: string) =>
+  `${result.shareCopy}\n빠밤!에서 직접 해보세요 → ${url}`;
 
 export default function ParentMBTIPage() {
   const [stage, setStage] = useState<Stage>("intro");
   const [answers, setAnswers] = useState<MBTIAxis[]>([]);
-  const [shareCopied, setShareCopied] = useState(false);
+  const { copied: shareCopied, share: shareResult, resetCopied } = useShare();
 
   const currentIdx = answers.length;
   const currentQ = PARENT_MBTI_QUESTIONS[currentIdx];
@@ -43,29 +49,15 @@ export default function ParentMBTIPage() {
   function reset() {
     setAnswers([]);
     setStage("intro");
-    setShareCopied(false);
+    resetCopied();
   }
 
   async function share(result: MBTIResult) {
-    const url =
-      typeof window !== "undefined"
-        ? `${window.location.origin}${window.location.pathname}`
-        : "https://bbabam.com/parent-mbti";
-    const text = `${result.shareCopy}\n빠밤!에서 직접 해보세요 → ${url}`;
-
-    if (typeof navigator !== "undefined" && navigator.share) {
-      try {
-        await navigator.share({ title: "예비 부모 MBTI", text });
-        return;
-      } catch {
-        /* cancelled */
-      }
-    }
-    if (typeof navigator !== "undefined" && navigator.clipboard) {
-      await navigator.clipboard.writeText(text);
-      setShareCopied(true);
-      setTimeout(() => setShareCopied(false), 2000);
-    }
+    const url = currentPageUrl("https://bbabam.com/parent-mbti");
+    await shareResult({
+      title: "예비 부모 MBTI",
+      text: mbtiShareText(result, url),
+    });
   }
 
   return (

@@ -31,6 +31,8 @@ import type {
   BabyGeneticsResult,
   ParentTraits,
 } from "@/features/baby-genetics/types";
+import { useShare } from "@/hooks/use-share";
+import { currentPageUrl } from "@/lib/share";
 
 const FATHER_DEFAULT: ParentTraits = {
   heightCm: 175,
@@ -58,7 +60,7 @@ export default function BabyGeneticsPage() {
   const [babySex, setBabySex] = useState<"boy" | "girl" | "unknown">("unknown");
   const [nickname, setNickname] = useState("");
   const [result, setResult] = useState<BabyGeneticsResult | null>(null);
-  const [shareCopied, setShareCopied] = useState(false);
+  const { copied: shareCopied, share: shareResult, resetCopied } = useShare();
 
   function predict() {
     const safeFather = {
@@ -82,35 +84,18 @@ export default function BabyGeneticsPage() {
 
   function reset() {
     setResult(null);
-    setShareCopied(false);
+    resetCopied();
   }
 
   async function share() {
     if (!result) return;
     const displayName = nickname.trim() || "아기";
     const h = pickHeight(result);
-    const url =
-      typeof window !== "undefined"
-        ? `${window.location.origin}${window.location.pathname}`
-        : "https://bbabam.com/genetics";
-    const text = `우리 ${displayName}의 예상 키: ${h.min}~${h.max}cm\n빠밤!에서 직접 예측해봤어요 → ${url}`;
-
-    if (typeof navigator !== "undefined" && navigator.share) {
-      try {
-        await navigator.share({
-          title: `${displayName}의 유전자 예상`,
-          text,
-        });
-        return;
-      } catch {
-        /* user cancelled — fall through to clipboard */
-      }
-    }
-    if (typeof navigator !== "undefined" && navigator.clipboard) {
-      await navigator.clipboard.writeText(text);
-      setShareCopied(true);
-      setTimeout(() => setShareCopied(false), 2000);
-    }
+    const url = currentPageUrl("https://bbabam.com/genetics");
+    await shareResult({
+      title: `${displayName}의 유전자 예상`,
+      text: `우리 ${displayName}의 예상 키: ${h.min}~${h.max}cm\n빠밤!에서 직접 예측해봤어요 → ${url}`,
+    });
   }
 
   return (

@@ -19,13 +19,19 @@ import type {
   GenderFolkloreResult,
   GenderGuess,
 } from "@/features/gender-folklore/types";
+import { useShare } from "@/hooks/use-share";
+import { currentPageUrl } from "@/lib/share";
 
 type Stage = "intro" | "quiz" | "result";
+
+// Pure: share message for a quiz result.
+const folkloreShareText = (result: GenderFolkloreResult, url: string) =>
+  `속설 테스트 결과: ${result.title}\n빠밤!에서 직접 해보세요 → ${url}`;
 
 export default function GenderFolklorePage() {
   const [stage, setStage] = useState<Stage>("intro");
   const [answers, setAnswers] = useState<GenderGuess[]>([]);
-  const [shareCopied, setShareCopied] = useState(false);
+  const { copied: shareCopied, share: shareResult, resetCopied } = useShare();
 
   const currentIdx = answers.length;
   const currentQ = GENDER_FOLKLORE_QUESTIONS[currentIdx];
@@ -47,29 +53,15 @@ export default function GenderFolklorePage() {
   function reset() {
     setAnswers([]);
     setStage("intro");
-    setShareCopied(false);
+    resetCopied();
   }
 
   async function share(result: GenderFolkloreResult) {
-    const url =
-      typeof window !== "undefined"
-        ? `${window.location.origin}${window.location.pathname}`
-        : "https://bbabam.com/gender-folklore";
-    const text = `속설 테스트 결과: ${result.title}\n빠밤!에서 직접 해보세요 → ${url}`;
-
-    if (typeof navigator !== "undefined" && navigator.share) {
-      try {
-        await navigator.share({ title: "성별 속설 테스트", text });
-        return;
-      } catch {
-        /* cancelled */
-      }
-    }
-    if (typeof navigator !== "undefined" && navigator.clipboard) {
-      await navigator.clipboard.writeText(text);
-      setShareCopied(true);
-      setTimeout(() => setShareCopied(false), 2000);
-    }
+    const url = currentPageUrl("https://bbabam.com/gender-folklore");
+    await shareResult({
+      title: "성별 속설 테스트",
+      text: folkloreShareText(result, url),
+    });
   }
 
   return (
