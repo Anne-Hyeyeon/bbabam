@@ -1,0 +1,10 @@
+export type Palette = "peach" | "sage" | "lilac" | "butter" | "pink" | "blue";
+
+export const POSTER_BG: Record<Palette, string> = {
+  peach:  "bg-[var(--color-cat-peach)]",
+  sage:   "bg-[var(--color-cat-sage)]",
+  lilac:  "bg-[var(--color-cat-lilac)]",
+  butter: "bg-[var(--color-cat-butter)]",
+  pink:   "bg-[var(--color-cat-pink)]",
+  blue:   "bg-[var(--color-cat-blue)]",
+};

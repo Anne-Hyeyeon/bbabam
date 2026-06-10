@@ -5,6 +5,7 @@
   },
   "portal": {
     "searchPlaceholder": "Looking for something fun?",
+    "heroCta": "Try it now",
     "chips": {
       "all": "All",
       "catGuess": "Gender",

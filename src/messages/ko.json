@@ -5,6 +5,7 @@
   },
   "portal": {
     "searchPlaceholder": "뭐 재밌는 거 없나?",
+    "heroCta": "바로 해보기",
     "chips": {
       "all": "전체",
       "catGuess": "성별",

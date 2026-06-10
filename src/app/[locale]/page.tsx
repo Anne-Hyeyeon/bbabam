@@ -2,6 +2,10 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Header } from "@/components/layout/header";
 import { ScrollRow } from "@/components/scroll-row";
+import { HeroBanner, type HeroSlide } from "@/components/home/hero-banner";
+import { BigBannerCard, type BigBannerData } from "@/components/home/big-banner-card";
+import { StatusBadge } from "@/components/home/status-badge";
+import { POSTER_BG, type Palette } from "@/components/home/palette";
 
 type SectionKey =
   | "genderQuiz"
@@ -18,7 +22,6 @@ type SectionKey =
   | "parentMbti";
 
 type Category = "catGuess" | "catCards" | "catQuiz" | "catTools";
-type Palette = "peach" | "sage" | "lilac" | "butter" | "pink" | "blue";
 type PrefixKey = "genderReveal" | "announce";
 
 type SectionDef = {
@@ -48,15 +51,6 @@ const SECTIONS: Record<SectionKey, SectionDef> = {
   parentMbti:         { key: "parentMbti",         href: "/parent-mbti",              status: "live", category: "catQuiz",  palette: "blue" },
 };
 
-const POSTER_BG: Record<Palette, string> = {
-  peach:  "bg-[var(--color-cat-peach)]",
-  sage:   "bg-[var(--color-cat-sage)]",
-  lilac:  "bg-[var(--color-cat-lilac)]",
-  butter: "bg-[var(--color-cat-butter)]",
-  pink:   "bg-[var(--color-cat-pink)]",
-  blue:   "bg-[var(--color-cat-blue)]",
-};
-
 const CHIPS: { key: "all" | Category }[] = [
   { key: "all" },
   { key: "catGuess" },
@@ -69,19 +63,6 @@ const BEST_KEYS: SectionKey[] = ["cardGenderEgg", "geneticsPredict", "genderQuiz
 const NEW_KEYS: SectionKey[] = ["cardGenderEgg", "milestones", "folkloreQuiz", "announceCopy", "parentMbti"];
 const CARDS_KEYS: SectionKey[] = ["cardGenderEgg", "cardGenderScratch", "cardGenderFlip", "cardGenderEnvelope", "announceCard", "announceCopy"];
 const QUIZ_KEYS: SectionKey[] = ["folkloreQuiz", "parentMbti", "genderQuiz", "geneticsPredict"];
-
-function StatusBadge({ status, label }: { status: "live" | "new"; label: string }) {
-  return (
-    <span
-      className={[
-        "absolute top-2 left-2 rounded-full px-2 py-[2px] text-[10px] font-semibold tracking-wide shadow-card",
-        status === "live" ? "bg-[var(--color-ink)] text-white" : "bg-[var(--color-primary)] text-white",
-      ].join(" ")}
-    >
-      {label}
-    </span>
-  );
-}
 
 function PosterCard({
   section,
@@ -206,6 +187,36 @@ export default function PortalLandingPage() {
       );
     });
 
+  // Pure: resolve a section into plain serializable banner data.
+  const toBannerData = (k: SectionKey): BigBannerData & HeroSlide => {
+    const s = SECTIONS[k];
+    return {
+      key: k,
+      href: s.href,
+      palette: s.palette,
+      status: s.status,
+      phrase: t(`phrases.${k}`),
+      title: t(`sections.${k}.title`),
+      catLabel: t(`chips.${s.category}`),
+      prefixLabel: s.prefix ? t(`prefix.${s.prefix}`) : undefined,
+    };
+  };
+
+  const heroSlides = BEST_KEYS.map(toBannerData);
+  const statusLabels = {
+    live: t("live"),
+    new: t("new"),
+    comingSoon: t("comingSoon"),
+  };
+
+  const renderBigBanners = (keys: SectionKey[]) => (
+    <div className="flex flex-col gap-3 px-4">
+      {keys.map((k) => (
+        <BigBannerCard key={k} banner={toBannerData(k)} statusLabels={statusLabels} />
+      ))}
+    </div>
+  );
+
   return (
     <>
       <Header showBack={false} />
@@ -219,6 +230,15 @@ export default function PortalLandingPage() {
             </svg>
             <span className="text-[13px] text-[var(--color-ink-muted)]">{t("searchPlaceholder")}</span>
           </div>
+        </div>
+
+        {/* ------- BEST hero sliding banner ------- */}
+        <div className="pb-4">
+          <HeroBanner
+            slides={heroSlides}
+            badgeLabel={t("sectionBest")}
+            ctaLabel={t("heroCta")}
+          />
         </div>
 
         {/* ------- Category chips ------- */}
@@ -242,14 +262,8 @@ export default function PortalLandingPage() {
           <div className="h-px w-full bg-[var(--color-border)]" />
         </nav>
 
-        {/* ------- BEST ------- */}
-        <section className="pt-4">
-          <SectionHeader title={t("sectionBest")} sub={t("sectionBestSub")} />
-          <ScrollRow>{render(BEST_KEYS, "lg")}</ScrollRow>
-        </section>
-
         {/* ------- NEW ------- */}
-        <section className="pt-6">
+        <section className="pt-4">
           <SectionHeader title={t("sectionNew")} sub={t("sectionNewSub")} />
           <ScrollRow>{render(NEW_KEYS, "lg")}</ScrollRow>
         </section>
@@ -257,13 +271,13 @@ export default function PortalLandingPage() {
         {/* ------- 카드 만들기 ------- */}
         <section className="pt-6">
           <SectionHeader title={t("sectionCards")} sub={t("sectionCardsSub")} />
-          <ScrollRow>{render(CARDS_KEYS, "md")}</ScrollRow>
+          {renderBigBanners(CARDS_KEYS)}
         </section>
 
         {/* ------- 나는 어떤 부모? ------- */}
         <section className="pt-6">
           <SectionHeader title={t("sectionQuiz")} sub={t("sectionQuizSub")} />
-          <ScrollRow>{render(QUIZ_KEYS, "md")}</ScrollRow>
+          {renderBigBanners(QUIZ_KEYS)}
         </section>
       </main>
     </>
