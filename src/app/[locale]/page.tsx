@@ -43,7 +43,7 @@ type SectionDef = {
 
 const ANNOUNCE_CARD_THUMBNAIL: Thumbnail = {
   kind: "image",
-  images: { hero: "announce-card.png" },
+  images: { hero: "announce-card.png", wide: "announce-card.png" },
   localized: true,
   textMode: "baked",
 };
