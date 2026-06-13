@@ -1446,10 +1446,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@parcel/watcher-darwin-arm64@npm:2.5.6, @parcel/watcher-darwin-arm64@npm:^2.5.6":
+"@parcel/watcher-darwin-arm64@npm:2.5.6":
   version: 2.5.6
   resolution: "@parcel/watcher-darwin-arm64@npm:2.5.6"
-  checksum: 10c0/c14a4ed0df71b90011b43da24994af9fc52c6dd604e80371227fc8afb0bf8a8ea83de933d881b98cb1f05ae6d3d73461718db1ae1ecba4509284be2449a25c14
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
@@ -2187,10 +2186,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swc/core-darwin-arm64@npm:1.15.24, @swc/core-darwin-arm64@npm:^1.15.24":
+"@swc/core-darwin-arm64@npm:1.15.24":
   version: 1.15.24
   resolution: "@swc/core-darwin-arm64@npm:1.15.24"
-  checksum: 10c0/2e8e3e50ed85ff7bd5df0f2f4e14447301f44d00b5af3ffc7c8836d95558ae6b49679250978a363e24eb9449f0c400816a1e9d2895b6570ddd31ef4ddf4ef711
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
@@ -2371,10 +2369,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tailwindcss/oxide-darwin-arm64@npm:4.2.2, @tailwindcss/oxide-darwin-arm64@npm:^4.2.2":
+"@tailwindcss/oxide-darwin-arm64@npm:4.2.2":
   version: 4.2.2
   resolution: "@tailwindcss/oxide-darwin-arm64@npm:4.2.2"
-  checksum: 10c0/ddd2d7844ef9be81dfe043b393a4eb7d971d72c53eef241456c132f7c38d5acaf569311dd565d23a345484f0dcc16a3967eb3ed74ad08e672310919f1a0d8502
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
@@ -3125,14 +3122,11 @@ __metadata:
   dependencies:
     "@neondatabase/serverless": "npm:^1.0.2"
     "@parcel/watcher": "npm:^2.5.6"
-    "@parcel/watcher-darwin-arm64": "npm:^2.5.6"
     "@radix-ui/react-label": "npm:^2.1.8"
     "@radix-ui/react-progress": "npm:^1.1.8"
     "@radix-ui/react-radio-group": "npm:^1.3.8"
     "@radix-ui/react-select": "npm:^2.2.6"
     "@radix-ui/react-slot": "npm:^1.2.4"
-    "@swc/core-darwin-arm64": "npm:^1.15.24"
-    "@tailwindcss/oxide-darwin-arm64": "npm:^4.2.2"
     "@tailwindcss/postcss": "npm:^4"
     "@types/node": "npm:^20.19.39"
     "@types/react": "npm:^19"
@@ -3146,7 +3140,6 @@ __metadata:
     eslint: "npm:^9"
     eslint-config-next: "npm:16.2.2"
     framer-motion: "npm:^12.38.0"
-    lightningcss-darwin-arm64: "npm:^1.32.0"
     lucide-react: "npm:^1.8.0"
     nanoid: "npm:^5.1.7"
     next: "npm:16.2.2"
@@ -5212,10 +5205,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lightningcss-darwin-arm64@npm:1.32.0, lightningcss-darwin-arm64@npm:^1.32.0":
+"lightningcss-darwin-arm64@npm:1.32.0":
   version: 1.32.0
   resolution: "lightningcss-darwin-arm64@npm:1.32.0"
-  checksum: 10c0/da954d0c215d0e95f15a92c8717f871017586e1332b98fd40e96196571d2fd3d51a727dc530768afee9f6a04da210510740574dd0c8dbf2ecced79e5996f1a06
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
