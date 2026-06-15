@@ -17,6 +17,10 @@
   --color-primary-hover: #749A86;
   --color-primary-soft: #E8F0EB;
 
+  /* Selected chip — soft pastel beige (not heavy near-black). */
+  --color-chip-active: #EAE0CB;
+  --color-chip-active-border: #DBCDAE;
+
   /* Category tints — used ONLY on section cards, not on backgrounds */
   --color-cat-peach: #FFD2B8;
   --color-cat-sage: #C3D5A9;
