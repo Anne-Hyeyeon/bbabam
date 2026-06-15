@@ -3,17 +3,14 @@ import { useTranslations } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { Header } from "@/components/layout/header";
 import { HeroBanner, type HeroSlide } from "@/components/home/hero-banner";
-import { ContentCard, type ContentCardData } from "@/components/home/content-card";
+import { type ContentCardData } from "@/components/home/content-card";
+import { CategoryFeed, type FeedChip, type FeedItem } from "@/components/home/category-feed";
 import { type Palette } from "@/components/home/palette";
 import {
   PHRASE_THUMBNAIL,
   resolveThumbnail,
   type Thumbnail,
 } from "@/components/home/thumbnail";
-
-// Temporarily hidden while the catalog is small: the chips tab comes back by
-// flipping this once there is enough content to filter.
-const SHOW_CATEGORY_CHIPS = false as boolean;
 
 type SectionKey =
   | "genderQuiz"
@@ -27,17 +24,6 @@ type SectionKey =
 
 type Category = "catGuess" | "catCards" | "catQuiz" | "catTools";
 type PrefixKey = "announce";
-/** Free-form classification tags. First entry is the one shown on the card. */
-type Tag =
-  | "imming"
-  | "card"
-  | "copy"
-  | "gender"
-  | "test"
-  | "genetics"
-  | "record"
-  | "name"
-  | "mbti";
 
 type SectionDef = {
   key: SectionKey;
@@ -47,8 +33,6 @@ type SectionDef = {
   palette: Palette;
   /** Product line prefix (e.g. "젠더리빌", "임밍아웃"). Shown as `(...)` before the title. */
   prefix?: PrefixKey;
-  /** Classification tags; tags[0] is rendered as the card's #hashtag chip. */
-  tags: Tag[];
   /** Required: every content declares how its thumbnail renders (see thumbnail.ts). */
   thumbnail: Thumbnail;
 };
@@ -82,14 +66,14 @@ const FOLKLORE_THUMBNAIL: Thumbnail = {
 };
 
 const SECTIONS: Record<SectionKey, SectionDef> = {
-  announceCard:       { key: "announceCard",       href: "/gender-reveal-card",                 status: "new",  category: "catCards", palette: "lilac",  prefix: "announce", tags: ["imming", "card"],   thumbnail: ANNOUNCE_CARD_THUMBNAIL },
-  announceCopy:       { key: "announceCopy",       href: "/announcements",            status: "new",  category: "catTools", palette: "butter", prefix: "announce", tags: ["copy", "imming"],    thumbnail: PHRASE_THUMBNAIL },
-  genderQuiz:         { key: "genderQuiz",         href: "/chinese-calendar",         status: "live", category: "catGuess", palette: "peach",  tags: ["gender", "test"],     thumbnail: GENDER_QUIZ_THUMBNAIL },
-  folkloreQuiz:       { key: "folkloreQuiz",       href: "/gender-folklore",          status: "new",  category: "catGuess", palette: "lilac",  tags: ["gender", "test"],     thumbnail: FOLKLORE_THUMBNAIL },
-  geneticsPredict:    { key: "geneticsPredict",    href: "/genetics",                 status: "live", category: "catTools", palette: "sage",   tags: ["genetics", "gender"], thumbnail: GENETICS_THUMBNAIL },
-  milestones:         { key: "milestones",         href: "/milestones",               status: "new",  category: "catTools", palette: "sage",   tags: ["record"],             thumbnail: PHRASE_THUMBNAIL },
-  nameGenerator:      { key: "nameGenerator",      href: null,                        status: "soon", category: "catTools", palette: "butter", tags: ["name"],               thumbnail: PHRASE_THUMBNAIL },
-  parentMbti:         { key: "parentMbti",         href: "/parent-mbti",              status: "live", category: "catQuiz",  palette: "blue",   tags: ["mbti", "test"],       thumbnail: PHRASE_THUMBNAIL },
+  announceCard:       { key: "announceCard",       href: "/gender-reveal-card",       status: "new",  category: "catCards", palette: "lilac",  prefix: "announce", thumbnail: ANNOUNCE_CARD_THUMBNAIL },
+  announceCopy:       { key: "announceCopy",       href: "/announcements",            status: "new",  category: "catTools", palette: "butter", prefix: "announce", thumbnail: PHRASE_THUMBNAIL },
+  genderQuiz:         { key: "genderQuiz",         href: "/chinese-calendar",         status: "live", category: "catGuess", palette: "peach",  thumbnail: GENDER_QUIZ_THUMBNAIL },
+  folkloreQuiz:       { key: "folkloreQuiz",       href: "/gender-folklore",          status: "new",  category: "catGuess", palette: "lilac",  thumbnail: FOLKLORE_THUMBNAIL },
+  geneticsPredict:    { key: "geneticsPredict",    href: "/genetics",                 status: "live", category: "catTools", palette: "sage",   thumbnail: GENETICS_THUMBNAIL },
+  milestones:         { key: "milestones",         href: "/milestones",               status: "new",  category: "catTools", palette: "sage",   thumbnail: PHRASE_THUMBNAIL },
+  nameGenerator:      { key: "nameGenerator",      href: null,                        status: "soon", category: "catTools", palette: "butter", thumbnail: PHRASE_THUMBNAIL },
+  parentMbti:         { key: "parentMbti",         href: "/parent-mbti",              status: "live", category: "catQuiz",  palette: "blue",   thumbnail: PHRASE_THUMBNAIL },
 };
 
 const CHIPS: { key: "all" | Category }[] = [
@@ -114,29 +98,6 @@ const FEED_KEYS: SectionKey[] = [
   "nameGenerator",
 ];
 
-function SectionHeader({ title, sub, showMore = true }: { title: string; sub: string; showMore?: boolean }) {
-  const t = useTranslations("portal");
-  return (
-    <div className="flex items-end justify-between px-4 pb-2.5">
-      <div>
-        <h2 className="text-[17px] font-bold tracking-tight text-[var(--color-ink)]">{title}</h2>
-        <p className="text-[11.5px] text-[var(--color-ink-muted)]">{sub}</p>
-      </div>
-      {showMore && (
-        <button
-          type="button"
-          className="flex items-center gap-0.5 text-[11.5px] font-medium text-[var(--color-ink-muted)] hover:text-[var(--color-ink)] transition"
-        >
-          {t("more")}
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden>
-            <path d="M9 6l6 6-6 6" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </button>
-      )}
-    </div>
-  );
-}
-
 export default function PortalLandingPage({ params }: { params: Promise<{ locale: string }> }) {
   // Pages render concurrently with layouts, so the locale must be seeded
   // here as well (Next 16 drops the next-intl proxy request header).
@@ -157,7 +118,6 @@ export default function PortalLandingPage({ params }: { params: Promise<{ locale
       phrase: t(`phrases.${k}`),
       title: t(`sections.${k}.title`),
       catLabel: t(`chips.${s.category}`),
-      tags: s.tags.map((tg) => t(`tags.${tg}`)),
       prefixLabel: s.prefix ? t(`prefix.${s.prefix}`) : undefined,
     };
   };
@@ -169,15 +129,11 @@ export default function PortalLandingPage({ params }: { params: Promise<{ locale
     comingSoon: t("comingSoon"),
   };
 
-  // Uniform two-column grid: visually distinct from the BEST carousel above,
-  // so the "browse everything" zone reads as its own thing.
-  const renderFeed = (keys: SectionKey[]) => (
-    <div className="grid grid-cols-2 gap-3 px-4">
-      {keys.map((k) => (
-        <ContentCard key={k} data={toBannerData(k, "wide")} statusLabels={statusLabels} />
-      ))}
-    </div>
-  );
+  const feedItems: FeedItem[] = FEED_KEYS.map((k) => ({
+    category: SECTIONS[k].category,
+    data: toBannerData(k, "wide"),
+  }));
+  const feedChips: FeedChip[] = CHIPS.map((c) => ({ key: c.key, label: t(`chips.${c.key}`) }));
 
   return (
     <>
@@ -203,34 +159,14 @@ export default function PortalLandingPage({ params }: { params: Promise<{ locale
           />
         </div>
 
-        {/* ------- Category chips (hidden until the catalog grows) ------- */}
-        {SHOW_CATEGORY_CHIPS && (
-          <nav aria-label="categories" className="pt-5">
-            <div className="flex gap-2 overflow-x-auto px-4 py-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-              {CHIPS.map((chip, idx) => (
-                <button
-                  key={chip.key}
-                  type="button"
-                  className={[
-                    "shrink-0 rounded-full border px-3.5 py-1.5 text-[12.5px] font-medium transition",
-                    idx === 0
-                      ? "border-[var(--color-ink)] bg-[var(--color-ink)] text-white"
-                      : "border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]",
-                  ].join(" ")}
-                >
-                  {t(`chips.${chip.key}`)}
-                </button>
-              ))}
-            </div>
-            <div className="h-px w-full bg-[var(--color-border)]" />
-          </nav>
-        )}
-
-        {/* ------- Full catalogue grid (distinct from BEST above) ------- */}
-        <section className="pt-4">
-          <SectionHeader title={t("sectionAll")} sub={t("sectionAllSub")} showMore={false} />
-          {renderFeed(FEED_KEYS)}
-        </section>
+        {/* ------- Category chips + full catalogue grid ------- */}
+        <CategoryFeed
+          items={feedItems}
+          chips={feedChips}
+          statusLabels={statusLabels}
+          title={t("sectionAll")}
+          sub={t("sectionAllSub")}
+        />
       </main>
     </>
   );

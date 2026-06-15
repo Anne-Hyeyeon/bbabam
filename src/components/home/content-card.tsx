@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
-import { CHIP_BG, POSTER_BG, type Palette } from "./palette";
+import { POSTER_BG, type Palette } from "./palette";
 import { StatusBadge } from "./status-badge";
 import type { ResolvedThumbnail } from "./thumbnail";
 
@@ -18,8 +18,6 @@ export interface ContentCardData {
   image: ResolvedThumbnail | null;
   phrase: string;
   title: string;
-  /** Classification tags; the first is shown as the card's #hashtag chip. */
-  tags: string[];
   prefixLabel?: string;
 }
 
@@ -76,17 +74,7 @@ export function ContentCard({ data, statusLabels, variant = "grid" }: ContentCar
   );
 
   const caption = (
-    <div className={["flex flex-1 flex-col gap-1.5", isFeature ? "p-4" : "p-3"].join(" ")}>
-      {data.tags[0] && (
-        <span
-          className={[
-            "inline-flex w-fit items-center rounded-full px-2 py-[2px] text-[11px] font-medium text-[var(--color-ink)]",
-            CHIP_BG[data.palette],
-          ].join(" ")}
-        >
-          #{data.tags[0]}
-        </span>
-      )}
+    <div className={["flex flex-1 flex-col", isFeature ? "p-4" : "p-3"].join(" ")}>
       <h3
         className={[
           "font-semibold leading-snug tracking-tight text-[var(--color-ink)]",
