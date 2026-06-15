@@ -30,7 +30,7 @@ export const templates: CardTemplate[] = [
     interactionType: "scratch",
     thumbnail: {
       kind: "image",
-      images: { wide: "gender-reveal-lottery.png" },
+      images: { wide: "gender-reveal-lottery.webp" },
       localized: true,
       textMode: "baked",
     },
@@ -42,7 +42,7 @@ export const templates: CardTemplate[] = [
     interactionType: "dialog",
     thumbnail: {
       kind: "image",
-      images: { wide: "omurice-reveal.png" },
+      images: { wide: "omurice-reveal.webp" },
       localized: true,
       textMode: "baked",
     },

@@ -3,7 +3,7 @@ import { useTranslations } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { Header } from "@/components/layout/header";
 import { HeroBanner, type HeroSlide } from "@/components/home/hero-banner";
-import { BigBannerCard, type BigBannerData } from "@/components/home/big-banner-card";
+import { ContentCard, type ContentCardData } from "@/components/home/content-card";
 import { type Palette } from "@/components/home/palette";
 import {
   PHRASE_THUMBNAIL,
@@ -11,10 +11,9 @@ import {
   type Thumbnail,
 } from "@/components/home/thumbnail";
 
-// Temporarily hidden while the catalog is small: the chips tab and section
-// subheadings come back by flipping these once there is enough content.
+// Temporarily hidden while the catalog is small: the chips tab comes back by
+// flipping this once there is enough content to filter.
 const SHOW_CATEGORY_CHIPS = false as boolean;
-const SHOW_SECTION_HEADERS = false as boolean;
 
 type SectionKey =
   | "genderQuiz"
@@ -43,28 +42,28 @@ type SectionDef = {
 
 const ANNOUNCE_CARD_THUMBNAIL: Thumbnail = {
   kind: "image",
-  images: { hero: "announce-card.png", wide: "announce-card.png" },
+  images: { hero: "announce-card.webp", wide: "announce-card.webp" },
   localized: true,
   textMode: "baked",
 };
 
 const GENDER_QUIZ_THUMBNAIL: Thumbnail = {
   kind: "image",
-  images: { hero: "royal-calendar.png", wide: "royal-calendar.png" },
+  images: { hero: "royal-calendar.webp", wide: "royal-calendar.webp" },
   localized: true,
   textMode: "baked",
 };
 
 const GENETICS_THUMBNAIL: Thumbnail = {
   kind: "image",
-  images: { hero: "baby-genetics.png", wide: "baby-genetics.png" },
+  images: { hero: "baby-genetics.webp", wide: "baby-genetics.webp" },
   localized: true,
   textMode: "baked",
 };
 
 const FOLKLORE_THUMBNAIL: Thumbnail = {
   kind: "image",
-  images: { hero: "gender-folklore.png", wide: "gender-folklore.png" },
+  images: { hero: "gender-folklore.webp", wide: "gender-folklore.webp" },
   localized: true,
   textMode: "baked",
 };
@@ -89,19 +88,20 @@ const CHIPS: { key: "all" | Category }[] = [
 ];
 
 const BEST_KEYS: SectionKey[] = ["announceCard", "geneticsPredict", "genderQuiz", "folkloreQuiz", "milestones"];
-// One vertical feed of everything: the catalog is too small for sub-sections.
+// Full catalogue grid under BEST. Lead with items the BEST carousel does not
+// already headline so the two zones don't read as duplicates; "soon" goes last.
 const FEED_KEYS: SectionKey[] = [
-  "announceCard",
-  "genderQuiz",
-  "folkloreQuiz",
-  "geneticsPredict",
-  "milestones",
-  "parentMbti",
   "announceCopy",
+  "parentMbti",
+  "folkloreQuiz",
+  "milestones",
+  "genderQuiz",
+  "geneticsPredict",
+  "announceCard",
   "nameGenerator",
 ];
 
-function SectionHeader({ title, sub }: { title: string; sub: string }) {
+function SectionHeader({ title, sub, showMore = true }: { title: string; sub: string; showMore?: boolean }) {
   const t = useTranslations("portal");
   return (
     <div className="flex items-end justify-between px-4 pb-2.5">
@@ -109,15 +109,17 @@ function SectionHeader({ title, sub }: { title: string; sub: string }) {
         <h2 className="text-[17px] font-bold tracking-tight text-[var(--color-ink)]">{title}</h2>
         <p className="text-[11.5px] text-[var(--color-ink-muted)]">{sub}</p>
       </div>
-      <button
-        type="button"
-        className="flex items-center gap-0.5 text-[11.5px] font-medium text-[var(--color-ink-muted)] hover:text-[var(--color-ink)] transition"
-      >
-        {t("more")}
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden>
-          <path d="M9 6l6 6-6 6" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      </button>
+      {showMore && (
+        <button
+          type="button"
+          className="flex items-center gap-0.5 text-[11.5px] font-medium text-[var(--color-ink-muted)] hover:text-[var(--color-ink)] transition"
+        >
+          {t("more")}
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden>
+            <path d="M9 6l6 6-6 6" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
+      )}
     </div>
   );
 }
@@ -131,7 +133,7 @@ export default function PortalLandingPage({ params }: { params: Promise<{ locale
   const t = useTranslations("portal");
 
   // Pure: resolve a section into plain serializable banner data.
-  const toBannerData = (k: SectionKey, slot: "hero" | "wide"): BigBannerData & HeroSlide => {
+  const toBannerData = (k: SectionKey, slot: "hero" | "wide"): ContentCardData & HeroSlide => {
     const s = SECTIONS[k];
     return {
       key: k,
@@ -153,10 +155,12 @@ export default function PortalLandingPage({ params }: { params: Promise<{ locale
     comingSoon: t("comingSoon"),
   };
 
-  const renderBigBanners = (keys: SectionKey[]) => (
-    <div className="flex flex-col gap-3 px-4">
+  // Uniform two-column grid: visually distinct from the BEST carousel above,
+  // so the "browse everything" zone reads as its own thing.
+  const renderFeed = (keys: SectionKey[]) => (
+    <div className="grid grid-cols-2 gap-3 px-4">
       {keys.map((k) => (
-        <BigBannerCard key={k} banner={toBannerData(k, "wide")} statusLabels={statusLabels} />
+        <ContentCard key={k} data={toBannerData(k, "wide")} statusLabels={statusLabels} />
       ))}
     </div>
   );
@@ -208,12 +212,10 @@ export default function PortalLandingPage({ params }: { params: Promise<{ locale
           </nav>
         )}
 
-        {/* ------- Full vertical feed ------- */}
+        {/* ------- Full catalogue grid (distinct from BEST above) ------- */}
         <section className="pt-4">
-          {SHOW_SECTION_HEADERS && (
-            <SectionHeader title={t("sectionQuiz")} sub={t("sectionQuizSub")} />
-          )}
-          {renderBigBanners(FEED_KEYS)}
+          <SectionHeader title={t("sectionAll")} sub={t("sectionAllSub")} showMore={false} />
+          {renderFeed(FEED_KEYS)}
         </section>
       </main>
     </>

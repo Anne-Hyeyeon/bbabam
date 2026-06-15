@@ -39,11 +39,14 @@ function SlideContent({
   eager: boolean;
 }) {
   const showCopy = slide.image === null || slide.image.textMode === "overlay";
+  // Copy laid over a photo needs a scrim + light text; copy on a flat tint panel
+  // stays dark for contrast against the pastel.
+  const overImage = showCopy && slide.image !== null;
 
   return (
     <div
       className={[
-        "relative h-full w-full overflow-hidden rounded-[16px]",
+        "relative h-full w-full overflow-hidden rounded-[14px]",
         POSTER_BG[slide.palette],
       ].join(" ")}
     >
@@ -58,16 +61,35 @@ function SlideContent({
         />
       )}
 
+      {showCopy && (
+        <div
+          className={[
+            "absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t to-transparent",
+            overImage ? "from-black/70 via-black/25" : "from-black/12",
+          ].join(" ")}
+        />
+      )}
+
       <span className="absolute top-3 left-3 rounded-full bg-[var(--color-ink)] px-2.5 py-[3px] text-[10px] font-bold tracking-wide text-white shadow-card">
         {badgeLabel}
       </span>
 
       {showCopy && (
         <div className="relative flex h-full flex-col justify-end gap-2 p-5 pb-6">
-          <p className="text-[26px] font-bold leading-[1.15] text-[var(--color-ink)] whitespace-pre-line">
+          <p
+            className={[
+              "text-[26px] font-bold leading-[1.15] whitespace-pre-line",
+              overImage ? "text-white drop-shadow-sm" : "text-[var(--color-ink)]",
+            ].join(" ")}
+          >
             {slide.phrase}
           </p>
-          <p className="text-[13px] font-medium text-[var(--color-ink-muted)]">
+          <p
+            className={[
+              "text-[13px] font-medium",
+              overImage ? "text-white/80" : "text-[var(--color-ink-muted)]",
+            ].join(" ")}
+          >
             {slide.prefixLabel && <span>({slide.prefixLabel}) </span>}
             {slide.title} · {slide.catLabel}
           </p>
@@ -128,7 +150,7 @@ export function HeroBanner({ slides, badgeLabel, ctaLabel }: HeroBannerProps) {
 
   return (
     <div className="relative px-4">
-      <div ref={emblaRef} className="overflow-hidden rounded-[16px]">
+      <div ref={emblaRef} className="overflow-hidden rounded-[14px]">
         <div className="flex touch-pan-y">
           {slides.map((slide, idx) => (
             <div key={slide.key} className="relative min-w-0 shrink-0 grow-0 basis-full aspect-[2/1]">

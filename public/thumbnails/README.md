@@ -30,13 +30,13 @@ baked 에셋은 **ko/와 en/에 같은 파일명**으로 두 벌 모두 있어�
 
 ## 새 썸네일 등록 절차
 
-1. 이미지를 규칙에 맞는 폴더에 저장 (예: `ko/announce-card.png`)
+1. 이미지를 규칙에 맞는 폴더에 저장 (예: `ko/announce-card.webp` — 용량을 위해 WebP 권장)
 2. `src/app/[locale]/page.tsx`의 `SECTIONS`에서 해당 컨텐츠의 `thumbnail`을 설정:
 
 ```ts
 thumbnail: {
   kind: "image",
-  images: { hero: "announce-card.png" }, // 같은 파일을 여러 슬롯에 써도 됨
+  images: { hero: "announce-card.webp" }, // 같은 파일을 여러 슬롯에 써도 됨
   localized: true,   // shared/ 에셋이면 false
   textMode: "baked", // 배경용이면 "overlay"
 }
