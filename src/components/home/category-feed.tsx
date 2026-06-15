@@ -47,10 +47,10 @@ export function CategoryFeed({ items, chips, statusLabels, title, sub }: Categor
                 onClick={() => setSelected(chip.key)}
                 aria-pressed={active}
                 className={[
-                  "shrink-0 cursor-pointer rounded-full border px-3.5 py-1.5 text-[12.5px] font-medium transition-colors",
+                  "shrink-0 cursor-pointer rounded-full border px-3.5 py-1.5 text-[12.5px] transition-colors",
                   active
-                    ? "border-[var(--color-ink)] bg-[var(--color-ink)] text-white"
-                    : "border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]",
+                    ? "border-[var(--color-chip-active-border)] bg-[var(--color-chip-active)] font-semibold text-[var(--color-ink)]"
+                    : "border-[var(--color-border)] bg-[var(--color-surface)] font-medium text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]",
                 ].join(" ")}
               >
                 {chip.label}
