@@ -27,6 +27,17 @@ type SectionKey =
 
 type Category = "catGuess" | "catCards" | "catQuiz" | "catTools";
 type PrefixKey = "announce";
+/** Free-form classification tags. First entry is the one shown on the card. */
+type Tag =
+  | "imming"
+  | "card"
+  | "copy"
+  | "gender"
+  | "test"
+  | "genetics"
+  | "record"
+  | "name"
+  | "mbti";
 
 type SectionDef = {
   key: SectionKey;
@@ -36,6 +47,8 @@ type SectionDef = {
   palette: Palette;
   /** Product line prefix (e.g. "젠더리빌", "임밍아웃"). Shown as `(...)` before the title. */
   prefix?: PrefixKey;
+  /** Classification tags; tags[0] is rendered as the card's #hashtag chip. */
+  tags: Tag[];
   /** Required: every content declares how its thumbnail renders (see thumbnail.ts). */
   thumbnail: Thumbnail;
 };
@@ -69,14 +82,14 @@ const FOLKLORE_THUMBNAIL: Thumbnail = {
 };
 
 const SECTIONS: Record<SectionKey, SectionDef> = {
-  announceCard:       { key: "announceCard",       href: "/gender-reveal-card",                 status: "new",  category: "catCards", palette: "lilac",  prefix: "announce", thumbnail: ANNOUNCE_CARD_THUMBNAIL },
-  announceCopy:       { key: "announceCopy",       href: "/announcements",            status: "new",  category: "catTools", palette: "butter", prefix: "announce", thumbnail: PHRASE_THUMBNAIL },
-  genderQuiz:         { key: "genderQuiz",         href: "/chinese-calendar",         status: "live", category: "catGuess", palette: "peach",  thumbnail: GENDER_QUIZ_THUMBNAIL },
-  folkloreQuiz:       { key: "folkloreQuiz",       href: "/gender-folklore",          status: "new",  category: "catGuess", palette: "lilac",  thumbnail: FOLKLORE_THUMBNAIL },
-  geneticsPredict:    { key: "geneticsPredict",    href: "/genetics",                 status: "live", category: "catTools", palette: "sage",   thumbnail: GENETICS_THUMBNAIL },
-  milestones:         { key: "milestones",         href: "/milestones",               status: "new",  category: "catTools", palette: "sage",   thumbnail: PHRASE_THUMBNAIL },
-  nameGenerator:      { key: "nameGenerator",      href: null,                        status: "soon", category: "catTools", palette: "butter", thumbnail: PHRASE_THUMBNAIL },
-  parentMbti:         { key: "parentMbti",         href: "/parent-mbti",              status: "live", category: "catQuiz",  palette: "blue",   thumbnail: PHRASE_THUMBNAIL },
+  announceCard:       { key: "announceCard",       href: "/gender-reveal-card",                 status: "new",  category: "catCards", palette: "lilac",  prefix: "announce", tags: ["imming", "card"],   thumbnail: ANNOUNCE_CARD_THUMBNAIL },
+  announceCopy:       { key: "announceCopy",       href: "/announcements",            status: "new",  category: "catTools", palette: "butter", prefix: "announce", tags: ["copy", "imming"],    thumbnail: PHRASE_THUMBNAIL },
+  genderQuiz:         { key: "genderQuiz",         href: "/chinese-calendar",         status: "live", category: "catGuess", palette: "peach",  tags: ["gender", "test"],     thumbnail: GENDER_QUIZ_THUMBNAIL },
+  folkloreQuiz:       { key: "folkloreQuiz",       href: "/gender-folklore",          status: "new",  category: "catGuess", palette: "lilac",  tags: ["gender", "test"],     thumbnail: FOLKLORE_THUMBNAIL },
+  geneticsPredict:    { key: "geneticsPredict",    href: "/genetics",                 status: "live", category: "catTools", palette: "sage",   tags: ["genetics", "gender"], thumbnail: GENETICS_THUMBNAIL },
+  milestones:         { key: "milestones",         href: "/milestones",               status: "new",  category: "catTools", palette: "sage",   tags: ["record"],             thumbnail: PHRASE_THUMBNAIL },
+  nameGenerator:      { key: "nameGenerator",      href: null,                        status: "soon", category: "catTools", palette: "butter", tags: ["name"],               thumbnail: PHRASE_THUMBNAIL },
+  parentMbti:         { key: "parentMbti",         href: "/parent-mbti",              status: "live", category: "catQuiz",  palette: "blue",   tags: ["mbti", "test"],       thumbnail: PHRASE_THUMBNAIL },
 };
 
 const CHIPS: { key: "all" | Category }[] = [
@@ -144,6 +157,7 @@ export default function PortalLandingPage({ params }: { params: Promise<{ locale
       phrase: t(`phrases.${k}`),
       title: t(`sections.${k}.title`),
       catLabel: t(`chips.${s.category}`),
+      tags: s.tags.map((tg) => t(`tags.${tg}`)),
       prefixLabel: s.prefix ? t(`prefix.${s.prefix}`) : undefined,
     };
   };
