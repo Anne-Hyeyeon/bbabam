@@ -16,6 +16,17 @@
       "catQuiz": "테스트",
       "catTools": "도구"
     },
+    "tags": {
+      "imming": "임밍아웃",
+      "card": "카드",
+      "copy": "문구",
+      "gender": "성별예측",
+      "test": "테스트",
+      "genetics": "유전",
+      "record": "기록",
+      "name": "태명",
+      "mbti": "MBTI"
+    },
     "sectionBest": "BEST",
     "sectionBestSub": "이번 주 인기 테스트",
     "sectionNew": "NEW",
