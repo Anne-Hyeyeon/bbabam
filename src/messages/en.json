@@ -16,17 +16,6 @@
       "catQuiz": "Tests",
       "catTools": "Tools"
     },
-    "tags": {
-      "imming": "Reveal",
-      "card": "Card",
-      "copy": "Wording",
-      "gender": "Gender",
-      "test": "Test",
-      "genetics": "Genetics",
-      "record": "Tracker",
-      "name": "Babyname",
-      "mbti": "MBTI"
-    },
     "sectionBest": "BEST",
     "sectionBestSub": "Popular this week",
     "sectionNew": "NEW",
