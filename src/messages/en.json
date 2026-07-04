@@ -33,15 +33,12 @@
     "catTools": "Tool",
     "catCards": "Card",
     "catQuiz": "Test",
-    "prefix": {
-      "announce": "Announcement"
-    },
     "phrases": {
       "genderQuiz": "Boy\nor girl?",
       "folkloreQuiz": "Old wives'\ntales",
       "geneticsPredict": "Who will\nbaby look like?",
       "milestones": "Weekly\nmilestones",
-      "announceCard": "I'm\npregnant!",
+      "announceCard": "The big\nreveal!",
       "nameGenerator": "Nickname\ngacha!",
       "parentMbti": "What kind\nof parent?",
       "dday": "Days till\nbaby day",
@@ -66,8 +63,8 @@
         "desc": "10 landmark moments from week 4 to 40"
       },
       "announceCard": {
-        "title": "Pregnancy announcement card",
-        "desc": "Share the surprise with scratch, flip, envelope, and egg templates"
+        "title": "Gender reveal card",
+        "desc": "Lottery, omurice, hatching egg, and gift-box reveals"
       },
       "nameGenerator": {
         "title": "Baby nickname gacha",
@@ -140,6 +137,10 @@
       "omurice": {
         "phrase": "Exciting!\nOmurice gender reveal",
         "desc": "Our baby's secret hidden in the egg!"
+      },
+      "giftBox": {
+        "phrase": "Shake it\nopen!",
+        "desc": "Three shakes and the surprise pops!"
       }
     },
     "create": "Create Card",
@@ -179,7 +180,8 @@
   "templates": {
     "scratch": "Gender Reveal Lottery",
     "eggHatch": "Hatching Egg",
-    "omurice": "Omurice Gender Reveal"
+    "omurice": "Omurice Gender Reveal",
+    "giftBox": "Gift Box Surprise"
   },
   "eggHatch": {
     "intro": {

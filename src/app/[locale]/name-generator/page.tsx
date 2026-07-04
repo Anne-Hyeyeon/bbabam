@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { ToolPage } from "@/components/tool/tool-page";
 import { ToolHero } from "@/components/tool/tool-hero";
+import { EmojiArt } from "@/components/art/emoji-art";
 import { ResultActions } from "@/components/tool/result-actions";
 import {
   BABY_NAME_META,
@@ -80,7 +81,7 @@ export default function NameGeneratorPage() {
     <ToolPage>
       <div className="px-4 py-6">
         <ToolHero
-          illustration={<CapsuleIllustration className="mx-auto h-24 w-24" />}
+          illustration={<EmojiArt src="/art/name-generator.png" className="mx-auto" />}
           title={BABY_NAME_META.title}
           lines={[BABY_NAME_META.subtitle, BABY_NAME_META.description]}
         />
@@ -197,46 +198,5 @@ export default function NameGeneratorPage() {
         </Alert>
       </div>
     </ToolPage>
-  );
-}
-
-/* Capsule-toy machine illustration — same soft style as sibling tools. */
-function CapsuleIllustration({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 160 160" fill="none" aria-hidden>
-      <circle cx="80" cy="80" r="78" fill="var(--color-cat-butter)" opacity="0.45" />
-      <circle cx="80" cy="80" r="62" fill="var(--color-cat-sage)" opacity="0.4" />
-      {/* machine dome */}
-      <path
-        d="M46 78 a34 34 0 0 1 68 0 z"
-        fill="#F5F7F9"
-        stroke="#2B2B2B"
-        strokeWidth="2.5"
-        strokeLinejoin="round"
-      />
-      {/* capsules inside the dome */}
-      <circle cx="66" cy="66" r="8" fill="#FFD1DC" stroke="#2B2B2B" strokeWidth="2" />
-      <circle cx="86" cy="58" r="8" fill="#A6C6E0" stroke="#2B2B2B" strokeWidth="2" />
-      <circle cx="96" cy="70" r="7" fill="#F2D06B" stroke="#2B2B2B" strokeWidth="2" />
-      {/* machine body */}
-      <rect
-        x="52"
-        y="78"
-        width="56"
-        height="38"
-        rx="6"
-        fill="#8AB09D"
-        stroke="#2B2B2B"
-        strokeWidth="2.5"
-      />
-      {/* dispense slot */}
-      <rect x="70" y="94" width="20" height="12" rx="3" fill="#F5F7F9" stroke="#2B2B2B" strokeWidth="2" />
-      {/* dropped capsule */}
-      <circle cx="80" cy="126" r="9" fill="#FFD1DC" stroke="#2B2B2B" strokeWidth="2.2" />
-      <path d="M71 126 h18" stroke="#2B2B2B" strokeWidth="2" />
-      {/* sparkles */}
-      <path d="M34 48 l2 -2 l2 2 l-2 2 z" fill="var(--color-primary)" opacity="0.85" />
-      <path d="M126 110 l2 -2 l2 2 l-2 2 z" fill="var(--color-primary)" opacity="0.85" />
-    </svg>
   );
 }

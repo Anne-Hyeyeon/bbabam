@@ -5,6 +5,7 @@ import { Info } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ToolPage } from "@/components/tool/tool-page";
 import { ToolHero } from "@/components/tool/tool-hero";
+import { EmojiArt } from "@/components/art/emoji-art";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
@@ -29,7 +30,7 @@ export default function MilestonesPage() {
       {/* Hero */}
       <div className="px-4 pt-6">
         <ToolHero
-          illustration={<BellyIllustration className="mx-auto h-24 w-24" />}
+          illustration={<EmojiArt src="/art/pregnant.png" className="mx-auto" />}
           title={PREGNANCY_MILESTONES_META.title}
           lines={[
             PREGNANCY_MILESTONES_META.subtitle,
@@ -188,38 +189,3 @@ export default function MilestonesPage() {
   );
 }
 
-function BellyIllustration({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 160 160" fill="none" aria-hidden>
-      <circle cx="80" cy="80" r="78" fill="var(--color-cat-sage)" opacity="0.5" />
-      <circle cx="80" cy="80" r="62" fill="var(--color-cat-butter)" opacity="0.5" />
-      {/* belly silhouette */}
-      <path
-        d="M70 40 C 62 60, 52 74, 52 94 C 52 112, 66 124, 86 124 C 106 124, 118 110, 118 92 C 118 76, 110 62, 100 48"
-        fill="#F5F7F9"
-        stroke="#2B2B2B"
-        strokeWidth="2.5"
-        strokeLinejoin="round"
-      />
-      {/* baby inside — small curled form */}
-      <path
-        d="M78 96 a8 8 0 1 0 16 0 a8 8 0 0 0 -16 0 M86 104 q 4 6 -4 10"
-        stroke="#2B2B2B"
-        strokeWidth="2"
-        fill="#FFD1DC"
-        strokeLinejoin="round"
-      />
-      {/* heart */}
-      <path
-        d="M86 82s-6-3.6-6-7.5a3.5 3.5 0 0 1 6-2.3 3.5 3.5 0 0 1 6 2.3c0 3.9-6 7.5-6 7.5z"
-        fill="#E87A91"
-        stroke="#2B2B2B"
-        strokeWidth="1.8"
-        strokeLinejoin="round"
-      />
-      {/* sparkles */}
-      <path d="M30 46 l2 -2 l2 2 l-2 2 z" fill="var(--color-primary)" opacity="0.85" />
-      <path d="M130 120 l2 -2 l2 2 l-2 2 z" fill="var(--color-primary)" opacity="0.85" />
-    </svg>
-  );
-}

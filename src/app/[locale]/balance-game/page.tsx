@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { ToolPage } from "@/components/tool/tool-page";
 import { ToolHero } from "@/components/tool/tool-hero";
+import { EmojiArt } from "@/components/art/emoji-art";
 import { ResultActions } from "@/components/tool/result-actions";
 import { QuizQuestion } from "@/components/quiz/quiz-question";
 import { useQuizFlow } from "@/components/quiz/use-quiz-flow";
@@ -74,7 +75,7 @@ function IntroView({ onStart }: { onStart: () => void }) {
   return (
     <div className="px-4 py-6">
       <ToolHero
-        illustration={<SeesawIllustration className="mx-auto h-24 w-24" />}
+        illustration={<EmojiArt src="/art/balance-game.png" className="mx-auto" />}
         title={BALANCE_GAME_META.title}
         lines={[BALANCE_GAME_META.subtitle, BALANCE_GAME_META.description]}
         badges={[
@@ -184,33 +185,6 @@ function SeesawGlyph({ className }: { className?: string }) {
       <path d="M24 26 l-5 12 h10 z" fill="#F5F7F9" stroke="#2B2B2B" strokeWidth="2.5" strokeLinejoin="round" />
       <circle cx="11" cy="26" r="5.5" fill="#A6C6E0" stroke="#2B2B2B" strokeWidth="2.5" />
       <circle cx="37" cy="18" r="5.5" fill="#FFD1DC" stroke="#2B2B2B" strokeWidth="2.5" />
-    </svg>
-  );
-}
-
-/* Seesaw with blue/pink riders — same soft style as sibling tools. */
-function SeesawIllustration({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 160 160" fill="none" aria-hidden>
-      <circle cx="80" cy="80" r="78" fill="var(--color-cat-butter)" opacity="0.45" />
-      <circle cx="80" cy="80" r="62" fill="var(--color-cat-lilac)" opacity="0.4" />
-      {/* plank */}
-      <path d="M34 96 L126 76" stroke="#2B2B2B" strokeWidth="3" strokeLinecap="round" />
-      {/* pivot */}
-      <path d="M80 87 l-12 27 h24 z" fill="#F5F7F9" stroke="#2B2B2B" strokeWidth="2.5" strokeLinejoin="round" />
-      {/* riders */}
-      <circle cx="42" cy="87" r="12" fill="#A6C6E0" stroke="#2B2B2B" strokeWidth="2.5" />
-      <circle cx="118" cy="67" r="12" fill="#FFD1DC" stroke="#2B2B2B" strokeWidth="2.5" />
-      {/* faces */}
-      <circle cx="38" cy="85" r="1.6" fill="#2B2B2B" />
-      <circle cx="46" cy="85" r="1.6" fill="#2B2B2B" />
-      <path d="M39 90 q3 2.6 6 0" stroke="#2B2B2B" strokeWidth="1.8" fill="none" strokeLinecap="round" />
-      <circle cx="114" cy="65" r="1.6" fill="#2B2B2B" />
-      <circle cx="122" cy="65" r="1.6" fill="#2B2B2B" />
-      <path d="M115 70 q3 2.6 6 0" stroke="#2B2B2B" strokeWidth="1.8" fill="none" strokeLinecap="round" />
-      {/* sparkles */}
-      <path d="M34 48 l2 -2 l2 2 l-2 2 z" fill="var(--color-primary)" opacity="0.85" />
-      <path d="M126 116 l2 -2 l2 2 l-2 2 z" fill="var(--color-primary)" opacity="0.85" />
     </svg>
   );
 }

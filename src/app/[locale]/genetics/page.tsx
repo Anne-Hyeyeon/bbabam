@@ -19,6 +19,7 @@ import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { ToolPage } from "@/components/tool/tool-page";
 import { ToolHero } from "@/components/tool/tool-hero";
+import { EmojiArt } from "@/components/art/emoji-art";
 import { ResultActions } from "@/components/tool/result-actions";
 import { scrollToTopSmooth } from "@/lib/scroll";
 import {
@@ -155,7 +156,7 @@ function InputView({
   return (
     <div className="px-4 py-6">
       <ToolHero
-        illustration={<BabyIllustration className="mx-auto h-24 w-24" />}
+        illustration={<EmojiArt src="/art/baby.png" className="mx-auto" />}
         title={BABY_GENETICS_META.title}
         lines={[BABY_GENETICS_META.subtitle]}
       />
@@ -269,7 +270,7 @@ function ResultView({
   return (
     <div className="px-4 py-6">
       <div className="text-center">
-        <BabyIllustration className="mx-auto h-32 w-32" />
+        <EmojiArt src="/art/baby.png" size={128} className="mx-auto" />
         <p className="mt-2 text-[12px] font-medium uppercase tracking-[0.14em] text-[var(--color-ink-muted)]">
           예상 결과 리포트
         </p>
@@ -601,74 +602,3 @@ function HeightLine({
     </div>
   );
 }
-
-/* Placeholder cute baby illustration — swap with Miricanvas art later */
-function BabyIllustration({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 160 160"
-      fill="none"
-      aria-hidden="true"
-    >
-      {/* soft halo */}
-      <circle cx="80" cy="80" r="78" fill="var(--color-cat-butter)" opacity="0.5" />
-      <circle cx="80" cy="80" r="62" fill="var(--color-cat-peach)" opacity="0.65" />
-      {/* head */}
-      <ellipse cx="80" cy="86" rx="42" ry="44" fill="#FFE3D1" stroke="#2B2B2B" strokeWidth="2" />
-      {/* hair tuft (single curl top) */}
-      <path
-        d="M72 42 Q80 30 88 42"
-        stroke="#2B2B2B"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        fill="none"
-      />
-      <path
-        d="M78 40 Q82 36 86 40"
-        stroke="#2B2B2B"
-        strokeWidth="2"
-        strokeLinecap="round"
-        fill="none"
-      />
-      {/* eyes (closed-smile arcs) */}
-      <path
-        d="M60 84 Q66 78 72 84"
-        stroke="#2B2B2B"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        fill="none"
-      />
-      <path
-        d="M88 84 Q94 78 100 84"
-        stroke="#2B2B2B"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        fill="none"
-      />
-      {/* cheeks */}
-      <circle cx="54" cy="98" r="5" fill="#FFB7C6" opacity="0.8" />
-      <circle cx="106" cy="98" r="5" fill="#FFB7C6" opacity="0.8" />
-      {/* smile */}
-      <path
-        d="M70 106 Q80 116 90 106"
-        stroke="#2B2B2B"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        fill="none"
-      />
-      {/* tiny sparkles */}
-      <path
-        d="M30 54 l2 -2 l2 2 l-2 2 z"
-        fill="var(--color-primary)"
-        opacity="0.8"
-      />
-      <path
-        d="M128 58 l2 -2 l2 2 l-2 2 z"
-        fill="var(--color-primary)"
-        opacity="0.8"
-      />
-    </svg>
-  );
-}
-

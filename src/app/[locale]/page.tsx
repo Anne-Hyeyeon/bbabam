@@ -26,7 +26,6 @@ type SectionKey =
   | "balanceGame";
 
 type Category = "catGuess" | "catCards" | "catQuiz" | "catTools";
-type PrefixKey = "announce";
 
 type SectionDef = {
   key: SectionKey;
@@ -34,8 +33,6 @@ type SectionDef = {
   status: "live" | "new" | "soon";
   category: Category;
   palette: Palette;
-  /** Product line prefix (e.g. "젠더리빌", "임밍아웃"). Shown as `(...)` before the title. */
-  prefix?: PrefixKey;
   /** Required: every content declares how its thumbnail renders (see thumbnail.ts). */
   thumbnail: Thumbnail;
   /** Poster illustration for phrase thumbnails (see poster-art.tsx). */
@@ -45,7 +42,7 @@ type SectionDef = {
 // GPT-designed webp thumbnails are parked in public/thumbnails for now;
 // the home renders every card in the 3D-icon poster style instead.
 const SECTIONS: Record<SectionKey, SectionDef> = {
-  announceCard:       { key: "announceCard",       href: "/gender-reveal-card",       status: "new",  category: "catCards", palette: "lilac",  prefix: "announce", thumbnail: PHRASE_THUMBNAIL, art: "announceCard" },
+  announceCard:       { key: "announceCard",       href: "/gender-reveal-card",       status: "new",  category: "catCards", palette: "lilac",  thumbnail: PHRASE_THUMBNAIL, art: "announceCard" },
   genderQuiz:         { key: "genderQuiz",         href: "/chinese-calendar",         status: "live", category: "catGuess", palette: "peach",  thumbnail: PHRASE_THUMBNAIL, art: "genderQuiz" },
   folkloreQuiz:       { key: "folkloreQuiz",       href: "/gender-folklore",          status: "new",  category: "catGuess", palette: "lilac",  thumbnail: PHRASE_THUMBNAIL, art: "folkloreQuiz" },
   geneticsPredict:    { key: "geneticsPredict",    href: "/genetics",                 status: "live", category: "catTools", palette: "sage",   thumbnail: PHRASE_THUMBNAIL, art: "geneticsPredict" },
@@ -102,7 +99,6 @@ export default function PortalLandingPage({ params }: { params: Promise<{ locale
       phrase: t(`phrases.${k}`),
       title: t(`sections.${k}.title`),
       catLabel: t(`chips.${s.category}`),
-      prefixLabel: s.prefix ? t(`prefix.${s.prefix}`) : undefined,
     };
   };
 

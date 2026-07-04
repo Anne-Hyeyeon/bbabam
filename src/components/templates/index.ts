@@ -23,29 +23,19 @@ export interface CardTemplate {
   component: () => Promise<{ default: ComponentType<TemplateInteractionProps> }>;
 }
 
+// GPT-designed webp thumbnails are parked in public/thumbnails; the picker
+// renders every template in the phrase + 3D-icon poster style instead.
 export const templates: CardTemplate[] = [
   {
     id: "scratch",
     nameKey: "scratch",
     interactionType: "scratch",
-    thumbnail: {
-      kind: "image",
-      images: { wide: "gender-reveal-lottery.webp" },
-      localized: true,
-      textMode: "baked",
-    },
     component: () => import("./scratch-card"),
   },
   {
     id: "omurice",
     nameKey: "omurice",
     interactionType: "dialog",
-    thumbnail: {
-      kind: "image",
-      images: { wide: "omurice-reveal.webp" },
-      localized: true,
-      textMode: "baked",
-    },
     component: () => import("./omurice-card"),
   },
   {
@@ -53,6 +43,12 @@ export const templates: CardTemplate[] = [
     nameKey: "eggHatch",
     interactionType: "game",
     component: () => import("./egg-hatch-card"),
+  },
+  {
+    id: "gift-box",
+    nameKey: "giftBox",
+    interactionType: "game",
+    component: () => import("./gift-box-card"),
   },
 ];
 
