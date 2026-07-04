@@ -44,7 +44,7 @@ export function RevealResult({
           transition={{ type: "spring", stiffness: 180, damping: 15, delay: 0.15 }}
           className="mb-3"
         >
-          <BabyCharacter gender={gender} size={150} className="mx-auto" />
+          <BabyCharacter size={150} className="mx-auto" />
         </motion.div>
 
         <div className={jua.className}>

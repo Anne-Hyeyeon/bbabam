@@ -139,7 +139,7 @@ export default function ScratchCard({
               className="absolute inset-0 flex flex-col items-center justify-center gap-1.5"
               style={{ background: GENDER_SOFT[gender] }}
             >
-              <BabyCharacter gender={gender} size={100} />
+              <BabyCharacter size={100} />
               <span
                 className={`${jua.className} text-[26px]`}
                 style={{ color: GENDER_DEEP[gender] }}

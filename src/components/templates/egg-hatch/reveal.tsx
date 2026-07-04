@@ -194,7 +194,7 @@ export function Reveal({ gender, babyNickname, onReveal, onReplay }: Props) {
             transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
             style={{ width: "100%", height: "100%" }}
           >
-            <BabyCharacter gender={gender} />
+            <BabyCharacter />
           </motion.div>
         </motion.div>
       </div>
