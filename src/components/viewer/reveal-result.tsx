@@ -6,6 +6,7 @@ import { Confetti } from "@/components/confetti";
 import { motion } from "framer-motion";
 import { BabyIllustration } from "@/components/templates/egg-hatch/baby-illustration";
 import { jua } from "@/components/templates/egg-hatch/font";
+import { GENDER_DEEP, genderNoun } from "@/components/templates/gender";
 import { topicJosa } from "@/lib/korean";
 
 interface RevealResultProps {
@@ -15,8 +16,6 @@ interface RevealResultProps {
   ultrasoundImageUrl?: string;
 }
 
-const GENDER_DEEP = { boy: "#6E9CC4", girl: "#E2849B" } as const;
-
 export function RevealResult({
   gender,
   babyNickname,
@@ -25,7 +24,7 @@ export function RevealResult({
 }: RevealResultProps) {
   const t = useTranslations("viewer");
   const deep = GENDER_DEEP[gender];
-  const genderText = gender === "girl" ? "딸" : "아들";
+  const genderText = genderNoun(gender);
 
   return (
     <>

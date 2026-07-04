@@ -6,6 +6,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { jua } from "./egg-hatch/font";
+import { GENDER_DEEP } from "./gender";
+import { parseIsoDate } from "@/lib/dates";
 import type { TemplateInteractionProps } from "./index";
 
 const ART_BASE = "/games/omurice";
@@ -13,9 +15,6 @@ const ART_SIZES = "(max-width: 480px) 100vw, 480px";
 
 const COUNTDOWN_START = 3;
 const COUNTDOWN_STEP_MS = 900;
-
-/** Readable pastel accents for the gender word (same tones as RevealResult). */
-const GENDER_DEEP = { boy: "#6E9CC4", girl: "#E2849B" } as const;
 
 const DIALOG_KEYS = ["dialog1", "dialog2", "dialog3"] as const;
 
@@ -35,13 +34,6 @@ const sceneAfterTap = (scene: Scene): Scene => {
 // Pure: which plate illustration each scene shows.
 const artFor = (scene: Scene, gender: "boy" | "girl"): string =>
   scene.kind === "reveal" ? `${ART_BASE}/${gender}.png` : `${ART_BASE}/covered.png`;
-
-// Pure: parse YYYY-MM-DD into a local Date (avoids UTC off-by-one shifts).
-const parseIsoDate = (iso: string): Date | null => {
-  const [year, month, day] = iso.split("-").map(Number);
-  if (!Number.isFinite(year) || !Number.isFinite(month) || !Number.isFinite(day)) return null;
-  return new Date(year, month - 1, day);
-};
 
 // The omurice card keeps its own reveal scene and never hands off to the
 // generic result page, so `onReveal` is intentionally unused.

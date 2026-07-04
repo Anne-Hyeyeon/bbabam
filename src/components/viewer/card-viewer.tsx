@@ -80,7 +80,7 @@ export function CardViewer({
           <Suspense
             fallback={
               <div className="flex items-center justify-center min-h-[60vh]">
-                <div className="w-8 h-8 rounded-full border-2 border-pink-baby/30 border-t-pink-baby animate-spin" />
+                <div className="h-8 w-8 animate-spin rounded-full border-2 border-[var(--color-primary-soft)] border-t-[var(--color-primary)]" />
               </div>
             }
           >
