@@ -42,39 +42,13 @@ type SectionDef = {
   art?: PosterArtKind;
 };
 
-const ANNOUNCE_CARD_THUMBNAIL: Thumbnail = {
-  kind: "image",
-  images: { hero: "announce-card.webp", wide: "announce-card.webp" },
-  localized: true,
-  textMode: "baked",
-};
-
-const GENDER_QUIZ_THUMBNAIL: Thumbnail = {
-  kind: "image",
-  images: { hero: "royal-calendar.webp", wide: "royal-calendar.webp" },
-  localized: true,
-  textMode: "baked",
-};
-
-const GENETICS_THUMBNAIL: Thumbnail = {
-  kind: "image",
-  images: { hero: "baby-genetics.webp", wide: "baby-genetics.webp" },
-  localized: true,
-  textMode: "baked",
-};
-
-const FOLKLORE_THUMBNAIL: Thumbnail = {
-  kind: "image",
-  images: { hero: "gender-folklore.webp", wide: "gender-folklore.webp" },
-  localized: true,
-  textMode: "baked",
-};
-
+// GPT-designed webp thumbnails are parked in public/thumbnails for now;
+// the home renders every card in the 3D-icon poster style instead.
 const SECTIONS: Record<SectionKey, SectionDef> = {
-  announceCard:       { key: "announceCard",       href: "/gender-reveal-card",       status: "new",  category: "catCards", palette: "lilac",  prefix: "announce", thumbnail: ANNOUNCE_CARD_THUMBNAIL },
-  genderQuiz:         { key: "genderQuiz",         href: "/chinese-calendar",         status: "live", category: "catGuess", palette: "peach",  thumbnail: GENDER_QUIZ_THUMBNAIL },
-  folkloreQuiz:       { key: "folkloreQuiz",       href: "/gender-folklore",          status: "new",  category: "catGuess", palette: "lilac",  thumbnail: FOLKLORE_THUMBNAIL },
-  geneticsPredict:    { key: "geneticsPredict",    href: "/genetics",                 status: "live", category: "catTools", palette: "sage",   thumbnail: GENETICS_THUMBNAIL },
+  announceCard:       { key: "announceCard",       href: "/gender-reveal-card",       status: "new",  category: "catCards", palette: "lilac",  prefix: "announce", thumbnail: PHRASE_THUMBNAIL, art: "announceCard" },
+  genderQuiz:         { key: "genderQuiz",         href: "/chinese-calendar",         status: "live", category: "catGuess", palette: "peach",  thumbnail: PHRASE_THUMBNAIL, art: "genderQuiz" },
+  folkloreQuiz:       { key: "folkloreQuiz",       href: "/gender-folklore",          status: "new",  category: "catGuess", palette: "lilac",  thumbnail: PHRASE_THUMBNAIL, art: "folkloreQuiz" },
+  geneticsPredict:    { key: "geneticsPredict",    href: "/genetics",                 status: "live", category: "catTools", palette: "sage",   thumbnail: PHRASE_THUMBNAIL, art: "geneticsPredict" },
   milestones:         { key: "milestones",         href: "/milestones",               status: "new",  category: "catTools", palette: "sage",   thumbnail: PHRASE_THUMBNAIL, art: "milestones" },
   nameGenerator:      { key: "nameGenerator",      href: "/name-generator",           status: "new",  category: "catTools", palette: "butter", thumbnail: PHRASE_THUMBNAIL, art: "nameGenerator" },
   parentMbti:         { key: "parentMbti",         href: "/parent-mbti",              status: "live", category: "catQuiz",  palette: "blue",   thumbnail: PHRASE_THUMBNAIL, art: "parentMbti" },
