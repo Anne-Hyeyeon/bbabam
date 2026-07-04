@@ -1,14 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { Info, RotateCcw, Share2 } from "lucide-react";
-import { Header } from "@/components/layout/header";
+import { Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { ToolPage } from "@/components/tool/tool-page";
+import { ToolHero } from "@/components/tool/tool-hero";
+import { ResultActions } from "@/components/tool/result-actions";
+import { scrollToTopSmooth } from "@/lib/scroll";
 import {
   AGE_RANGE,
   CHINESE_CALENDAR_FACTS,
@@ -58,7 +61,7 @@ export default function ChineseCalendarPage() {
       return;
     }
     setResult(r);
-    setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 50);
+    scrollToTopSmooth();
   }
 
   function reset() {
@@ -77,28 +80,25 @@ export default function ChineseCalendarPage() {
   }
 
   return (
-    <>
-      <Header showBack />
-      <main className="mx-auto w-full max-w-[480px] min-h-screen bg-[var(--color-surface)] pb-10">
-        {result ? (
-          <ResultView
-            result={result}
-            shareCopied={shareCopied}
-            onReset={reset}
-            onShare={share}
-          />
-        ) : (
-          <InputView
-            motherBirth={motherBirth}
-            conception={conception}
-            error={error}
-            onMotherBirthChange={setMotherBirth}
-            onConceptionChange={setConception}
-            onPredict={predict}
-          />
-        )}
-      </main>
-    </>
+    <ToolPage>
+      {result ? (
+        <ResultView
+          result={result}
+          shareCopied={shareCopied}
+          onReset={reset}
+          onShare={share}
+        />
+      ) : (
+        <InputView
+          motherBirth={motherBirth}
+          conception={conception}
+          error={error}
+          onMotherBirthChange={setMotherBirth}
+          onConceptionChange={setConception}
+          onPredict={predict}
+        />
+      )}
+    </ToolPage>
   );
 }
 
@@ -122,15 +122,11 @@ function InputView({
 }) {
   return (
     <div className="px-4 py-6">
-      <div className="text-center">
-        <CrownIllustration className="mx-auto h-24 w-24" />
-        <h1 className="mt-2 text-[22px] font-bold tracking-tight text-[var(--color-ink)]">
-          {CHINESE_CALENDAR_META.title}
-        </h1>
-        <p className="mt-1.5 text-[13px] text-[var(--color-ink-muted)]">
-          {CHINESE_CALENDAR_META.subtitle}
-        </p>
-      </div>
+      <ToolHero
+        illustration={<CrownIllustration className="mx-auto h-24 w-24" />}
+        title={CHINESE_CALENDAR_META.title}
+        lines={[CHINESE_CALENDAR_META.subtitle]}
+      />
 
       <Card className="mt-6">
         <CardHeader>
@@ -297,15 +293,12 @@ function ResultView({
         </AlertDescription>
       </Alert>
 
-      <div className="mt-5 flex gap-2">
-        <Button variant="outline" className="flex-1" onClick={onReset}>
-          <RotateCcw className="h-4 w-4" /> 다시 예측
-        </Button>
-        <Button className="flex-1" onClick={onShare}>
-          <Share2 className="h-4 w-4" />
-          {shareCopied ? "복사됐어요!" : "공유하기"}
-        </Button>
-      </div>
+      <ResultActions
+        onReset={onReset}
+        onShare={onShare}
+        copied={shareCopied}
+        resetLabel="다시 예측"
+      />
     </div>
   );
 }

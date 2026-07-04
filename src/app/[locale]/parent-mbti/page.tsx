@@ -1,13 +1,15 @@
 "use client";
 
-import { useState } from "react";
-import { ArrowLeft, Info, RotateCcw, Share2, Sparkles } from "lucide-react";
-import { Header } from "@/components/layout/header";
+import { Info, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { ToolPage } from "@/components/tool/tool-page";
+import { ToolHero } from "@/components/tool/tool-hero";
+import { ResultActions } from "@/components/tool/result-actions";
+import { QuizQuestion } from "@/components/quiz/quiz-question";
+import { useQuizFlow } from "@/components/quiz/use-quiz-flow";
 import {
   PARENT_MBTI_META,
   PARENT_MBTI_QUESTIONS,
@@ -18,37 +20,18 @@ import type { MBTIAxis, MBTIResult } from "@/features/parent-mbti/types";
 import { useShare } from "@/hooks/use-share";
 import { currentPageUrl } from "@/lib/share";
 
-type Stage = "intro" | "quiz" | "result";
-
 // Pure: share message for an MBTI result.
 const mbtiShareText = (result: MBTIResult, url: string) =>
   `${result.shareCopy}\n빠밤!에서 직접 해보세요 → ${url}`;
 
 export default function ParentMBTIPage() {
-  const [stage, setStage] = useState<Stage>("intro");
-  const [answers, setAnswers] = useState<MBTIAxis[]>([]);
+  const quiz = useQuizFlow<MBTIAxis>(PARENT_MBTI_QUESTIONS.length);
   const { copied: shareCopied, share: shareResult, resetCopied } = useShare();
 
-  const currentIdx = answers.length;
-  const currentQ = PARENT_MBTI_QUESTIONS[currentIdx];
-  const progress =
-    ((currentIdx + 1) / PARENT_MBTI_QUESTIONS.length) * 100;
-
-  function handleAnswer(axis: MBTIAxis) {
-    const next = [...answers, axis];
-    setAnswers(next);
-    if (next.length === PARENT_MBTI_QUESTIONS.length) {
-      setStage("result");
-      setTimeout(
-        () => window.scrollTo({ top: 0, behavior: "smooth" }),
-        50,
-      );
-    }
-  }
+  const currentQ = PARENT_MBTI_QUESTIONS[quiz.currentIndex];
 
   function reset() {
-    setAnswers([]);
-    setStage("intro");
+    quiz.reset();
     resetCopied();
   }
 
@@ -60,37 +43,32 @@ export default function ParentMBTIPage() {
     });
   }
 
+  const result =
+    quiz.stage === "result" ? PARENT_MBTI_RESULTS[computeMBTI(quiz.answers)] : null;
+
   return (
-    <>
-      <Header showBack />
-      <main className="mx-auto w-full max-w-[480px] min-h-screen bg-[var(--color-surface)] pb-10">
-        {stage === "intro" && <IntroView onStart={() => setStage("quiz")} />}
-        {stage === "quiz" && currentQ && (
-          <QuizView
-            index={currentIdx}
-            total={PARENT_MBTI_QUESTIONS.length}
-            question={currentQ.question}
-            options={currentQ.options}
-            progress={progress}
-            onPick={handleAnswer}
-            onBack={reset}
-          />
-        )}
-        {stage === "result" && (
-          <ResultView
-            result={PARENT_MBTI_RESULTS[computeMBTI(answers)]}
-            matchResult={
-              PARENT_MBTI_RESULTS[
-                PARENT_MBTI_RESULTS[computeMBTI(answers)].match.type
-              ]
-            }
-            shareCopied={shareCopied}
-            onReset={reset}
-            onShare={share}
-          />
-        )}
-      </main>
-    </>
+    <ToolPage>
+      {quiz.stage === "intro" && <IntroView onStart={quiz.start} />}
+      {quiz.stage === "quiz" && currentQ && (
+        <QuizQuestion
+          index={quiz.currentIndex}
+          total={PARENT_MBTI_QUESTIONS.length}
+          question={currentQ.question}
+          options={currentQ.options.map((opt) => ({ text: opt.text, value: opt.type }))}
+          onPick={quiz.answer}
+          onBack={reset}
+        />
+      )}
+      {result && (
+        <ResultView
+          result={result}
+          matchResult={PARENT_MBTI_RESULTS[result.match.type]}
+          shareCopied={shareCopied}
+          onReset={reset}
+          onShare={share}
+        />
+      )}
+    </ToolPage>
   );
 }
 
@@ -100,26 +78,15 @@ export default function ParentMBTIPage() {
 function IntroView({ onStart }: { onStart: () => void }) {
   return (
     <div className="px-4 py-6">
-      <div className="text-center">
-        <MBTIIllustration className="mx-auto h-24 w-24" />
-        <h1 className="mt-2 text-[22px] font-bold tracking-tight text-[var(--color-ink)]">
-          {PARENT_MBTI_META.title}
-        </h1>
-        <p className="mt-1.5 text-[13px] leading-relaxed text-[var(--color-ink-muted)]">
-          {PARENT_MBTI_META.subtitle}
-          <br />
-          {PARENT_MBTI_META.description}
-        </p>
-
-        <div className="mt-4 flex items-center justify-center gap-2">
-          <Badge variant="secondary">
-            총 {PARENT_MBTI_META.questionCount}문항
-          </Badge>
-          <Badge variant="secondary">
-            약 {PARENT_MBTI_META.durationMinutes}분
-          </Badge>
-        </div>
-      </div>
+      <ToolHero
+        illustration={<MBTIIllustration className="mx-auto h-24 w-24" />}
+        title={PARENT_MBTI_META.title}
+        lines={[PARENT_MBTI_META.subtitle, PARENT_MBTI_META.description]}
+        badges={[
+          `총 ${PARENT_MBTI_META.questionCount}문항`,
+          `약 ${PARENT_MBTI_META.durationMinutes}분`,
+        ]}
+      />
 
       <Card className="mt-6">
         <CardHeader className="pb-1.5">
@@ -150,71 +117,6 @@ function IntroPoint({ text }: { text: string }) {
         className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-primary)]"
       />
       <span>{text}</span>
-    </div>
-  );
-}
-
-/* ============================================================
- * Quiz
- * ============================================================ */
-function QuizView({
-  index,
-  total,
-  question,
-  options,
-  progress,
-  onPick,
-  onBack,
-}: {
-  index: number;
-  total: number;
-  question: string;
-  options: { text: string; type: MBTIAxis }[];
-  progress: number;
-  onPick: (axis: MBTIAxis) => void;
-  onBack: () => void;
-}) {
-  return (
-    <div className="px-4 py-5">
-      <div className="flex items-center gap-3">
-        <button
-          type="button"
-          onClick={onBack}
-          aria-label="처음으로"
-          className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--color-border)] text-[var(--color-ink-muted)] hover:text-[var(--color-ink)] transition"
-        >
-          <ArrowLeft className="h-4 w-4" />
-        </button>
-        <Progress value={progress} className="flex-1" />
-        <span className="text-[11.5px] font-medium text-[var(--color-ink-muted)]">
-          {index + 1}/{total}
-        </span>
-      </div>
-
-      <div className="pt-6">
-        <p className="text-[11.5px] font-semibold uppercase tracking-[0.14em] text-[var(--color-ink-muted)]">
-          Q{index + 1}
-        </p>
-        <h2 className="mt-1.5 text-[22px] font-bold leading-snug tracking-tight text-[var(--color-ink)]">
-          {question}
-        </h2>
-
-        <div className="mt-5 space-y-2.5">
-          {options.map((opt, idx) => (
-            <button
-              key={idx}
-              type="button"
-              onClick={() => onPick(opt.type)}
-              className="group flex w-full items-center gap-3 rounded-[12px] border border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-3.5 text-left text-[14px] font-medium text-[var(--color-ink)] shadow-card transition hover:-translate-y-[1px] hover:border-[var(--color-primary)] hover:bg-[var(--color-primary-soft)]"
-            >
-              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[var(--color-surface-muted)] text-[12px] font-bold text-[var(--color-ink-muted)] group-hover:bg-[var(--color-primary)] group-hover:text-white transition">
-                {String.fromCharCode(65 + idx)}
-              </span>
-              <span className="leading-snug">{opt.text}</span>
-            </button>
-          ))}
-        </div>
-      </div>
     </div>
   );
 }
@@ -337,15 +239,11 @@ function ResultView({
         </AlertDescription>
       </Alert>
 
-      <div className="mt-5 flex gap-2">
-        <Button variant="outline" className="flex-1" onClick={onReset}>
-          <RotateCcw className="h-4 w-4" /> 다시 하기
-        </Button>
-        <Button className="flex-1" onClick={() => onShare(result)}>
-          <Share2 className="h-4 w-4" />
-          {shareCopied ? "복사됐어요!" : "공유하기"}
-        </Button>
-      </div>
+      <ResultActions
+        onReset={onReset}
+        onShare={() => onShare(result)}
+        copied={shareCopied}
+      />
     </div>
   );
 }

@@ -1,7 +1,8 @@
 {
   "common": {
     "appName": "bbabam!",
-    "tagline": "Little tools to smile about — from pregnancy to birth",
+    "tagline": "Little tools to smile about, from pregnancy to birth",
+    "footerNote": "Fun taken seriously. Diagnoses belong to doctors. © 2026 bbabam",
     "copyLink": "Copy Link",
     "copied": "Copied!",
     "shareKakao": "Share via KakaoTalk"
@@ -41,8 +42,7 @@
       "geneticsPredict": "Who will\nbaby look like?",
       "milestones": "Weekly\nmilestones",
       "announceCard": "I'm\npregnant!",
-      "announceCopy": "Announcement\nmessages",
-      "nameGenerator": "Find our\nnickname",
+      "nameGenerator": "Nickname\ngacha!",
       "parentMbti": "What kind\nof parent?"
     },
     "sections": {
@@ -66,13 +66,9 @@
         "title": "Pregnancy announcement card",
         "desc": "Share the surprise with scratch, flip, envelope, and egg templates"
       },
-      "announceCopy": {
-        "title": "Pregnancy announcement copy",
-        "desc": "Ready-to-use phrases for parents, partner, friends, and work"
-      },
       "nameGenerator": {
-        "title": "Baby nickname generator",
-        "desc": "Find the perfect pet-name for your little one"
+        "title": "Baby nickname gacha",
+        "desc": "One tap picks a nickname, from adorable to old Korean"
       },
       "parentMbti": {
         "title": "Expecting-parent MBTI",
@@ -83,6 +79,7 @@
   "menu": {
     "home": "Home",
     "createCard": "Create Card",
+    "nameGenerator": "Nickname Gacha",
     "myCards": "My Cards",
     "login": "Login",
     "logout": "Logout"

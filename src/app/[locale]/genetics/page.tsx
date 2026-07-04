@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Info, RotateCcw, Share2 } from "lucide-react";
-import { Header } from "@/components/layout/header";
+import { Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -18,6 +17,10 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { ToolPage } from "@/components/tool/tool-page";
+import { ToolHero } from "@/components/tool/tool-hero";
+import { ResultActions } from "@/components/tool/result-actions";
+import { scrollToTopSmooth } from "@/lib/scroll";
 import {
   BABY_GENETICS_META,
   GENETICS_FUN_FACTS,
@@ -79,7 +82,7 @@ export default function BabyGeneticsPage() {
       babySex,
     };
     setResult(predictBabyGenetics(input));
-    setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 50);
+    scrollToTopSmooth();
   }
 
   function reset() {
@@ -99,32 +102,29 @@ export default function BabyGeneticsPage() {
   }
 
   return (
-    <>
-      <Header showBack />
-      <main className="mx-auto w-full max-w-[480px] min-h-screen bg-[var(--color-surface)] pb-10">
-        {result ? (
-          <ResultView
-            result={result}
-            nickname={nickname.trim()}
-            shareCopied={shareCopied}
-            onReset={reset}
-            onShare={share}
-          />
-        ) : (
-          <InputView
-            father={father}
-            mother={mother}
-            babySex={babySex}
-            nickname={nickname}
-            onNicknameChange={setNickname}
-            onFatherChange={setFather}
-            onMotherChange={setMother}
-            onBabySexChange={setBabySex}
-            onPredict={predict}
-          />
-        )}
-      </main>
-    </>
+    <ToolPage>
+      {result ? (
+        <ResultView
+          result={result}
+          nickname={nickname.trim()}
+          shareCopied={shareCopied}
+          onReset={reset}
+          onShare={share}
+        />
+      ) : (
+        <InputView
+          father={father}
+          mother={mother}
+          babySex={babySex}
+          nickname={nickname}
+          onNicknameChange={setNickname}
+          onFatherChange={setFather}
+          onMotherChange={setMother}
+          onBabySexChange={setBabySex}
+          onPredict={predict}
+        />
+      )}
+    </ToolPage>
   );
 }
 
@@ -154,15 +154,11 @@ function InputView({
 }) {
   return (
     <div className="px-4 py-6">
-      <div className="text-center">
-        <BabyIllustration className="mx-auto h-24 w-24" />
-        <h1 className="mt-2 text-[22px] font-bold tracking-tight text-[var(--color-ink)]">
-          {BABY_GENETICS_META.title}
-        </h1>
-        <p className="mt-1.5 text-[13px] text-[var(--color-ink-muted)]">
-          {BABY_GENETICS_META.subtitle}
-        </p>
-      </div>
+      <ToolHero
+        illustration={<BabyIllustration className="mx-auto h-24 w-24" />}
+        title={BABY_GENETICS_META.title}
+        lines={[BABY_GENETICS_META.subtitle]}
+      />
 
       <Card className="mt-6">
         <CardHeader>
@@ -284,7 +280,7 @@ function ResultView({
       </div>
 
       <div className="mt-5 space-y-3">
-        <ResultCard title="예상 키 (성인 기준)" palette="butter">
+        <ResultCard title="예상 키 (성인 기준)">
           {babySex === "unknown" ? (
             <div className="space-y-1.5">
               <HeightLine label="남자아이" range={estimatedHeight.boy} />
@@ -334,14 +330,14 @@ function ResultView({
           </div>
         </ResultCard>
 
-        <ResultCard title="대머리 가능성" palette="peach">
+        <ResultCard title="대머리 가능성">
           <ProbRow label="유전 위험" value={result.baldnessProb.prob} />
           <p className="mt-1.5 text-[11.5px] text-[var(--color-ink-muted)]">
             {result.baldnessProb.note}
           </p>
         </ResultCard>
 
-        <ResultCard title="성격 경향" palette="lilac">
+        <ResultCard title="성격 경향">
           <p className="text-[14px] font-medium text-[var(--color-ink)]">
             {result.personalityTendency.label}
           </p>
@@ -350,7 +346,7 @@ function ResultView({
           </p>
         </ResultCard>
 
-        <ResultCard title="누굴 더 닮을까?" palette="pink">
+        <ResultCard title="누굴 더 닮을까?">
           <p className="text-[13.5px] leading-relaxed text-[var(--color-ink)]">
             {result.resemblance}
           </p>
@@ -405,15 +401,12 @@ function ResultView({
         <AlertDescription>{BABY_GENETICS_META.disclaimer}</AlertDescription>
       </Alert>
 
-      <div className="mt-5 flex gap-2">
-        <Button variant="outline" className="flex-1" onClick={onReset}>
-          <RotateCcw className="h-4 w-4" /> 다시 예측
-        </Button>
-        <Button className="flex-1" onClick={onShare}>
-          <Share2 className="h-4 w-4" />
-          {shareCopied ? "복사됐어요!" : "공유하기"}
-        </Button>
-      </div>
+      <ResultActions
+        onReset={onReset}
+        onShare={onShare}
+        copied={shareCopied}
+        resetLabel="다시 예측"
+      />
     </div>
   );
 }
@@ -551,25 +544,15 @@ function SelectField({
   );
 }
 
-type Palette = "peach" | "sage" | "lilac" | "butter" | "pink" | "blue";
-
 function ResultCard({
   title,
-  palette,
   children,
 }: {
   title: string;
-  palette?: Palette;
   children: React.ReactNode;
 }) {
-  const accentStyle = palette
-    ? { background: `var(--color-cat-${palette})` }
-    : undefined;
   return (
     <Card className="overflow-hidden">
-      {palette && (
-        <div className="h-1.5" style={accentStyle} aria-hidden="true" />
-      )}
       <CardHeader className="pb-1.5">
         <CardTitle className="text-[13px] text-[var(--color-ink-muted)]">
           {title}

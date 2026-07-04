@@ -1,8 +1,6 @@
-"use client";
-
 export function MobileLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="mx-auto w-full max-w-[480px] min-h-screen bg-[var(--color-surface)]">
+    <div className="mx-auto min-h-screen w-full max-w-[480px] bg-[var(--color-surface)]">
       {children}
     </div>
   );
