@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Info, Sparkles } from "lucide-react";
+import { ImageDown, Info, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -19,8 +19,17 @@ import {
 import type { BabyNameEntry, VibeFilter } from "@/features/baby-name/types";
 import { useShare } from "@/hooks/use-share";
 import { currentPageUrl } from "@/lib/share";
+import { saveNameCardImage } from "@/lib/name-card-image";
 
 const HISTORY_LIMIT = 8;
+
+type SaveState = "idle" | "busy" | "done";
+
+const SAVE_LABELS: Record<SaveState, string> = {
+  idle: "인스타용 이미지로 저장",
+  busy: "카드 만드는 중...",
+  done: "저장했어요!",
+};
 
 // Pure: share message for a drawn nickname.
 const nameShareText = (entry: BabyNameEntry, url: string) =>
@@ -38,6 +47,7 @@ export default function NameGeneratorPage() {
   const [current, setCurrent] = useState<BabyNameEntry | null>(null);
   const [history, setHistory] = useState<BabyNameEntry[]>([]);
   const [drawCount, setDrawCount] = useState(0);
+  const [saveState, setSaveState] = useState<SaveState>("idle");
   const { copied: shareCopied, share: shareResult, resetCopied } = useShare();
 
   function draw() {
@@ -46,7 +56,15 @@ export default function NameGeneratorPage() {
     setCurrent(entry);
     setHistory((prev) => pushHistory(prev, entry));
     setDrawCount((n) => n + 1);
+    setSaveState("idle");
     resetCopied();
+  }
+
+  async function saveImage() {
+    if (!current || saveState === "busy") return;
+    setSaveState("busy");
+    const ok = await saveNameCardImage(current, vibeLabel(current.vibe));
+    setSaveState(ok ? "done" : "idle");
   }
 
   async function share() {
@@ -133,12 +151,23 @@ export default function NameGeneratorPage() {
 
         {/* Actions */}
         {current ? (
-          <ResultActions
-            onReset={draw}
-            onShare={share}
-            copied={shareCopied}
-            resetLabel="다시 뽑기"
-          />
+          <>
+            <Button
+              variant="outline"
+              className="mt-4 w-full"
+              onClick={saveImage}
+              disabled={saveState === "busy"}
+            >
+              <ImageDown className="h-4 w-4" />
+              {SAVE_LABELS[saveState]}
+            </Button>
+            <ResultActions
+              onReset={draw}
+              onShare={share}
+              copied={shareCopied}
+              resetLabel="다시 뽑기"
+            />
+          </>
         ) : (
           <Button size="lg" className="mt-5 w-full" onClick={draw}>
             <Sparkles className="h-4 w-4" />
