@@ -384,8 +384,8 @@ function CalendarTable({
               const isExact = age === highlightAge && month === highlightMonth;
               const baseCls =
                 val === "B"
-                  ? "bg-[var(--color-cat-blue)]/40"
-                  : "bg-[var(--color-cat-pink)]/40";
+                  ? "bg-[var(--color-cat-blue)]"
+                  : "bg-[var(--color-cat-pink)]";
               const exactCls = isExact
                 ? " ring-2 ring-inset ring-[var(--color-primary)] font-black"
                 : "";
