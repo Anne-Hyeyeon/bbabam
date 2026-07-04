@@ -1,13 +1,14 @@
 "use client";
 
-import { useState } from "react";
-import { ArrowLeft, Info, RotateCcw, Share2, Sparkles } from "lucide-react";
-import { Header } from "@/components/layout/header";
+import { Info, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { ToolPage } from "@/components/tool/tool-page";
+import { ToolHero } from "@/components/tool/tool-hero";
+import { ResultActions } from "@/components/tool/result-actions";
+import { QuizQuestion } from "@/components/quiz/quiz-question";
+import { useQuizFlow } from "@/components/quiz/use-quiz-flow";
 import {
   FOLKLORE_FACTS,
   GENDER_FOLKLORE_META,
@@ -22,37 +23,18 @@ import type {
 import { useShare } from "@/hooks/use-share";
 import { currentPageUrl } from "@/lib/share";
 
-type Stage = "intro" | "quiz" | "result";
-
 // Pure: share message for a quiz result.
 const folkloreShareText = (result: GenderFolkloreResult, url: string) =>
   `속설 테스트 결과: ${result.title}\n빠밤!에서 직접 해보세요 → ${url}`;
 
 export default function GenderFolklorePage() {
-  const [stage, setStage] = useState<Stage>("intro");
-  const [answers, setAnswers] = useState<GenderGuess[]>([]);
+  const quiz = useQuizFlow<GenderGuess>(GENDER_FOLKLORE_QUESTIONS.length);
   const { copied: shareCopied, share: shareResult, resetCopied } = useShare();
 
-  const currentIdx = answers.length;
-  const currentQ = GENDER_FOLKLORE_QUESTIONS[currentIdx];
-  const progress =
-    ((currentIdx + 1) / GENDER_FOLKLORE_QUESTIONS.length) * 100;
-
-  function handleAnswer(g: GenderGuess) {
-    const next = [...answers, g];
-    setAnswers(next);
-    if (next.length === GENDER_FOLKLORE_QUESTIONS.length) {
-      setStage("result");
-      setTimeout(
-        () => window.scrollTo({ top: 0, behavior: "smooth" }),
-        50,
-      );
-    }
-  }
+  const currentQ = GENDER_FOLKLORE_QUESTIONS[quiz.currentIndex];
 
   function reset() {
-    setAnswers([]);
-    setStage("intro");
+    quiz.reset();
     resetCopied();
   }
 
@@ -65,31 +47,27 @@ export default function GenderFolklorePage() {
   }
 
   return (
-    <>
-      <Header showBack />
-      <main className="mx-auto w-full max-w-[480px] min-h-screen bg-[var(--color-surface)] pb-10">
-        {stage === "intro" && <IntroView onStart={() => setStage("quiz")} />}
-        {stage === "quiz" && currentQ && (
-          <QuizView
-            index={currentIdx}
-            total={GENDER_FOLKLORE_QUESTIONS.length}
-            question={currentQ.question}
-            options={currentQ.options}
-            progress={progress}
-            onPick={handleAnswer}
-            onBack={reset}
-          />
-        )}
-        {stage === "result" && (
-          <ResultView
-            result={computeGenderFolklore(answers)}
-            shareCopied={shareCopied}
-            onReset={reset}
-            onShare={share}
-          />
-        )}
-      </main>
-    </>
+    <ToolPage>
+      {quiz.stage === "intro" && <IntroView onStart={quiz.start} />}
+      {quiz.stage === "quiz" && currentQ && (
+        <QuizQuestion
+          index={quiz.currentIndex}
+          total={GENDER_FOLKLORE_QUESTIONS.length}
+          question={currentQ.question}
+          options={currentQ.options.map((opt) => ({ text: opt.text, value: opt.guess }))}
+          onPick={quiz.answer}
+          onBack={reset}
+        />
+      )}
+      {quiz.stage === "result" && (
+        <ResultView
+          result={computeGenderFolklore(quiz.answers)}
+          shareCopied={shareCopied}
+          onReset={reset}
+          onShare={share}
+        />
+      )}
+    </ToolPage>
   );
 }
 
@@ -99,26 +77,15 @@ export default function GenderFolklorePage() {
 function IntroView({ onStart }: { onStart: () => void }) {
   return (
     <div className="px-4 py-6">
-      <div className="text-center">
-        <FolkloreIllustration className="mx-auto h-24 w-24" />
-        <h1 className="mt-2 text-[22px] font-bold tracking-tight text-[var(--color-ink)]">
-          {GENDER_FOLKLORE_META.title}
-        </h1>
-        <p className="mt-1.5 text-[13px] leading-relaxed text-[var(--color-ink-muted)]">
-          {GENDER_FOLKLORE_META.subtitle}
-          <br />
-          {GENDER_FOLKLORE_META.description}
-        </p>
-
-        <div className="mt-4 flex items-center justify-center gap-2">
-          <Badge variant="secondary">
-            {GENDER_FOLKLORE_META.questionCount}문항
-          </Badge>
-          <Badge variant="secondary">
-            약 {GENDER_FOLKLORE_META.durationMinutes}분
-          </Badge>
-        </div>
-      </div>
+      <ToolHero
+        illustration={<FolkloreIllustration className="mx-auto h-24 w-24" />}
+        title={GENDER_FOLKLORE_META.title}
+        lines={[GENDER_FOLKLORE_META.subtitle, GENDER_FOLKLORE_META.description]}
+        badges={[
+          `${GENDER_FOLKLORE_META.questionCount}문항`,
+          `약 ${GENDER_FOLKLORE_META.durationMinutes}분`,
+        ]}
+      />
 
       <Alert className="mt-6" variant="info">
         <Info className="h-4 w-4" />
@@ -129,71 +96,6 @@ function IntroView({ onStart }: { onStart: () => void }) {
         <Sparkles className="h-4 w-4" />
         테스트 시작하기
       </Button>
-    </div>
-  );
-}
-
-/* ============================================================
- * Quiz
- * ============================================================ */
-function QuizView({
-  index,
-  total,
-  question,
-  options,
-  progress,
-  onPick,
-  onBack,
-}: {
-  index: number;
-  total: number;
-  question: string;
-  options: { text: string; guess: GenderGuess }[];
-  progress: number;
-  onPick: (g: GenderGuess) => void;
-  onBack: () => void;
-}) {
-  return (
-    <div className="px-4 py-5">
-      <div className="flex items-center gap-3">
-        <button
-          type="button"
-          onClick={onBack}
-          aria-label="처음으로"
-          className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--color-border)] text-[var(--color-ink-muted)] hover:text-[var(--color-ink)] transition"
-        >
-          <ArrowLeft className="h-4 w-4" />
-        </button>
-        <Progress value={progress} className="flex-1" />
-        <span className="text-[11.5px] font-medium text-[var(--color-ink-muted)]">
-          {index + 1}/{total}
-        </span>
-      </div>
-
-      <div className="pt-6">
-        <p className="text-[11.5px] font-semibold uppercase tracking-[0.14em] text-[var(--color-ink-muted)]">
-          Q{index + 1}
-        </p>
-        <h2 className="mt-1.5 text-[22px] font-bold leading-snug tracking-tight text-[var(--color-ink)]">
-          {question}
-        </h2>
-
-        <div className="mt-5 space-y-2.5">
-          {options.map((opt, idx) => (
-            <button
-              key={idx}
-              type="button"
-              onClick={() => onPick(opt.guess)}
-              className="group flex w-full items-center gap-3 rounded-[12px] border border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-3.5 text-left text-[14px] font-medium text-[var(--color-ink)] shadow-card transition hover:-translate-y-[1px] hover:border-[var(--color-primary)] hover:bg-[var(--color-primary-soft)]"
-            >
-              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[var(--color-surface-muted)] text-[12px] font-bold text-[var(--color-ink-muted)] group-hover:bg-[var(--color-primary)] group-hover:text-white transition">
-                {String.fromCharCode(65 + idx)}
-              </span>
-              <span className="leading-snug">{opt.text}</span>
-            </button>
-          ))}
-        </div>
-      </div>
     </div>
   );
 }
@@ -284,15 +186,11 @@ function ResultView({
         <AlertDescription>{result.disclaimer}</AlertDescription>
       </Alert>
 
-      <div className="mt-5 flex gap-2">
-        <Button variant="outline" className="flex-1" onClick={onReset}>
-          <RotateCcw className="h-4 w-4" /> 다시 하기
-        </Button>
-        <Button className="flex-1" onClick={() => onShare(result)}>
-          <Share2 className="h-4 w-4" />
-          {shareCopied ? "복사됐어요!" : "공유하기"}
-        </Button>
-      </div>
+      <ResultActions
+        onReset={onReset}
+        onShare={() => onShare(result)}
+        copied={shareCopied}
+      />
     </div>
   );
 }

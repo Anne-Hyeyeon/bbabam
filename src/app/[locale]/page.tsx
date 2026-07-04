@@ -18,7 +18,6 @@ type SectionKey =
   | "geneticsPredict"
   | "milestones"
   | "announceCard"
-  | "announceCopy"
   | "nameGenerator"
   | "parentMbti";
 
@@ -67,12 +66,11 @@ const FOLKLORE_THUMBNAIL: Thumbnail = {
 
 const SECTIONS: Record<SectionKey, SectionDef> = {
   announceCard:       { key: "announceCard",       href: "/gender-reveal-card",       status: "new",  category: "catCards", palette: "lilac",  prefix: "announce", thumbnail: ANNOUNCE_CARD_THUMBNAIL },
-  announceCopy:       { key: "announceCopy",       href: "/announcements",            status: "new",  category: "catTools", palette: "butter", prefix: "announce", thumbnail: PHRASE_THUMBNAIL },
   genderQuiz:         { key: "genderQuiz",         href: "/chinese-calendar",         status: "live", category: "catGuess", palette: "peach",  thumbnail: GENDER_QUIZ_THUMBNAIL },
   folkloreQuiz:       { key: "folkloreQuiz",       href: "/gender-folklore",          status: "new",  category: "catGuess", palette: "lilac",  thumbnail: FOLKLORE_THUMBNAIL },
   geneticsPredict:    { key: "geneticsPredict",    href: "/genetics",                 status: "live", category: "catTools", palette: "sage",   thumbnail: GENETICS_THUMBNAIL },
   milestones:         { key: "milestones",         href: "/milestones",               status: "new",  category: "catTools", palette: "sage",   thumbnail: PHRASE_THUMBNAIL },
-  nameGenerator:      { key: "nameGenerator",      href: null,                        status: "soon", category: "catTools", palette: "butter", thumbnail: PHRASE_THUMBNAIL },
+  nameGenerator:      { key: "nameGenerator",      href: "/name-generator",           status: "new",  category: "catTools", palette: "butter", thumbnail: PHRASE_THUMBNAIL },
   parentMbti:         { key: "parentMbti",         href: "/parent-mbti",              status: "live", category: "catQuiz",  palette: "blue",   thumbnail: PHRASE_THUMBNAIL },
 };
 
@@ -84,18 +82,17 @@ const CHIPS: { key: "all" | Category }[] = [
   { key: "catTools" },
 ];
 
-const BEST_KEYS: SectionKey[] = ["announceCard", "geneticsPredict", "genderQuiz", "folkloreQuiz", "milestones"];
+const BEST_KEYS: SectionKey[] = ["announceCard", "nameGenerator", "geneticsPredict", "genderQuiz", "folkloreQuiz"];
 // Full catalogue grid under BEST. Lead with items the BEST carousel does not
-// already headline so the two zones don't read as duplicates; "soon" goes last.
+// already headline so the two zones don't read as duplicates.
 const FEED_KEYS: SectionKey[] = [
-  "announceCopy",
   "parentMbti",
-  "folkloreQuiz",
   "milestones",
+  "nameGenerator",
+  "folkloreQuiz",
   "genderQuiz",
   "geneticsPredict",
   "announceCard",
-  "nameGenerator",
 ];
 
 export default function PortalLandingPage({ params }: { params: Promise<{ locale: string }> }) {

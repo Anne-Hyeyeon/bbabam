@@ -2,8 +2,9 @@
 
 import { useMemo, useState } from "react";
 import { Info } from "lucide-react";
-import { Header } from "@/components/layout/header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ToolPage } from "@/components/tool/tool-page";
+import { ToolHero } from "@/components/tool/tool-hero";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
@@ -24,21 +25,18 @@ export default function MilestonesPage() {
   const nearest = useMemo(() => nearestMilestone(current), [current]);
 
   return (
-    <>
-      <Header showBack />
-      <main className="mx-auto w-full max-w-[480px] min-h-screen bg-[var(--color-surface)] pb-10">
-        {/* Hero */}
-        <div className="px-4 pt-6 text-center">
-          <BellyIllustration className="mx-auto h-24 w-24" />
-          <h1 className="mt-2 text-[22px] font-bold tracking-tight text-[var(--color-ink)]">
-            {PREGNANCY_MILESTONES_META.title}
-          </h1>
-          <p className="mt-1.5 text-[13px] leading-relaxed text-[var(--color-ink-muted)]">
-            {PREGNANCY_MILESTONES_META.subtitle}
-            <br />
-            {PREGNANCY_MILESTONES_META.description}
-          </p>
-        </div>
+    <ToolPage>
+      {/* Hero */}
+      <div className="px-4 pt-6">
+        <ToolHero
+          illustration={<BellyIllustration className="mx-auto h-24 w-24" />}
+          title={PREGNANCY_MILESTONES_META.title}
+          lines={[
+            PREGNANCY_MILESTONES_META.subtitle,
+            PREGNANCY_MILESTONES_META.description,
+          ]}
+        />
+      </div>
 
         {/* Current-week picker */}
         <div className="px-4 pt-6">
@@ -177,17 +175,16 @@ export default function MilestonesPage() {
           </Card>
         </div>
 
-        <div className="px-4 pt-4">
-          <Alert>
-            <Info className="h-4 w-4" />
-            <AlertDescription>
-              개인차가 있을 수 있어요. 정확한 건강 상태는 담당 의사 선생님과
-              꼭 상담해주세요.
-            </AlertDescription>
-          </Alert>
-        </div>
-      </main>
-    </>
+      <div className="px-4 pt-4">
+        <Alert>
+          <Info className="h-4 w-4" />
+          <AlertDescription>
+            개인차가 있을 수 있어요. 정확한 건강 상태는 담당 의사 선생님과
+            꼭 상담해주세요.
+          </AlertDescription>
+        </Alert>
+      </div>
+    </ToolPage>
   );
 }
 

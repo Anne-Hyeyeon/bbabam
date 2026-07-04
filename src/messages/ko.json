@@ -2,6 +2,7 @@
   "common": {
     "appName": "빠밤!",
     "tagline": "임신부터 출산까지, 함께 웃을 수 있는 작은 도구들",
+    "footerNote": "재미는 진심으로, 진단은 병원에서. © 2026 빠밤",
     "copyLink": "링크 복사",
     "copied": "복사되었어요!",
     "shareKakao": "카카오톡으로 공유"
@@ -41,8 +42,7 @@
       "geneticsPredict": "닮은 꼴\n누구?",
       "milestones": "주차별\n마일스톤",
       "announceCard": "저 임신\n했어요!",
-      "announceCopy": "상황별\n알림 문구",
-      "nameGenerator": "우리 아기\n태명 짓기",
+      "nameGenerator": "운명의\n태명 뽑기",
       "parentMbti": "나는 어떤\n엄마·아빠?"
     },
     "sections": {
@@ -66,13 +66,9 @@
         "title": "임밍아웃 카드",
         "desc": "스크래치·뒤집기·봉투·알 부화 템플릿으로 깜짝 소식 알리기"
       },
-      "announceCopy": {
-        "title": "임밍아웃 문구 모음",
-        "desc": "부모님·배우자·친구·회사까지 상황별 알림 문구 복사"
-      },
       "nameGenerator": {
-        "title": "태명 생성기",
-        "desc": "우리 아기에게 딱 맞는 태명 찾기"
+        "title": "운명의 태명 뽑기",
+        "desc": "귀염뽀짝부터 순우리말까지, 버튼 한 번에 태명 완성"
       },
       "parentMbti": {
         "title": "예비 부모 MBTI",
@@ -83,6 +79,7 @@
   "menu": {
     "home": "홈",
     "createCard": "카드 만들기",
+    "nameGenerator": "태명 뽑기",
     "myCards": "내 카드",
     "login": "로그인",
     "logout": "로그아웃"

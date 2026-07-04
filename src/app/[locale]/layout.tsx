@@ -3,6 +3,7 @@ import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { MobileLayout } from "@/components/layout/mobile-layout";
+import { AppFooter } from "@/components/layout/app-footer";
 import { SessionProvider } from "next-auth/react";
 
 export default async function LocaleLayout({
@@ -27,7 +28,10 @@ export default async function LocaleLayout({
   return (
     <NextIntlClientProvider messages={messages}>
       <SessionProvider>
-        <MobileLayout>{children}</MobileLayout>
+        <MobileLayout>
+          {children}
+          <AppFooter />
+        </MobileLayout>
       </SessionProvider>
     </NextIntlClientProvider>
   );
