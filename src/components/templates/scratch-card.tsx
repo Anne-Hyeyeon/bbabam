@@ -2,7 +2,8 @@
 
 import { useCallback, useRef, useState } from "react";
 import { jua } from "./egg-hatch/font";
-import { EmojiArt, GENDER_ART } from "@/components/art/emoji-art";
+import { BabyCharacter } from "@/components/art/baby-character";
+import { BbabamMark } from "@/components/brand/bbabam-mark";
 import { CardGameHeader } from "./card-game-header";
 import { GENDER_DEEP, GENDER_SOFT, genderNoun } from "./gender";
 import type { TemplateInteractionProps } from "./index";
@@ -110,56 +111,103 @@ export default function ScratchCard({
     <div className="flex w-full flex-col items-center gap-5 p-6">
       <CardGameHeader babyNickname={babyNickname} recipientName={recipientName} />
 
-      {/* Lottery ticket frame */}
-      <div className="w-full max-w-[320px] rounded-2xl border-2 border-[var(--color-ink)] bg-white p-3 shadow-card">
-        <div className="flex items-center justify-between px-1 pb-2.5">
-          <span className={`${jua.className} text-[15px] text-[var(--color-ink)]`}>
-            빠밤 젠더 복권
+      {/* Lottery ticket */}
+      <div className="w-full max-w-[320px] overflow-hidden rounded-2xl border border-[var(--color-border)] bg-white shadow-card">
+        {/* Brand band */}
+        <div className="flex items-center justify-between bg-[var(--color-primary-soft)] px-4 py-2.5">
+          <span className={`${jua.className} flex items-center gap-1.5 text-[15px] text-[var(--color-ink)]`}>
+            <BbabamMark size={18} />
+            젠더리빌 복권
           </span>
-          <span className="rounded-full bg-[var(--color-cat-butter)] px-2 py-[2px] text-[11px] font-bold text-[var(--color-ink)]">
+          <span className="rounded-full bg-white px-2.5 py-[3px] text-[10.5px] font-bold text-[var(--color-primary)]">
             당첨 확률 100%
           </span>
         </div>
 
-        <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl">
-          {/* Prize layer under the foil */}
-          <div
-            className="absolute inset-0 flex flex-col items-center justify-center gap-1"
-            style={{ background: GENDER_SOFT[gender] }}
-          >
-            <EmojiArt src={GENDER_ART[gender]} size={104} />
-            <span
-              className={`${jua.className} text-[26px]`}
-              style={{ color: GENDER_DEEP[gender] }}
-            >
-              {genderNoun(gender)}이에요!
-            </span>
-          </div>
-
-          <canvas
-            ref={initCanvas}
-            className="absolute inset-0 h-full w-full cursor-pointer touch-none"
-            onPointerDown={(e) => {
-              isScratching.current = true;
-              e.currentTarget.setPointerCapture(e.pointerId);
-              scratchAt(e.clientX, e.clientY);
-            }}
-            onPointerMove={(e) => {
-              if (isScratching.current) scratchAt(e.clientX, e.clientY);
-            }}
-            onPointerUp={() => {
-              isScratching.current = false;
-            }}
-            onPointerCancel={() => {
-              isScratching.current = false;
-            }}
-          />
+        {/* Perforation */}
+        <div className="relative py-2" aria-hidden>
+          <div className="mx-4 border-t-2 border-dashed border-[var(--color-border)]" />
+          <span className="absolute -left-2 top-1/2 h-4 w-4 -translate-y-1/2 rounded-full border border-[var(--color-border)] bg-[var(--color-bg)]" />
+          <span className="absolute -right-2 top-1/2 h-4 w-4 -translate-y-1/2 rounded-full border border-[var(--color-border)] bg-[var(--color-bg)]" />
         </div>
 
-        <p className="px-1 pt-2.5 text-center text-[12px] text-[var(--color-ink-muted)]">
-          동전 대신 손가락으로 긁어 주세요
-        </p>
+        {/* Scratch zone */}
+        <div className="px-4 pb-2">
+          <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl border border-[var(--color-border)]">
+            {/* Prize layer under the foil */}
+            <div
+              className="absolute inset-0 flex flex-col items-center justify-center gap-1.5"
+              style={{ background: GENDER_SOFT[gender] }}
+            >
+              <BabyCharacter gender={gender} size={100} />
+              <span
+                className={`${jua.className} text-[26px]`}
+                style={{ color: GENDER_DEEP[gender] }}
+              >
+                {genderNoun(gender)}이에요!
+              </span>
+            </div>
+
+            <canvas
+              ref={initCanvas}
+              className="absolute inset-0 h-full w-full cursor-pointer touch-none"
+              onPointerDown={(e) => {
+                isScratching.current = true;
+                e.currentTarget.setPointerCapture(e.pointerId);
+                scratchAt(e.clientX, e.clientY);
+              }}
+              onPointerMove={(e) => {
+                if (isScratching.current) scratchAt(e.clientX, e.clientY);
+              }}
+              onPointerUp={() => {
+                isScratching.current = false;
+              }}
+              onPointerCancel={() => {
+                isScratching.current = false;
+              }}
+            />
+          </div>
+          <p className="pt-2 text-center text-[11.5px] text-[var(--color-ink-muted)]">
+            동전 대신 손가락으로 긁어 주세요
+          </p>
+        </div>
+
+        {/* Fine print + barcode */}
+        <div className="flex items-end justify-between px-4 pb-3.5 pt-1">
+          <div>
+            <p className="text-[9.5px] font-semibold tracking-[0.08em] text-[var(--color-ink-muted)]">
+              NO. 2026-BBABAM-100
+            </p>
+            <p className="mt-0.5 text-[10.5px] text-[var(--color-ink-muted)]">
+              당첨금: 우리 집 최고의 행복 1명
+            </p>
+          </div>
+          <Barcode />
+        </div>
       </div>
     </div>
+  );
+}
+
+/* Decorative barcode for the ticket's fine-print row. */
+const BARCODE_BARS = [3, 1, 2, 1, 3, 2, 1, 1, 2, 3, 1, 2, 1, 3, 1, 2] as const;
+
+// Pure: bar widths → x offsets (1.5px gap between bars).
+const BARCODE_LAYOUT = BARCODE_BARS.reduce<{ x: number; w: number }[]>(
+  (acc, w) => {
+    const prev = acc[acc.length - 1];
+    const x = prev ? prev.x + prev.w + 1.5 : 0;
+    return [...acc, { x, w }];
+  },
+  [],
+);
+
+function Barcode() {
+  return (
+    <svg width="52" height="20" viewBox="0 0 52 20" aria-hidden>
+      {BARCODE_LAYOUT.map(({ x, w }) => (
+        <rect key={x} x={x} y={0} width={w} height={20} fill="#2B2B2B" opacity="0.75" />
+      ))}
+    </svg>
   );
 }
