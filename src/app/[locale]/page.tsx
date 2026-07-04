@@ -21,7 +21,8 @@ type SectionKey =
   | "nameGenerator"
   | "parentMbti"
   | "dday"
-  | "hospitalBag";
+  | "hospitalBag"
+  | "balanceGame";
 
 type Category = "catGuess" | "catCards" | "catQuiz" | "catTools";
 type PrefixKey = "announce";
@@ -76,6 +77,7 @@ const SECTIONS: Record<SectionKey, SectionDef> = {
   parentMbti:         { key: "parentMbti",         href: "/parent-mbti",              status: "live", category: "catQuiz",  palette: "blue",   thumbnail: PHRASE_THUMBNAIL },
   dday:               { key: "dday",               href: "/dday",                     status: "new",  category: "catTools", palette: "blue",   thumbnail: PHRASE_THUMBNAIL },
   hospitalBag:        { key: "hospitalBag",        href: "/hospital-bag",             status: "new",  category: "catTools", palette: "sage",   thumbnail: PHRASE_THUMBNAIL },
+  balanceGame:        { key: "balanceGame",        href: "/balance-game",             status: "new",  category: "catQuiz",  palette: "peach",  thumbnail: PHRASE_THUMBNAIL },
 };
 
 const CHIPS: { key: "all" | Category }[] = [
@@ -90,6 +92,7 @@ const BEST_KEYS: SectionKey[] = ["announceCard", "nameGenerator", "dday", "genet
 // Full catalogue grid under BEST. Lead with items the BEST carousel does not
 // already headline so the two zones don't read as duplicates.
 const FEED_KEYS: SectionKey[] = [
+  "balanceGame",
   "hospitalBag",
   "parentMbti",
   "milestones",
