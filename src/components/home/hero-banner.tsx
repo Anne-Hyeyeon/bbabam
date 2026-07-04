@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import { Link } from "@/i18n/navigation";
 import { POSTER_BG, type Palette } from "./palette";
+import { PosterArt, type PosterArtKind } from "./poster-art";
 import type { ResolvedThumbnail } from "./thumbnail";
 
 const AUTOPLAY_MS = 4000;
@@ -15,6 +16,8 @@ export interface HeroSlide {
   href: string | null;
   palette: Palette;
   image: ResolvedThumbnail | null;
+  /** Poster illustration shown on phrase slides (no image asset). */
+  art?: PosterArtKind;
   phrase: string;
   title: string;
   catLabel: string;
@@ -58,6 +61,13 @@ function SlideContent({
           sizes={HERO_SIZES}
           priority={eager}
           className="object-cover"
+        />
+      )}
+
+      {!slide.image && slide.art && (
+        <PosterArt
+          kind={slide.art}
+          className="absolute right-6 top-1/2 h-[72%] w-auto -translate-y-1/2"
         />
       )}
 

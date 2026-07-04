@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { POSTER_BG, type Palette } from "./palette";
+import { PosterArt, type PosterArtKind } from "./poster-art";
 import { StatusBadge } from "./status-badge";
 import type { ResolvedThumbnail } from "./thumbnail";
 
@@ -16,6 +17,8 @@ export interface ContentCardData {
   palette: Palette;
   status: "live" | "new" | "soon";
   image: ResolvedThumbnail | null;
+  /** Poster illustration shown on phrase panels (no image asset). */
+  art?: PosterArtKind;
   phrase: string;
   title: string;
   prefixLabel?: string;
@@ -52,6 +55,15 @@ export function ContentCard({ data, statusLabels, variant = "grid" }: ContentCar
         <div className={["flex h-full w-full items-end", POSTER_BG[data.palette]].join(" ")}>
           {/* Soft scrim gives the flat tint panel depth and keeps copy legible. */}
           <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/10 to-transparent" />
+          {data.art && (
+            <PosterArt
+              kind={data.art}
+              className={[
+                "absolute bottom-1 h-[78%] w-auto",
+                isFeature ? "right-4" : "right-1.5",
+              ].join(" ")}
+            />
+          )}
           <p
             className={[
               "relative whitespace-pre-line p-4 font-bold leading-[1.18] text-[var(--color-ink)]",
