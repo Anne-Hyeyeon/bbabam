@@ -45,7 +45,8 @@
       "nameGenerator": "운명의\n태명 뽑기",
       "parentMbti": "나는 어떤\n엄마·아빠?",
       "dday": "아기 만날 날\nD-며칠?",
-      "hospitalBag": "출산가방\n뭐 챙기지?"
+      "hospitalBag": "출산가방\n뭐 챙기지?",
+      "balanceGame": "아들 vs 딸\n밸런스 게임"
     },
     "sections": {
       "genderQuiz": {
@@ -83,6 +84,10 @@
       "hospitalBag": {
         "title": "출산가방 체크리스트",
         "desc": "막달 뇌를 위한 원터치 짐싸기 리스트"
+      },
+      "balanceGame": {
+        "title": "아들딸 밸런스 게임",
+        "desc": "극한의 육아 양자택일 10문항, 나는 어느 라이프?"
       }
     }
   },

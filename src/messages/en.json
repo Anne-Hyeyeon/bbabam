@@ -45,7 +45,8 @@
       "nameGenerator": "Nickname\ngacha!",
       "parentMbti": "What kind\nof parent?",
       "dday": "Days till\nbaby day",
-      "hospitalBag": "Hospital bag\npacked?"
+      "hospitalBag": "Hospital bag\npacked?",
+      "balanceGame": "Boy vs girl\nbalance game"
     },
     "sections": {
       "genderQuiz": {
@@ -83,6 +84,10 @@
       "hospitalBag": {
         "title": "Hospital bag checklist",
         "desc": "One-tap packing list for the third-trimester brain"
+      },
+      "balanceGame": {
+        "title": "Boy-or-girl balance game",
+        "desc": "10 brutal either-or questions about parenting life"
       }
     }
   },
