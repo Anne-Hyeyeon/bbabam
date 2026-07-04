@@ -21,13 +21,15 @@
   --color-chip-active: #EAE0CB;
   --color-chip-active-border: #DBCDAE;
 
-  /* Category tints — used ONLY on section cards, not on backgrounds */
-  --color-cat-peach: #FFD2B8;
-  --color-cat-sage: #C3D5A9;
-  --color-cat-lilac: #D2C2FB;
-  --color-cat-butter: #F9E199;
-  --color-cat-pink: #FFB7C6;
-  --color-cat-blue: #A6C6E0;
+  /* Category tints — used ONLY on section cards, not on backgrounds.
+     Deliberately desaturated: high-lightness, low-chroma so the 3D art
+     and ink type carry the card, not the tint. */
+  --color-cat-peach: #F7E7DB;
+  --color-cat-sage: #E6ECDD;
+  --color-cat-lilac: #EAE6F4;
+  --color-cat-butter: #F6EED7;
+  --color-cat-pink: #F8E5E9;
+  --color-cat-blue: #E1EAF2;
 
   /* States */
   --color-state-success: #6EAF82;
