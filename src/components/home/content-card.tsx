@@ -59,8 +59,8 @@ export function ContentCard({ data, statusLabels, variant = "grid" }: ContentCar
             <PosterArt
               kind={data.art}
               className={[
-                "absolute bottom-1 h-[78%] w-auto",
-                isFeature ? "right-4" : "right-1.5",
+                "absolute w-auto",
+                isFeature ? "bottom-3 right-4 h-[64%]" : "bottom-2 right-2.5 h-[58%]",
               ].join(" ")}
             />
           )}

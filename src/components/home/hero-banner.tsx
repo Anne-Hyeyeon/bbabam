@@ -67,7 +67,7 @@ function SlideContent({
       {!slide.image && slide.art && (
         <PosterArt
           kind={slide.art}
-          className="absolute right-6 top-1/2 h-[72%] w-auto -translate-y-1/2"
+          className="absolute right-8 top-1/2 h-[56%] w-auto -translate-y-1/2"
         />
       )}
 
