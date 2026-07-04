@@ -11,7 +11,11 @@ export type PosterArtKind =
   | "hospitalBag"
   | "balanceGame"
   | "parentMbti"
-  | "milestones";
+  | "milestones"
+  | "announceCard"
+  | "genderQuiz"
+  | "geneticsPredict"
+  | "folkloreQuiz";
 
 const ART_SRC: Record<PosterArtKind, string> = {
   nameGenerator: "/art/name-generator.png",
@@ -20,6 +24,10 @@ const ART_SRC: Record<PosterArtKind, string> = {
   balanceGame: "/art/balance-game.png",
   parentMbti: "/art/parent-mbti.png",
   milestones: "/art/milestones.png",
+  announceCard: "/art/announce-card.png",
+  genderQuiz: "/art/gender-quiz.png",
+  geneticsPredict: "/art/genetics.png",
+  folkloreQuiz: "/art/folklore.png",
 };
 
 /** Source assets are 256×256 with transparency. */
