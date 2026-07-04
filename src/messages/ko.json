@@ -43,7 +43,8 @@
       "milestones": "주차별\n마일스톤",
       "announceCard": "저 임신\n했어요!",
       "nameGenerator": "운명의\n태명 뽑기",
-      "parentMbti": "나는 어떤\n엄마·아빠?"
+      "parentMbti": "나는 어떤\n엄마·아빠?",
+      "dday": "아기 만날 날\nD-며칠?"
     },
     "sections": {
       "genderQuiz": {
@@ -73,6 +74,10 @@
       "parentMbti": {
         "title": "예비 부모 MBTI",
         "desc": "나는 어떤 스타일의 엄마·아빠가 될까?"
+      },
+      "dday": {
+        "title": "출산 D-day 계산기",
+        "desc": "예정일 하나로 D-day·주차·아기 크기까지"
       }
     }
   },
@@ -80,6 +85,7 @@
     "home": "홈",
     "createCard": "카드 만들기",
     "nameGenerator": "태명 뽑기",
+    "dday": "D-day 계산기",
     "myCards": "내 카드",
     "login": "로그인",
     "logout": "로그아웃"

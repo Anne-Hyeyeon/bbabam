@@ -4,6 +4,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { useSession, signOut } from "next-auth/react";
 import { motion, AnimatePresence } from "framer-motion";
+import { BbabamMark } from "@/components/brand/bbabam-mark";
 
 interface HamburgerMenuProps {
   onClose: () => void;
@@ -55,8 +56,11 @@ export function HamburgerMenu({ onClose }: HamburgerMenuProps) {
           transition={{ type: "tween", duration: 0.2 }}
         >
           <div className="mb-5 flex items-center justify-between">
-            <span className="text-[17px] font-bold tracking-tight text-[var(--color-ink)]">
-              빠밤<span className="text-[var(--color-primary)]">!</span>
+            <span className="flex items-center gap-1.5 text-[17px] font-bold tracking-tight text-[var(--color-ink)]">
+              <BbabamMark size={20} />
+              <span>
+                빠밤<span className="text-[var(--color-primary)]">!</span>
+              </span>
             </span>
             <button
               onClick={onClose}
@@ -73,6 +77,7 @@ export function HamburgerMenu({ onClose }: HamburgerMenuProps) {
             <MenuLink href="/" label={t("home")} onClose={onClose} />
             <MenuLink href="/gender-reveal-card" label={t("createCard")} onClose={onClose} />
             <MenuLink href="/name-generator" label={t("nameGenerator")} onClose={onClose} />
+            <MenuLink href="/dday" label={t("dday")} onClose={onClose} />
             {session && (
               <MenuLink href="/dashboard" label={t("myCards")} onClose={onClose} />
             )}

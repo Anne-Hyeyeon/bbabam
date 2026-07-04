@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { BbabamMark } from "@/components/brand/bbabam-mark";
 import { HamburgerMenu } from "./hamburger-menu";
 
 interface HeaderProps {
@@ -31,10 +32,13 @@ export function Header({ showBack = true, showHamburger = true, subtitle }: Head
             </button>
           )}
         </div>
-        <h1 className="text-[20px] font-bold tracking-tight text-ink whitespace-nowrap">
-          빠밤<span className="text-primary">!</span>
+        <h1 className="flex items-center gap-1.5 whitespace-nowrap text-[20px] font-bold tracking-tight text-ink">
+          <BbabamMark size={22} />
+          <span>
+            빠밤<span className="text-primary">!</span>
+          </span>
           {subtitle && (
-            <span className="ml-1.5 text-[15px] font-semibold text-ink-muted">{subtitle}</span>
+            <span className="text-[15px] font-semibold text-ink-muted">{subtitle}</span>
           )}
         </h1>
         <div className="w-10 text-right">

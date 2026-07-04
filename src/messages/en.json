@@ -43,7 +43,8 @@
       "milestones": "Weekly\nmilestones",
       "announceCard": "I'm\npregnant!",
       "nameGenerator": "Nickname\ngacha!",
-      "parentMbti": "What kind\nof parent?"
+      "parentMbti": "What kind\nof parent?",
+      "dday": "Days till\nbaby day"
     },
     "sections": {
       "genderQuiz": {
@@ -73,6 +74,10 @@
       "parentMbti": {
         "title": "Expecting-parent MBTI",
         "desc": "What kind of mom or dad will you be?"
+      },
+      "dday": {
+        "title": "Birth countdown",
+        "desc": "Due date in — D-day, week, and baby size out"
       }
     }
   },
@@ -80,6 +85,7 @@
     "home": "Home",
     "createCard": "Create Card",
     "nameGenerator": "Nickname Gacha",
+    "dday": "Birth Countdown",
     "myCards": "My Cards",
     "login": "Login",
     "logout": "Logout"

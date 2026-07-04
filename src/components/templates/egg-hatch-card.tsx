@@ -5,6 +5,7 @@ import { Stage } from "./egg-hatch/stage";
 import { Reveal } from "./egg-hatch/reveal";
 import { useEggState } from "./egg-hatch/use-egg-state";
 import { jua } from "./egg-hatch/font";
+import { CardGameHeader } from "./card-game-header";
 
 export default function EggHatchCard({
   gender,
@@ -17,12 +18,7 @@ export default function EggHatchCard({
 
   return (
     <div className={`flex flex-col items-center gap-4 p-6 ${jua.className}`}>
-      {recipientName && (
-        <p className="text-text-secondary text-sm">
-          {recipientName}님을 위한 카드
-        </p>
-      )}
-      <h2 className="text-xl text-center">{babyNickname}의 성별은?</h2>
+      <CardGameHeader babyNickname={babyNickname} recipientName={recipientName} />
 
       {showReveal ? (
         <Reveal
