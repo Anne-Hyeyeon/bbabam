@@ -2,10 +2,15 @@
 
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
+import { Copy, Trash2 } from "lucide-react";
 import { Header } from "@/components/layout/header";
 import { Link } from "@/i18n/navigation";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { EmojiArt } from "@/components/art/emoji-art";
+import { GENDER_DEEP } from "@/components/templates/gender";
 
-interface Card {
+interface StoredCard {
   id: string;
   slug: string;
   babyNickname: string;
@@ -16,7 +21,7 @@ interface Card {
 
 export default function DashboardPage() {
   const t = useTranslations("dashboard");
-  const [cards, setCards] = useState<Card[]>([]);
+  const [cards, setCards] = useState<StoredCard[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -42,51 +47,55 @@ export default function DashboardPage() {
   return (
     <>
       <Header />
-      <main className="p-4">
-        <h2 className="text-lg mb-4">{t("title")}</h2>
+      <main className="p-4 pb-10">
+        <h2 className="mb-4 text-[17px] font-bold tracking-tight text-[var(--color-ink)]">
+          {t("title")}
+        </h2>
 
         {loading ? (
           <div className="flex justify-center py-12">
-            <div className="w-8 h-8 rounded-full border-2 border-pink-baby/30 border-t-pink-baby animate-spin" />
+            <div className="h-8 w-8 animate-spin rounded-full border-2 border-[var(--color-primary-soft)] border-t-[var(--color-primary)]" />
           </div>
         ) : cards.length === 0 ? (
-          <div className="text-center py-12">
-            <p className="text-text-secondary mb-4">{t("empty")}</p>
-            <Link
-              href="/gender-reveal-card"
-              className="inline-block px-6 py-3 rounded-xl bg-gradient-to-r from-pink-baby to-blue-baby text-white"
-            >
-              {t("createFirst")}
-            </Link>
+          <div className="py-12 text-center">
+            <EmojiArt src="/art/baby.png" size={72} className="mx-auto" />
+            <p className="mt-3 text-[13px] text-[var(--color-ink-muted)]">{t("empty")}</p>
+            <Button asChild className="mt-5">
+              <Link href="/gender-reveal-card">{t("createFirst")}</Link>
+            </Button>
           </div>
         ) : (
           <div className="flex flex-col gap-3">
             {cards.map((card) => (
-              <div
-                key={card.id}
-                className={`bg-gray-soft rounded-xl p-4 flex items-center justify-between ${
-                  card.gender === "girl" ? "border-l-4 border-l-pink-baby" : "border-l-4 border-l-blue-baby"
-                }`}
-              >
-                <div>
-                  <span className={`inline-block w-2 h-2 rounded-full mr-2 ${card.gender === "girl" ? "bg-pink-baby" : "bg-blue-baby"}`} />
-                  <span>{card.babyNickname}</span>
-                </div>
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => handleCopy(card.slug)}
-                    className="px-3 py-1.5 rounded-lg bg-gradient-to-r from-pink-baby to-blue-baby text-white text-sm"
-                  >
-                    {t("copyLink")}
-                  </button>
-                  <button
-                    onClick={() => handleDelete(card.id)}
-                    className="px-3 py-1.5 rounded-lg bg-red-50 text-red-400 text-sm"
-                  >
-                    {t("delete")}
-                  </button>
-                </div>
-              </div>
+              <Card key={card.id}>
+                <CardContent className="flex items-center justify-between p-4">
+                  <div className="flex min-w-0 items-center gap-2.5">
+                    <span
+                      aria-hidden
+                      className="h-2.5 w-2.5 shrink-0 rounded-full"
+                      style={{ background: GENDER_DEEP[card.gender] }}
+                    />
+                    <span className="truncate text-[14px] font-semibold text-[var(--color-ink)]">
+                      {card.babyNickname}
+                    </span>
+                  </div>
+                  <div className="flex shrink-0 gap-1.5">
+                    <Button size="sm" variant="outline" onClick={() => handleCopy(card.slug)}>
+                      <Copy className="h-3.5 w-3.5" />
+                      {t("copyLink")}
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      className="text-[var(--color-state-error)] hover:text-[var(--color-state-error)]"
+                      onClick={() => handleDelete(card.id)}
+                    >
+                      <Trash2 className="h-3.5 w-3.5" />
+                      {t("delete")}
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
             ))}
           </div>
         )}

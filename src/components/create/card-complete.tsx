@@ -15,7 +15,7 @@ export function CardComplete({ templateId, babyNickname, gender, dueDate }: Card
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] p-6 text-center">
       <h2 className="text-xl mb-2">{t("complete")}</h2>
-      <p className="text-text-secondary text-sm mb-6">{t("completeDesc", { babyNickname })}</p>
+      <p className="mb-6 text-sm text-[var(--color-ink-muted)]">{t("completeDesc", { babyNickname })}</p>
 
       <div className="w-full max-w-[320px] flex flex-col gap-3">
         <ShareButtons url={shareUrl} babyNickname={babyNickname} />

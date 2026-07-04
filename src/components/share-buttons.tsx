@@ -38,7 +38,7 @@ export function ShareButtons({ url, babyNickname }: ShareButtonsProps) {
 
   return (
     <div className="flex flex-col gap-3 w-full">
-      <div className="flex items-center gap-2 bg-gray-soft rounded-xl px-4 py-3 border border-gray-100">
+      <div className="flex items-center gap-2 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface-muted)] px-4 py-3">
         <span className="text-sm text-gray-600 truncate flex-1">{fullUrl}</span>
       </div>
       <Button onClick={handleCopy} variant="outline" className="w-full">
