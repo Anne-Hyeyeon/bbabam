@@ -44,7 +44,8 @@
       "announceCard": "I'm\npregnant!",
       "nameGenerator": "Nickname\ngacha!",
       "parentMbti": "What kind\nof parent?",
-      "dday": "Days till\nbaby day"
+      "dday": "Days till\nbaby day",
+      "hospitalBag": "Hospital bag\npacked?"
     },
     "sections": {
       "genderQuiz": {
@@ -78,6 +79,10 @@
       "dday": {
         "title": "Birth countdown",
         "desc": "Due date in — D-day, week, and baby size out"
+      },
+      "hospitalBag": {
+        "title": "Hospital bag checklist",
+        "desc": "One-tap packing list for the third-trimester brain"
       }
     }
   },
@@ -86,6 +91,7 @@
     "createCard": "Create Card",
     "nameGenerator": "Nickname Gacha",
     "dday": "Birth Countdown",
+    "hospitalBag": "Hospital Bag",
     "myCards": "My Cards",
     "login": "Login",
     "logout": "Logout"

@@ -78,6 +78,7 @@ export function HamburgerMenu({ onClose }: HamburgerMenuProps) {
             <MenuLink href="/gender-reveal-card" label={t("createCard")} onClose={onClose} />
             <MenuLink href="/name-generator" label={t("nameGenerator")} onClose={onClose} />
             <MenuLink href="/dday" label={t("dday")} onClose={onClose} />
+            <MenuLink href="/hospital-bag" label={t("hospitalBag")} onClose={onClose} />
             {session && (
               <MenuLink href="/dashboard" label={t("myCards")} onClose={onClose} />
             )}
