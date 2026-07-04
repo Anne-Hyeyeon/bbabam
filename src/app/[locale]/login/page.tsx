@@ -1,30 +1,44 @@
 "use client";
+
 import { useTranslations } from "next-intl";
 import { signIn } from "next-auth/react";
 import { Link } from "@/i18n/navigation";
+import { BbabamMark } from "@/components/brand/bbabam-mark";
+
+/** Kakao's official brand yellow, required by their login guidelines. */
+const KAKAO_YELLOW = "#FEE500";
 
 export default function LoginPage() {
   const t = useTranslations("login");
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-8 bg-gradient-to-br from-pink-light to-blue-light">
-      <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-8 w-full max-w-sm flex flex-col items-center gap-4">
-        <p className="text-2xl font-bold bg-gradient-to-r from-pink-baby to-blue-baby bg-clip-text text-transparent">
-          빠밤!
+    <main className="flex min-h-screen flex-col items-center justify-center bg-[var(--color-bg)] p-8">
+      <div className="flex w-full max-w-sm flex-col items-center gap-4 rounded-[16px] border border-[var(--color-border)] bg-[var(--color-surface)] p-8 shadow-card">
+        <p className="flex items-center gap-2 text-[22px] font-bold tracking-tight text-[var(--color-ink)]">
+          <BbabamMark size={26} />
+          <span>
+            빠밤<span className="text-[var(--color-primary)]">!</span>
+          </span>
         </p>
-        <h1 className="text-xl mb-4">{t("title")}</h1>
+        <h1 className="mb-2 text-[16px] font-semibold text-[var(--color-ink)]">
+          {t("title")}
+        </h1>
         <button
           onClick={() => signIn("kakao", { callbackUrl: "/dashboard" })}
-          className="w-full py-3 bg-yellow-400 text-black rounded-xl hover:bg-yellow-500 transition"
+          className="w-full rounded-[12px] py-3 text-[14px] font-semibold text-[#191919] transition hover:opacity-90"
+          style={{ background: KAKAO_YELLOW }}
         >
           {t("kakao")}
         </button>
         <button
           onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
-          className="w-full py-3 bg-white border border-gray-200 text-gray-700 rounded-xl hover:bg-gray-50 transition"
+          className="w-full rounded-[12px] border border-[var(--color-border)] bg-[var(--color-surface)] py-3 text-[14px] font-semibold text-[var(--color-ink)] transition hover:bg-[var(--color-surface-muted)]"
         >
           {t("google")}
         </button>
-        <Link href="/gender-reveal-card" className="mt-2 text-text-secondary text-sm">
+        <Link
+          href="/gender-reveal-card"
+          className="mt-2 text-[13px] text-[var(--color-ink-muted)] transition hover:text-[var(--color-ink)]"
+        >
           {t("continueWithout")}
         </Link>
       </div>

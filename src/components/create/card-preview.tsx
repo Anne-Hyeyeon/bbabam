@@ -25,7 +25,7 @@ export function CardPreview({
   const TemplateComponent = template ? lazyTemplateComponents[template.id] : null;
 
   if (!template || !TemplateComponent) {
-    return <div className="p-6 text-center text-text-secondary">{t("selectTemplate")}</div>;
+    return <div className="p-6 text-center text-[var(--color-ink-muted)]">{t("selectTemplate")}</div>;
   }
 
   return (

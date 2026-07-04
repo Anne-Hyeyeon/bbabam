@@ -87,13 +87,13 @@ export function CardInfoForm({ data, onChange }: CardInfoFormProps) {
       {/* Ultrasound photo upload: temporarily disabled (query-link cards carry no uploads).
       <div>
         <label className="block text-sm mb-1">
-          {t("ultrasound")} <span className="text-text-secondary">{t("ultrasoundOptional")}</span>
+          {t("ultrasound")} <span className="text-[var(--color-ink-muted)]">{t("ultrasoundOptional")}</span>
         </label>
         <input
           type="file"
           accept="image/*"
           onChange={(e) => update({ ultrasoundFile: e.target.files?.[0] || null })}
-          className="w-full text-sm file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:bg-pink-light file:text-pink-baby"
+          className="w-full text-sm file:mr-3 file:rounded-xl file:border-0 file:bg-[var(--color-primary-soft)] file:px-4 file:py-2 file:font-semibold file:text-[var(--color-primary)]"
         />
       </div>
       */}

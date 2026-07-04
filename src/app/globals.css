@@ -41,16 +41,6 @@
   --radius-md: 10px;
   --radius-lg: 14px;
   --radius-xl: 18px;
-
-  /* Legacy tokens (in-flight components) */
-  --color-pink-baby: #FFB6C1;
-  --color-pink-light: #FFF0F5;
-  --color-blue-baby: #89CFF0;
-  --color-blue-light: #EEF4FF;
-  --color-cream: #FFF8F0;
-  --color-gray-soft: #F5F5F5;
-  --color-text-primary: #3D3D3D;
-  --color-text-secondary: #9CA3AF;
 }
 
 /* ------------------------------------------------------------------
