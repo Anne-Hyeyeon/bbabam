@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { ToolPage } from "@/components/tool/tool-page";
 import { ToolHero } from "@/components/tool/tool-hero";
+import { EmojiArt } from "@/components/art/emoji-art";
 import { ResultActions } from "@/components/tool/result-actions";
 import { scrollToTopSmooth } from "@/lib/scroll";
 import {
@@ -123,7 +124,7 @@ function InputView({
   return (
     <div className="px-4 py-6">
       <ToolHero
-        illustration={<CrownIllustration className="mx-auto h-24 w-24" />}
+        illustration={<EmojiArt src="/art/gender-quiz.png" className="mx-auto" />}
         title={CHINESE_CALENDAR_META.title}
         lines={[CHINESE_CALENDAR_META.subtitle]}
       />
@@ -421,47 +422,6 @@ function CrownIcon({ className }: { className?: string }) {
     >
       <path d="M3 18h18" />
       <path d="M3 8l4 3 5-6 5 6 4-3-2 10H5L3 8z" />
-    </svg>
-  );
-}
-
-/* Crown illustration — filled, with soft halo. Placeholder style. */
-function CrownIllustration({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 160 160"
-      fill="none"
-      aria-hidden="true"
-    >
-      <circle cx="80" cy="80" r="78" fill="var(--color-cat-butter)" opacity="0.45" />
-      <circle cx="80" cy="80" r="62" fill="var(--color-cat-peach)" opacity="0.55" />
-      {/* crown body */}
-      <path
-        d="M36 98 L44 58 L62 78 L80 44 L98 78 L116 58 L124 98 Z"
-        fill="#F2D06B"
-        stroke="#2B2B2B"
-        strokeWidth="2.5"
-        strokeLinejoin="round"
-      />
-      {/* base */}
-      <rect
-        x="36"
-        y="96"
-        width="88"
-        height="14"
-        rx="3"
-        fill="#F2D06B"
-        stroke="#2B2B2B"
-        strokeWidth="2.5"
-      />
-      {/* gems */}
-      <circle cx="62" cy="80" r="4.5" fill="#E87A91" stroke="#2B2B2B" strokeWidth="2" />
-      <circle cx="80" cy="62" r="5" fill="#8AB09D" stroke="#2B2B2B" strokeWidth="2" />
-      <circle cx="98" cy="80" r="4.5" fill="#A6C6E0" stroke="#2B2B2B" strokeWidth="2" />
-      {/* sparkles */}
-      <path d="M30 54 l2 -2 l2 2 l-2 2 z" fill="var(--color-primary)" opacity="0.85" />
-      <path d="M128 58 l2 -2 l2 2 l-2 2 z" fill="var(--color-primary)" opacity="0.85" />
     </svg>
   );
 }

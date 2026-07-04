@@ -9,6 +9,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { ToolPage } from "@/components/tool/tool-page";
 import { ToolHero } from "@/components/tool/tool-hero";
+import { EmojiArt } from "@/components/art/emoji-art";
 import {
   HOSPITAL_BAG_CATEGORIES,
   HOSPITAL_BAG_META,
@@ -41,7 +42,7 @@ export default function HospitalBagPage() {
     <ToolPage>
       <div className="px-4 py-6">
         <ToolHero
-          illustration={<BagIllustration className="mx-auto h-24 w-24" />}
+          illustration={<EmojiArt src="/art/hospital-bag.png" className="mx-auto" />}
           title={HOSPITAL_BAG_META.title}
           lines={[HOSPITAL_BAG_META.subtitle, HOSPITAL_BAG_META.description]}
         />
@@ -180,57 +181,5 @@ function ChecklistRow({
         )}
       </span>
     </button>
-  );
-}
-
-/* Packed-bag illustration — same soft style as sibling tools. */
-function BagIllustration({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 160 160" fill="none" aria-hidden>
-      <circle cx="80" cy="80" r="78" fill="var(--color-cat-sage)" opacity="0.4" />
-      <circle cx="80" cy="80" r="62" fill="var(--color-cat-peach)" opacity="0.45" />
-      {/* handles */}
-      <path
-        d="M62 62 v-8 a18 18 0 0 1 36 0 v8"
-        stroke="#2B2B2B"
-        strokeWidth="2.5"
-        fill="none"
-        strokeLinecap="round"
-      />
-      {/* bag body */}
-      <rect
-        x="42"
-        y="62"
-        width="76"
-        height="52"
-        rx="12"
-        fill="#F5F7F9"
-        stroke="#2B2B2B"
-        strokeWidth="2.5"
-      />
-      {/* pocket line */}
-      <path d="M42 84 h76" stroke="#2B2B2B" strokeWidth="2.5" />
-      {/* check badge */}
-      <circle cx="106" cy="98" r="13" fill="#8AB09D" stroke="#2B2B2B" strokeWidth="2.5" />
-      <path
-        d="M100 98 l4 4 8-8"
-        stroke="#FFFFFF"
-        strokeWidth="3"
-        fill="none"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      {/* heart tag */}
-      <path
-        d="M62 96s-7-4.3-7-9a4.2 4.2 0 0 1 7-2.8 4.2 4.2 0 0 1 7 2.8c0 4.7-7 9-7 9z"
-        fill="#FFD1DC"
-        stroke="#2B2B2B"
-        strokeWidth="2"
-        strokeLinejoin="round"
-      />
-      {/* sparkles */}
-      <path d="M34 46 l2 -2 l2 2 l-2 2 z" fill="var(--color-primary)" opacity="0.85" />
-      <path d="M126 118 l2 -2 l2 2 l-2 2 z" fill="var(--color-primary)" opacity="0.85" />
-    </svg>
   );
 }

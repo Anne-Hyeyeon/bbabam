@@ -20,7 +20,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "빠밤! — 임신·출산 축하 도구 모음",
   description:
-    "성별 맞추기, 태명 생성기, 임밍아웃·젠더리빌 카드까지. 임신부터 출산까지 쓸 수 있는 따뜻한 도구들.",
+    "성별 맞추기, 태명 뽑기, 젠더리빌 카드까지. 임신부터 출산까지 쓸 수 있는 따뜻한 도구들.",
 };
 
 export default function RootLayout({

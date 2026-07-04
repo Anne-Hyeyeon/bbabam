@@ -21,7 +21,6 @@ export interface ContentCardData {
   art?: PosterArtKind;
   phrase: string;
   title: string;
-  prefixLabel?: string;
 }
 
 interface ContentCardProps {
@@ -93,9 +92,6 @@ export function ContentCard({ data, statusLabels, variant = "grid" }: ContentCar
           isFeature ? "text-[17px]" : "text-[14px]",
         ].join(" ")}
       >
-        {data.prefixLabel && (
-          <span className="text-[var(--color-ink-muted)]">({data.prefixLabel}) </span>
-        )}
         {data.title}
       </h3>
     </div>

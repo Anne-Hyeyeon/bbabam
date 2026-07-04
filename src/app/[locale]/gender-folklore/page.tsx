@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { ToolPage } from "@/components/tool/tool-page";
 import { ToolHero } from "@/components/tool/tool-hero";
+import { EmojiArt } from "@/components/art/emoji-art";
 import { ResultActions } from "@/components/tool/result-actions";
 import { QuizQuestion } from "@/components/quiz/quiz-question";
 import { useQuizFlow } from "@/components/quiz/use-quiz-flow";
@@ -79,7 +80,7 @@ function IntroView({ onStart }: { onStart: () => void }) {
   return (
     <div className="px-4 py-6">
       <ToolHero
-        illustration={<FolkloreIllustration className="mx-auto h-24 w-24" />}
+        illustration={<EmojiArt src="/art/folklore.png" className="mx-auto" />}
         title={GENDER_FOLKLORE_META.title}
         lines={[GENDER_FOLKLORE_META.subtitle, GENDER_FOLKLORE_META.description]}
         badges={[
@@ -285,41 +286,6 @@ function ResultGlyph({
       <circle cx="24" cy="24" r="2.5" fill="#2B2B2B" />
       <circle cx="17" cy="31" r="2.5" fill="#2B2B2B" />
       <circle cx="31" cy="31" r="2.5" fill="#2B2B2B" />
-    </svg>
-  );
-}
-
-/* Soft illustration for intro hero. */
-function FolkloreIllustration({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 160 160"
-      fill="none"
-      aria-hidden
-    >
-      <circle cx="80" cy="80" r="78" fill="var(--color-cat-peach)" opacity="0.5" />
-      <circle cx="80" cy="80" r="62" fill="var(--color-cat-butter)" opacity="0.55" />
-      {/* moon — boy side */}
-      <path
-        d="M52 56a22 22 0 1 0 16 38 18 18 0 0 1-16-38z"
-        fill="#F5F7F9"
-        stroke="#2B2B2B"
-        strokeWidth="2.5"
-        strokeLinejoin="round"
-      />
-      {/* flower — girl side */}
-      <g stroke="#2B2B2B" strokeWidth="2.5" strokeLinejoin="round">
-        <circle cx="108" cy="66" r="7" fill="#FFD1DC" />
-        <circle cx="120" cy="78" r="7" fill="#FFD1DC" />
-        <circle cx="108" cy="90" r="7" fill="#FFD1DC" />
-        <circle cx="96" cy="78" r="7" fill="#FFD1DC" />
-        <circle cx="108" cy="78" r="5" fill="#F2D06B" />
-      </g>
-      {/* sparkles */}
-      <path d="M32 40 l2 -2 l2 2 l-2 2 z" fill="var(--color-primary)" opacity="0.85" />
-      <path d="M140 120 l2 -2 l2 2 l-2 2 z" fill="var(--color-primary)" opacity="0.85" />
-      <path d="M42 122 l2 -2 l2 2 l-2 2 z" fill="var(--color-primary)" opacity="0.7" />
     </svg>
   );
 }

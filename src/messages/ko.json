@@ -24,7 +24,7 @@
     "sectionQuiz": "나는 어떤 부모?",
     "sectionQuizSub": "자가 테스트·MBTI 모음",
     "sectionAll": "전체 콘텐츠",
-    "sectionAllSub": "임밍아웃 카드부터 태아 성별 테스트까지",
+    "sectionAllSub": "젠더리빌 카드부터 태아 성별 테스트까지",
     "more": "더보기",
     "comingSoon": "준비중",
     "new": "NEW",
@@ -33,15 +33,12 @@
     "catTools": "도구",
     "catCards": "카드",
     "catQuiz": "테스트",
-    "prefix": {
-      "announce": "임밍아웃"
-    },
     "phrases": {
       "genderQuiz": "아들일까\n딸일까?",
       "folkloreQuiz": "속설로\n성별 맞추기",
       "geneticsPredict": "닮은 꼴\n누구?",
       "milestones": "주차별\n마일스톤",
-      "announceCard": "저 임신\n했어요!",
+      "announceCard": "두근두근\n성별 공개!",
       "nameGenerator": "운명의\n태명 뽑기",
       "parentMbti": "나는 어떤\n엄마·아빠?",
       "dday": "아기 만날 날\nD-며칠?",
@@ -66,8 +63,8 @@
         "desc": "4주부터 40주까지 — 아기가 자라는 10개의 결정적 순간"
       },
       "announceCard": {
-        "title": "임밍아웃 카드",
-        "desc": "스크래치·뒤집기·봉투·알 부화 템플릿으로 깜짝 소식 알리기"
+        "title": "젠더리빌 카드",
+        "desc": "복권·오므라이스·알 부화·선물상자로 깜짝 성별 공개"
       },
       "nameGenerator": {
         "title": "운명의 태명 뽑기",
@@ -140,6 +137,10 @@
       "omurice": {
         "phrase": "두근두근!\n오므라이스 젠더리빌",
         "desc": "계란 속에 숨겨진 우리 아기의 비밀!"
+      },
+      "giftBox": {
+        "phrase": "흔들어서\n열어 보세요!",
+        "desc": "세 번 흔들면 선물이 팡!"
       }
     },
     "create": "카드 만들기",
@@ -179,7 +180,8 @@
   "templates": {
     "scratch": "젠더리빌 복권",
     "eggHatch": "반짝이는 알 부화",
-    "omurice": "오므라이스 젠더리빌"
+    "omurice": "오므라이스 젠더리빌",
+    "giftBox": "선물상자 서프라이즈"
   },
   "eggHatch": {
     "intro": {

@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { ToolPage } from "@/components/tool/tool-page";
 import { ToolHero } from "@/components/tool/tool-hero";
+import { EmojiArt } from "@/components/art/emoji-art";
 import { ResultActions } from "@/components/tool/result-actions";
 import { QuizQuestion } from "@/components/quiz/quiz-question";
 import { useQuizFlow } from "@/components/quiz/use-quiz-flow";
@@ -79,7 +80,7 @@ function IntroView({ onStart }: { onStart: () => void }) {
   return (
     <div className="px-4 py-6">
       <ToolHero
-        illustration={<MBTIIllustration className="mx-auto h-24 w-24" />}
+        illustration={<EmojiArt src="/art/parent-mbti.png" className="mx-auto" />}
         title={PARENT_MBTI_META.title}
         lines={[PARENT_MBTI_META.subtitle, PARENT_MBTI_META.description]}
         badges={[
@@ -320,21 +321,3 @@ function MBTIGlyph({ type, className }: { type: string; className?: string }) {
   );
 }
 
-function MBTIIllustration({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 160 160" fill="none" aria-hidden>
-      <circle cx="80" cy="80" r="78" fill="var(--color-cat-lilac)" opacity="0.55" />
-      <circle cx="80" cy="80" r="62" fill="var(--color-cat-peach)" opacity="0.5" />
-      {/* 4 MBTI axis circles */}
-      <g stroke="#2B2B2B" strokeWidth="2.5" strokeLinejoin="round">
-        <circle cx="60" cy="58" r="14" fill="#FFD1DC" />
-        <circle cx="100" cy="58" r="14" fill="#A6C6E0" />
-        <circle cx="60" cy="98" r="14" fill="#F2D06B" />
-        <circle cx="100" cy="98" r="14" fill="#8AB09D" />
-      </g>
-      {/* sparkles */}
-      <path d="M30 40 l2 -2 l2 2 l-2 2 z" fill="var(--color-primary)" opacity="0.85" />
-      <path d="M130 120 l2 -2 l2 2 l-2 2 z" fill="var(--color-primary)" opacity="0.85" />
-    </svg>
-  );
-}

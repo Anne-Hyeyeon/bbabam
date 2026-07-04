@@ -1,12 +1,9 @@
 "use client";
 
-import Image from "next/image";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { templates } from "@/components/templates";
 import { POSTER_BG, type Palette } from "@/components/home/palette";
-import { resolveThumbnail } from "@/components/home/thumbnail";
-
-const PICKER_SIZES = "(max-width: 480px) 100vw, 480px";
+import { EmojiArt, type EmojiArtSrc } from "@/components/art/emoji-art";
 
 interface TemplatePickerProps {
   selected: string | null;
@@ -18,19 +15,26 @@ const TEMPLATE_PALETTES: Record<string, Palette> = {
   scratch: "pink",
   omurice: "butter",
   "egg-hatch": "blue",
+  "gift-box": "lilac",
+};
+
+// 3D icon per template (same poster style as the home cards).
+const TEMPLATE_ART: Record<string, EmojiArtSrc> = {
+  scratch: "/art/coin.png",
+  omurice: "/art/cooking.png",
+  "egg-hatch": "/art/egg.png",
+  "gift-box": "/art/gift.png",
 };
 
 export function TemplatePicker({ selected, onSelect }: TemplatePickerProps) {
   const t = useTranslations("create");
   const tName = useTranslations("templates");
-  const locale = useLocale();
 
   return (
     <div className="flex flex-col gap-3 p-4">
-      {templates.map((tpl, idx) => {
+      {templates.map((tpl) => {
         const isSelected = selected === tpl.id;
-        const eager = idx === 0;
-        const image = tpl.thumbnail ? resolveThumbnail(tpl.thumbnail, "wide", locale) : null;
+        const art = TEMPLATE_ART[tpl.id];
         return (
           <button
             key={tpl.id}
@@ -45,25 +49,21 @@ export function TemplatePicker({ selected, onSelect }: TemplatePickerProps) {
                 : "hover:-translate-y-[2px]",
             ].join(" ")}
           >
-            {image ? (
-              <Image
-                src={image.src}
-                alt={tName(tpl.nameKey)}
-                fill
-                sizes={PICKER_SIZES}
-                priority={eager}
-                className="object-cover"
+            {art && (
+              <EmojiArt
+                src={art}
+                size={88}
+                className="absolute right-5 top-1/2 -translate-y-1/2"
               />
-            ) : (
-              <div className="flex h-full flex-col justify-end gap-1 p-4">
-                <p className="text-[22px] font-bold leading-[1.15] text-[var(--color-ink)] whitespace-pre-line">
-                  {t(`templateBanners.${tpl.nameKey}.phrase`)}
-                </p>
-                <p className="text-[12px] font-medium text-[var(--color-ink-muted)]">
-                  {tName(tpl.nameKey)} · {t(`templateBanners.${tpl.nameKey}.desc`)}
-                </p>
-              </div>
             )}
+            <div className="flex h-full flex-col justify-end gap-1 p-4 pr-28">
+              <p className="text-[22px] font-bold leading-[1.15] text-[var(--color-ink)] whitespace-pre-line">
+                {t(`templateBanners.${tpl.nameKey}.phrase`)}
+              </p>
+              <p className="text-[12px] font-medium text-[var(--color-ink-muted)]">
+                {tName(tpl.nameKey)} · {t(`templateBanners.${tpl.nameKey}.desc`)}
+              </p>
+            </div>
 
             {isSelected && (
               <span className="absolute top-3 right-3 flex h-6 w-6 items-center justify-center rounded-full bg-[var(--color-ink)] text-white">

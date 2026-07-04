@@ -10,6 +10,7 @@ import { Progress } from "@/components/ui/progress";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { ToolPage } from "@/components/tool/tool-page";
 import { ToolHero } from "@/components/tool/tool-hero";
+import { EmojiArt } from "@/components/art/emoji-art";
 import { ResultActions } from "@/components/tool/result-actions";
 import {
   DDAY_META,
@@ -65,7 +66,7 @@ export default function DdayPage() {
     <ToolPage>
       <div className="px-4 py-6">
         <ToolHero
-          illustration={<CalendarIllustration className="mx-auto h-24 w-24" />}
+          illustration={<EmojiArt src="/art/dday.png" className="mx-auto" />}
           title={DDAY_META.title}
           lines={[DDAY_META.subtitle, DDAY_META.description]}
         />
@@ -158,44 +159,5 @@ function MilestoneNote({ week }: { week: number }) {
         {milestone.description}
       </p>
     </div>
-  );
-}
-
-/* Calendar-with-heart illustration — same soft style as sibling tools. */
-function CalendarIllustration({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 160 160" fill="none" aria-hidden>
-      <circle cx="80" cy="80" r="78" fill="var(--color-cat-blue)" opacity="0.35" />
-      <circle cx="80" cy="80" r="62" fill="var(--color-cat-butter)" opacity="0.5" />
-      {/* calendar body */}
-      <rect
-        x="42"
-        y="50"
-        width="76"
-        height="66"
-        rx="8"
-        fill="#F5F7F9"
-        stroke="#2B2B2B"
-        strokeWidth="2.5"
-      />
-      <path d="M42 66 h76" stroke="#2B2B2B" strokeWidth="2.5" />
-      {/* binder rings */}
-      <path d="M58 42 v14 M102 42 v14" stroke="#2B2B2B" strokeWidth="2.5" strokeLinecap="round" />
-      {/* date dots */}
-      <circle cx="58" cy="80" r="3" fill="#C9C7C2" />
-      <circle cx="80" cy="80" r="3" fill="#C9C7C2" />
-      <circle cx="102" cy="80" r="3" fill="#C9C7C2" />
-      {/* heart on the big day */}
-      <path
-        d="M80 108s-11-6.8-11-14.3a6.6 6.6 0 0 1 11-4.4 6.6 6.6 0 0 1 11 4.4C91 101.2 80 108 80 108z"
-        fill="#FFD1DC"
-        stroke="#2B2B2B"
-        strokeWidth="2.2"
-        strokeLinejoin="round"
-      />
-      {/* sparkles */}
-      <path d="M34 44 l2 -2 l2 2 l-2 2 z" fill="var(--color-primary)" opacity="0.85" />
-      <path d="M126 118 l2 -2 l2 2 l-2 2 z" fill="var(--color-primary)" opacity="0.85" />
-    </svg>
   );
 }

@@ -3,7 +3,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTranslations } from "next-intl";
-import { BabyIllustration } from "./baby-illustration";
+import Image from "next/image";
+import { GENDER_ART } from "@/components/art/emoji-art";
 import { topicJosa } from "@/lib/korean";
 import {
   GENDER_PASTEL,
@@ -192,9 +193,16 @@ export function Reveal({ gender, babyNickname, onReveal, onReplay }: Props) {
           <motion.div
             animate={{ y: [0, -6, 0] }}
             transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
-            style={{ width: "100%", height: "100%" }}
+            style={{ width: "100%", height: "100%", position: "relative" }}
           >
-            <BabyIllustration gender={gender} />
+            <Image
+              src={GENDER_ART[gender]}
+              alt=""
+              aria-hidden
+              fill
+              sizes="240px"
+              className="object-contain drop-shadow-sm"
+            />
           </motion.div>
         </motion.div>
       </div>

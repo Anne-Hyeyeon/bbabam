@@ -2,7 +2,7 @@
 
 import { useCallback, useRef, useState } from "react";
 import { jua } from "./egg-hatch/font";
-import { BabyIllustration } from "./egg-hatch/baby-illustration";
+import { EmojiArt, GENDER_ART } from "@/components/art/emoji-art";
 import { CardGameHeader } from "./card-game-header";
 import { GENDER_DEEP, GENDER_SOFT, genderNoun } from "./gender";
 import type { TemplateInteractionProps } from "./index";
@@ -127,9 +127,7 @@ export default function ScratchCard({
             className="absolute inset-0 flex flex-col items-center justify-center gap-1"
             style={{ background: GENDER_SOFT[gender] }}
           >
-            <div className="w-[104px]" style={{ aspectRatio: "200 / 210" }}>
-              <BabyIllustration gender={gender} />
-            </div>
+            <EmojiArt src={GENDER_ART[gender]} size={104} />
             <span
               className={`${jua.className} text-[26px]`}
               style={{ color: GENDER_DEEP[gender] }}

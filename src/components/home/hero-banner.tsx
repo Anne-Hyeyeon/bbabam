@@ -21,7 +21,6 @@ export interface HeroSlide {
   phrase: string;
   title: string;
   catLabel: string;
-  prefixLabel?: string;
 }
 
 interface HeroBannerProps {
@@ -100,7 +99,6 @@ function SlideContent({
               overImage ? "text-white/80" : "text-[var(--color-ink-muted)]",
             ].join(" ")}
           >
-            {slide.prefixLabel && <span>({slide.prefixLabel}) </span>}
             {slide.title} · {slide.catLabel}
           </p>
           <span className="mt-1 inline-flex w-fit items-center gap-1 rounded-full bg-[var(--color-ink)] px-4 py-2 text-[13px] font-semibold text-white shadow-card transition group-hover:opacity-90">
