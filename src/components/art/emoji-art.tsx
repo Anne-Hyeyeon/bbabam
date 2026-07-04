@@ -23,9 +23,3 @@ export function EmojiArt({ src, size = 96, className }: EmojiArtProps) {
     />
   );
 }
-
-/** Boy/girl reveal characters shared by the card games. */
-export const GENDER_ART: Record<"boy" | "girl", EmojiArtSrc> = {
-  boy: "/art/boy.png",
-  girl: "/art/girl.png",
-};

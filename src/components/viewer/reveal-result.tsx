@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Confetti } from "@/components/confetti";
 import { motion } from "framer-motion";
-import { EmojiArt, GENDER_ART } from "@/components/art/emoji-art";
+import { BabyCharacter } from "@/components/art/baby-character";
 import { jua } from "@/components/templates/egg-hatch/font";
 import { GENDER_DEEP, genderNoun } from "@/components/templates/gender";
 import { topicJosa } from "@/lib/korean";
@@ -44,7 +44,7 @@ export function RevealResult({
           transition={{ type: "spring", stiffness: 180, damping: 15, delay: 0.15 }}
           className="mb-3"
         >
-          <EmojiArt src={GENDER_ART[gender]} size={150} />
+          <BabyCharacter gender={gender} size={150} className="mx-auto" />
         </motion.div>
 
         <div className={jua.className}>
