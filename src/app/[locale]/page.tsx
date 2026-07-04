@@ -6,6 +6,7 @@ import { HeroBanner, type HeroSlide } from "@/components/home/hero-banner";
 import { type ContentCardData } from "@/components/home/content-card";
 import { CategoryFeed, type FeedChip, type FeedItem } from "@/components/home/category-feed";
 import { type Palette } from "@/components/home/palette";
+import { type PosterArtKind } from "@/components/home/poster-art";
 import {
   PHRASE_THUMBNAIL,
   resolveThumbnail,
@@ -37,6 +38,8 @@ type SectionDef = {
   prefix?: PrefixKey;
   /** Required: every content declares how its thumbnail renders (see thumbnail.ts). */
   thumbnail: Thumbnail;
+  /** Poster illustration for phrase thumbnails (see poster-art.tsx). */
+  art?: PosterArtKind;
 };
 
 const ANNOUNCE_CARD_THUMBNAIL: Thumbnail = {
@@ -72,12 +75,12 @@ const SECTIONS: Record<SectionKey, SectionDef> = {
   genderQuiz:         { key: "genderQuiz",         href: "/chinese-calendar",         status: "live", category: "catGuess", palette: "peach",  thumbnail: GENDER_QUIZ_THUMBNAIL },
   folkloreQuiz:       { key: "folkloreQuiz",       href: "/gender-folklore",          status: "new",  category: "catGuess", palette: "lilac",  thumbnail: FOLKLORE_THUMBNAIL },
   geneticsPredict:    { key: "geneticsPredict",    href: "/genetics",                 status: "live", category: "catTools", palette: "sage",   thumbnail: GENETICS_THUMBNAIL },
-  milestones:         { key: "milestones",         href: "/milestones",               status: "new",  category: "catTools", palette: "sage",   thumbnail: PHRASE_THUMBNAIL },
-  nameGenerator:      { key: "nameGenerator",      href: "/name-generator",           status: "new",  category: "catTools", palette: "butter", thumbnail: PHRASE_THUMBNAIL },
-  parentMbti:         { key: "parentMbti",         href: "/parent-mbti",              status: "live", category: "catQuiz",  palette: "blue",   thumbnail: PHRASE_THUMBNAIL },
-  dday:               { key: "dday",               href: "/dday",                     status: "new",  category: "catTools", palette: "blue",   thumbnail: PHRASE_THUMBNAIL },
-  hospitalBag:        { key: "hospitalBag",        href: "/hospital-bag",             status: "new",  category: "catTools", palette: "sage",   thumbnail: PHRASE_THUMBNAIL },
-  balanceGame:        { key: "balanceGame",        href: "/balance-game",             status: "new",  category: "catQuiz",  palette: "peach",  thumbnail: PHRASE_THUMBNAIL },
+  milestones:         { key: "milestones",         href: "/milestones",               status: "new",  category: "catTools", palette: "sage",   thumbnail: PHRASE_THUMBNAIL, art: "milestones" },
+  nameGenerator:      { key: "nameGenerator",      href: "/name-generator",           status: "new",  category: "catTools", palette: "butter", thumbnail: PHRASE_THUMBNAIL, art: "nameGenerator" },
+  parentMbti:         { key: "parentMbti",         href: "/parent-mbti",              status: "live", category: "catQuiz",  palette: "blue",   thumbnail: PHRASE_THUMBNAIL, art: "parentMbti" },
+  dday:               { key: "dday",               href: "/dday",                     status: "new",  category: "catTools", palette: "blue",   thumbnail: PHRASE_THUMBNAIL, art: "dday" },
+  hospitalBag:        { key: "hospitalBag",        href: "/hospital-bag",             status: "new",  category: "catTools", palette: "sage",   thumbnail: PHRASE_THUMBNAIL, art: "hospitalBag" },
+  balanceGame:        { key: "balanceGame",        href: "/balance-game",             status: "new",  category: "catQuiz",  palette: "peach",  thumbnail: PHRASE_THUMBNAIL, art: "balanceGame" },
 };
 
 const CHIPS: { key: "all" | Category }[] = [
@@ -121,6 +124,7 @@ export default function PortalLandingPage({ params }: { params: Promise<{ locale
       palette: s.palette,
       status: s.status,
       image: resolveThumbnail(s.thumbnail, slot, locale),
+      art: s.art,
       phrase: t(`phrases.${k}`),
       title: t(`sections.${k}.title`),
       catLabel: t(`chips.${s.category}`),
